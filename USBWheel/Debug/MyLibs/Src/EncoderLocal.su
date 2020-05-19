@@ -1,0 +1,13 @@
+EncoderLocal.cpp:42:6:virtual void EncoderLocal::exti(uint16_t)	0	static
+EncoderLocal.cpp:20:1:EncoderLocal::~EncoderLocal()	8	static
+EncoderLocal.cpp:20:1:virtual EncoderLocal::~EncoderLocal()	8	static
+EncoderLocal.cpp:10:1:EncoderLocal::EncoderLocal()	8	static
+EncoderLocal.cpp:25:9:int32_t EncoderLocal::getPos()	0	static
+EncoderLocal.cpp:29:6:void EncoderLocal::setPos(int32_t)	0	static
+EncoderLocal.cpp:34:6:void EncoderLocal::setOffset(int32_t)	0	static
+EncoderLocal.cpp:38:6:void EncoderLocal::setPeriod(uint32_t)	0	static
+EncoderLocal.cpp:54:6:void EncoderLocal::overflowCallback()	8	static
+EncoderLocal.cpp:48:6:virtual void EncoderLocal::timerElapsed(TIM_HandleTypeDef*)	0	static
+EncoderLocal.cpp:67:10:uint32_t EncoderLocal::getPpr()	0	static
+EncoderLocal.cpp:71:10:uint32_t EncoderLocal::getPosCpr()	0	static
+EncoderLocal.cpp:75:6:void EncoderLocal::setPpr(uint32_t)	0	static

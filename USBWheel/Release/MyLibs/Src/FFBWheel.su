@@ -1,0 +1,15 @@
+FFBWheel.cpp:162:6:virtual void FFBWheel::adcUpd(volatile uint32_t*)	0	static
+FFBWheel.cpp:214:6:virtual void FFBWheel::timerElapsed(TIM_HandleTypeDef*)	0	static
+FFBWheel.cpp:147:9:int16_t FFBWheel::updateEndstop()	0	static
+FFBWheel.cpp:180:9:int32_t FFBWheel::getEncValue(EncoderLocal*, uint16_t)	24	static
+FFBWheel.cpp:190:6:void FFBWheel::send_report()	16	static
+FFBWheel.cpp:83:6:void FFBWheel::update()	24	static
+FFBWheel.cpp:220:6:void FFBWheel::cdcRcv(char*, uint32_t*)	32	static
+FFBWheel.cpp:226:6:void FFBWheel::usbInit()	0	static
+FFBWheel.cpp:229:6:void FFBWheel::SOF()	0	static
+FFBWheel.cpp:234:16:static FFBWheelConfig FFBWheel::decodeConf()	72	static
+FFBWheel.cpp:28:6:void FFBWheel::restoreFlash()	48	static
+FFBWheel.cpp:7:1:FFBWheel::FFBWheel()	16	static
+FFBWheel.cpp:42:6:void FFBWheel::saveFlash()	64	static
+FFBWheel.cpp:22:1:FFBWheel::~FFBWheel()	8	static
+FFBWheel.cpp:22:1:virtual FFBWheel::~FFBWheel()	8	static

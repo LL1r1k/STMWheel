@@ -1,0 +1,7 @@
+eeprom.c:54:6:EE_Format	32	static
+eeprom.c:77:6:EE_Read	0	static
+eeprom.c:85:6:EE_Write	16	static
+eeprom.c:131:6:EE_Reads	0	static
+eeprom.c:143:7:EE_Writes	24	static
+eeprom.c:183:10:EE_GetSize	0	static
+eeprom.c:188:10:EE_GetMaximumVirtualAddress	0	static

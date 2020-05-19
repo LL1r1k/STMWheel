@@ -1,0 +1,2 @@
+ledEffects.cpp:6:6:void pulseSysLed()	8	static
+ledEffects.cpp:11:6:void updateLeds()	8	static

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;USBWheel/MyLibs/Inc/MotorPWM.h&apos; to &apos;MotorBTS7960.h&apos;" description="Rename resource &apos;MotorPWM.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="MyLibs/Inc/MotorPWM.h" name="MotorBTS7960.h" stamp="1588063446487" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;USBWheel/MyLibs/Src/MotorPWM.cpp&apos; to &apos;MotorBTS7960.cpp&apos;" description="Rename resource &apos;MotorPWM.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="MyLibs/Src/MotorPWM.cpp" name="MotorBTS7960.cpp" stamp="1588063456260" updateReferences="true"/>
+</session>

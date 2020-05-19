@@ -1,0 +1,5 @@
+ws2812.cpp:29:6:void ws2812_init()	0	static
+ws2812.cpp:36:6:void ws2812_pixel_rgb_to_buf_dma(uint8_t, uint8_t, uint8_t, uint16_t)	12	static
+ws2812.cpp:46:6:void setup_rpm_ws2812(uint8_t)	16	static
+ws2812.cpp:57:6:void setup_ws2812(RGB*, uint8_t)	16	static
+ws2812.cpp:63:1:cpp)	0	static

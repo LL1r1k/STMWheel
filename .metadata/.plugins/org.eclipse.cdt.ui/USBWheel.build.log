@@ -1,0 +1,35 @@
+12:04:47 **** Incremental Build of configuration Debug for project USBWheel ****
+make -j8 all 
+arm-none-eabi-g++ "../MyLibs/Src/FFBWheel.cpp" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/FFBWheel.d" -MT"MyLibs/Src/FFBWheel.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "MyLibs/Src/FFBWheel.o"
+arm-none-eabi-g++ "../MyLibs/Src/FFBWheel_commands.cpp" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/FFBWheel_commands.d" -MT"MyLibs/Src/FFBWheel_commands.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "MyLibs/Src/FFBWheel_commands.o"
+arm-none-eabi-g++ "../MyLibs/Src/HidFFB.cpp" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/HidFFB.d" -MT"MyLibs/Src/HidFFB.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "MyLibs/Src/HidFFB.o"
+arm-none-eabi-g++ "../MyLibs/Src/global_callbacks.cpp" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/global_callbacks.d" -MT"MyLibs/Src/global_callbacks.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "MyLibs/Src/global_callbacks.o"
+arm-none-eabi-g++ "../Core/Src/cppmain.cpp" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/cppmain.d" -MT"Core/Src/cppmain.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/cppmain.o"
+../MyLibs/Src/HidFFB.cpp: In member function 'int32_t HidFFB::ApplyEnvelope(FFB_Effect*, int32_t)':
+../MyLibs/Src/HidFFB.cpp:374:43: error: 'struct FFB_Effect' has no member named 'attackLevel'; did you mean 'attackTime'?
+   int32_t attackLevel = ApplyGain(effect->attackLevel, effect->gain);
+                                           ^~~~~~~~~~~
+                                           attackTime
+../MyLibs/Src/HidFFB.cpp:375:41: error: 'struct FFB_Effect' has no member named 'fadeLevel'; did you mean 'fadeTime'?
+   int32_t fadeLevel = ApplyGain(effect->fadeLevel, effect->gain);
+                                         ^~~~~~~~~
+                                         fadeTime
+make: *** [MyLibs/Src/subdir.mk:84: MyLibs/Src/HidFFB.o] Error 1
+make: *** Waiting for unfinished jobs....
+../MyLibs/Src/FFBWheel.cpp: In member function 'void FFBWheel::send_report()':
+../MyLibs/Src/FFBWheel.cpp:197:51: warning: array subscript is above array bounds [-Warray-bounds]
+  reportHID.RX =   (axes & 0x01 << 3) ? ((adc_buf[2] & 0xFFF) << 4) -0x7fff : 0;
+                                          ~~~~~~~~~^
+../MyLibs/Src/FFBWheel.cpp:198:49: warning: array subscript is above array bounds [-Warray-bounds]
+  reportHID.RY = (axes & 0x01 << 4) ? ((adc_buf[3] & 0xFFF) << 4) -0x7fff : 0;
+                                        ~~~~~~~~~^
+../MyLibs/Src/FFBWheel.cpp:199:50: warning: array subscript is above array bounds [-Warray-bounds]
+  reportHID.RZ =  (axes & 0x01 << 5) ? ((adc_buf[4] & 0xFFF) << 4) -0x7fff : 0;
+                                         ~~~~~~~~~^
+../MyLibs/Src/FFBWheel.cpp:200:53: warning: array subscript is above array bounds [-Warray-bounds]
+  reportHID.Slider=  (axes & 0x01 << 6) ? ((adc_buf[5] & 0xFFF) << 4) -0x7fff : 0;
+                                            ~~~~~~~~~^
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+
+12:04:49 Build Failed. 4 errors, 4 warnings. (took 2s.244ms)
+
