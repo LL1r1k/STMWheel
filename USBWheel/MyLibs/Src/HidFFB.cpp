@@ -33,10 +33,9 @@ void HidFFB::hidOut(uint8_t* report){
 		gain = report[1];
 		break;
 	case HID_ID_ENVREP:
-		printf("Envrep");
+		set_envelope((FFB_SetEnvelope_Data_t*)(report));
 		break;
-	case HID_ID_CONDREP:
-		//FFB_SetCondition_Data_t
+	case HID_ID_CONDREP: // Condition
 		set_condition((FFB_SetCondition_Data_t*)report);
 		break;
 	case HID_ID_PRIDREP: // Periodic
@@ -46,13 +45,13 @@ void HidFFB::hidOut(uint8_t* report){
 		set_constant_effect((FFB_SetConstantForce_Data_t*)report);
 		break;
 	case HID_ID_RAMPREP: // Ramp
-		printf("Ramprep");
+		set_ramp_effect((FFB_SetRampForce_Data_t*)report);
 		break;
-	case HID_ID_CSTMREP: // Custom. TODO
-		printf("Customrep");
+	case HID_ID_CSTMREP: // Custom
+		//TODO
 		break;
 	case HID_ID_SMPLREP: // Download sample
-		printf("Sampledl");
+		//TODO
 		break;
 	case HID_ID_EFOPREP: //Effect operation
 	{
@@ -194,9 +193,29 @@ void HidFFB::set_effect(FFB_SetEffect_t* effect){
 	}
 
 	effect_p->duration = effect->duration;
-	//printf("SetEffect: %d, Axis: %d,Type: %d\n",effect->effectType,effect->enableAxis,effect->effectType);
+	effect_p->directionX = effect->directionX;
+	effect_p->directionY = effect->directionY;
+
 	if(!ffb_active)
 		start_FFB();
+}
+
+void HidFFB::set_envelope(FFB_SetEnvelope_Data_t *envelop)
+{
+	FFB_Effect* effect = &effects[envelop->effectBlockIndex-1];
+
+	effect->attackLevel = envelop->attackLevel;
+	effect->fadeLevel = envelop->fadeLevel;
+	effect->attackTime = envelop->attackTime;
+	effect->fadeTime = envelop->fadeTime;
+}
+
+void HidFFB::set_ramp_effect(FFB_SetRampForce_Data_t *effect)
+{
+	FFB_Effect* effect_p = &effects[effect->effectBlockIndex-1];
+
+	effect_p->startMagnitude = effect->startMagnitude;
+	effect_p->endMagnitude = effect->endMagnitude;
 }
 
 void HidFFB::set_filters(FFB_Effect* effect){

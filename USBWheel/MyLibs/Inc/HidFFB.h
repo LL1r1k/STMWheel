@@ -33,9 +33,6 @@ public:
 private:
 	// HID
 
-	int32_t ApplyEnvelope(FFB_Effect* effect, int32_t value);
-	int32_t ApplyGain(uint8_t value, uint8_t gain);
-
 	uint8_t find_free_effect(uint8_t type);
 	void new_effect(FFB_CreateNewEffect_Feature_Data_t* effect);
 	void free_effect(uint16_t id);
@@ -43,8 +40,10 @@ private:
 	void reset_ffb();
 	void set_effect(FFB_SetEffect_t* effect);
 	void set_condition(FFB_SetCondition_Data_t* cond);
+	void set_envelope(FFB_SetEnvelope_Data_t* envelop);
 
 	void set_constant_effect(FFB_SetConstantForce_Data_t* effect);
+	void set_ramp_effect(FFB_SetRampForce_Data_t* effect);
 	void set_periodic(FFB_SetPeriodic_Data_t* report);
 	void start_FFB();
 	void stop_FFB();

@@ -124,17 +124,6 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				    0xc0,                          //   END_COLLECTION
 
 
-					// Feature report (12)
-					/*
-					0x09, 0x00,                    //   USAGE (Reserved (no event indicated))
-					0x75, 0x08,                    //   REPORT_SIZE (8)
-					0x95, 0x01,                    //   REPORT_COUNT (1)
-					0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
-					0x25, 0xff,                    //   LOGICAL_MAXIMUM (255)
-					0xb1, 0x02,                    //   FEATURE (Data,Var,Abs)
-		*/
-
-
 				// BEGIN PID effects
 					0x05,0x0F,        //    Usage Page Physical Interface
 					0x09,0x92,        //    Usage PID State report

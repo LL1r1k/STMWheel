@@ -119,9 +119,6 @@ typedef struct
 	uint8_t		enableAxis = 0; // bits: 0=X, 1=Y, 2=DirectionEnable
 	uint8_t		directionX = 0;	// angle (0=0 .. 255=360deg)
 	uint8_t		directionY = 0;	// angle (0=0 .. 255=360deg)
-//	uint16_t	typeSpecificBlockOffsetX = 0; // Needed?
-//	uint16_t	typeSpecificBlockOffsetY = 0;
-//	uint16_t	startDelay;	// 0..32767 ms
 } __attribute__((packed)) FFB_SetEffect_t;
 
 typedef struct
@@ -136,8 +133,6 @@ typedef struct
 	uint16_t	negativeSaturation;
 	uint16_t	deadBand;
 } __attribute__((packed)) FFB_SetCondition_Data_t;
-
-
 
 typedef struct
 	{ // FFB: PID Block Load Feature Report
@@ -178,23 +173,29 @@ typedef struct
 	volatile uint8_t state = 0;
 	uint8_t type=FFB_EFFECT_NONE;
 	uint8_t gain=255;
+	int16_t attackLevel, fadeLevel;
 	int16_t	positiveCoefficient=0;
 	int16_t	negativeCoefficient=0;
 	uint16_t	positiveSaturation=0;
 	uint16_t	negativeSaturation=0;
 	int16_t magnitude = 0;
+	int16_t startMagnitude = 0;
+	int16_t  endMagnitude = 0;
+	uint8_t directionX = 0;
+	uint8_t directionY = 0;
 	int16_t phase=0;
 	int16_t offset=0;
+	int16_t cpOffset = 0;
 	int32_t last_value = 0;
 	Biquad* filter = nullptr;
 	uint16_t counter=0;						// ms
 	uint16_t period=0;							// ms
-	uint16_t duration=0,fadeTime=0,attackTime=0;	// ms
+	uint16_t duration=0,fadeTime=0,attackTime=0, elapsedTime = 0;	// ms
+	uint64_t startTime = 0;
 	uint16_t samplePeriod = 0;
 	uint8_t axis = 0;
 	uint16_t	deadBand = 0;
 } FFB_Effect;
-
 
 
 // --------------- Effects------------------------
@@ -204,6 +205,24 @@ typedef struct
 	uint8_t	effectBlockIndex;	// 1..40
 	int16_t magnitude;	// -10000..10000 (set by hid descriptor report)
 } __attribute__((packed)) FFB_SetConstantForce_Data_t;
+
+typedef struct
+	{ // FFB: Set Ramp Force Report
+	  uint8_t	reportId;	// =6
+	  uint8_t	effectBlockIndex;	// 1..40
+	  int16_t startMagnitude;
+	  int16_t	endMagnitude;
+} __attribute__((packed)) FFB_SetRampForce_Data_t;
+
+typedef struct
+	{ // FFB: Set Envelope  Report
+	  uint8_t	reportId;	// =2
+	  uint8_t	effectBlockIndex;	// 1..40
+	  uint16_t attackLevel;
+	  uint16_t	fadeLevel;
+	  uint16_t	attackTime;	// ms
+	  uint16_t	fadeTime;	// ms
+} __attribute__((packed)) FFB_SetEnvelope_Data_t;
 
 #endif //c++
 
