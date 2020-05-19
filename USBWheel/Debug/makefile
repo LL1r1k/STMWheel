@@ -57,8 +57,8 @@ USBWheel.bin \
 all: USBWheel.elf secondary-outputs
 
 # Tool invocations
-USBWheel.elf: $(OBJS) $(USER_OBJS) H:\STM3\USBWheel\STM32F103C8TX_FLASH.ld
-	arm-none-eabi-g++ -o "USBWheel.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"H:\STM3\USBWheel\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="USBWheel.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+USBWheel.elf: $(OBJS) $(USER_OBJS) H:\STM4\USBWheel\STM32F103C8TX_FLASH.ld
+	arm-none-eabi-g++ -o "USBWheel.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"H:\STM4\USBWheel\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="USBWheel.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

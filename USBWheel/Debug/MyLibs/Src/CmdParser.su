@@ -1,11 +1,118 @@
-CmdParser.cpp:16:1:CmdParser::~CmdParser()	8	static
-CmdParser.cpp:16:1:virtual CmdParser::~CmdParser()	8	static
-stl_uninitialized.h:305:5:_ForwardIterator std::__uninitialized_move_if_noexcept_a(_InputIterator, _InputIterator, _ForwardIterator, _Allocator&) [with _InputIterator = ParsedCommand*; _ForwardIterator = ParsedCommand*; _Allocator = std::allocator<ParsedCommand>]	24	static
+new:168:14:void* operator new(std::size_t, void*)	16	static
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
 basic_string.h:6367:3:long int std::__cxx11::stol(const string&, std::size_t*, int)	32	static
-CmdParser.cpp:11:1:CmdParser::CmdParser()	24	static
-CmdParser.cpp:20:6:void CmdParser::clear()	0	static
-CmdParser.cpp:25:6:bool CmdParser::add(char*, uint32_t*)	24	static
-vector.tcc:394:7:) [with _Args = {const ParsedCommand&}; _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	32	static
+CmdParser.cpp:11:1:CmdParser::CmdParser()	32	static
+CmdParser.cpp:16:1:CmdParser::~CmdParser()	16	static
+CmdParser.cpp:16:1:virtual CmdParser::~CmdParser()	16	static
+CmdParser.cpp:20:6:void CmdParser::clear()	16	static
+CmdParser.cpp:25:6:bool CmdParser::add(char*, uint32_t*)	32	static
+CmdParser.h:20:8:ParsedCommand::ParsedCommand()	16	static
+CmdParser.h:20:8:ParsedCommand::~ParsedCommand()	16	static
+CmdParser.cpp:42:28:std::vector<ParsedCommand> CmdParser::parse()	432	static
+string_conversions.h:63:2:)::_Save_errno::_Save_errno() [with _TRet = long int; _Ret = long int; _CharT = char; _Base = {int}]	16	static
+string_conversions.h:64:2:)::_Save_errno::~_Save_errno() [with _TRet = long int; _Ret = long int; _CharT = char; _Base = {int}]	16	static
+string_conversions.h:70:4:)::_Range_chk::_S_chk(_TRet, std::false_type) [with _TRet = long int; _Ret = long int; _CharT = char; _Base = {int}]	16	static
+string_conversions.h:54:5:) [with _TRet = long int; _Ret = long int; _CharT = char; _Base = {int}]	56	static
+stl_vector.h:259:7:std::vector<_Tp, _Alloc>::vector() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_vector.h:259:7:std::vector<_Tp, _Alloc>::vector() [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+stl_vector.h:433:7:std::vector<_Tp, _Alloc>::~vector() [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	24	static
 stl_vector.h:939:7:void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
-vector.tcc:394:7:) [with _Args = {const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&}; _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	48	static
-CmdParser.cpp:42:28:std::vector<ParsedCommand> CmdParser::parse()	136	static
+stl_vector.h:939:7:void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+stl_vector.h:563:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::begin() [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	24	static
+stl_vector.h:581:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::end() [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	24	static
+stl_iterator.h:880:5:bool __gnu_cxx::operator!=(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&) [with _Iterator = std::__cxx11::basic_string<char>*; _Container = std::vector<std::__cxx11::basic_string<char> >]	24	static
+stl_iterator.h:800:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>& __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator++() [with _Iterator = std::__cxx11::basic_string<char>*; _Container = std::vector<std::__cxx11::basic_string<char> >]	16	static
+stl_iterator.h:792:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::reference __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator*() const [with _Iterator = std::__cxx11::basic_string<char>*; _Container = std::vector<std::__cxx11::basic_string<char> >]	16	static
+stl_vector.h:126:7:std::_Vector_base<_Tp, _Alloc>::_Vector_base() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_vector.h:115:7:std::_Vector_base<_Tp, _Alloc>::_Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_construct.h:203:5:void std::_Destroy(_ForwardIterator, _ForwardIterator, std::allocator<_T2>&) [with _ForwardIterator = ParsedCommand*; _Tp = ParsedCommand]	24	static
+stl_vector.h:81:14:std::_Vector_base<std::__cxx11::basic_string<char>, std::allocator<std::__cxx11::basic_string<char> > >::_Vector_impl::~_Vector_impl()	16	static
+stl_vector.h:126:7:std::_Vector_base<_Tp, _Alloc>::_Vector_base() [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+stl_vector.h:161:7:std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+stl_vector.h:115:7:std::_Vector_base<_Tp, _Alloc>::_Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+stl_construct.h:203:5:void std::_Destroy(_ForwardIterator, _ForwardIterator, std::allocator<_T2>&) [with _ForwardIterator = std::__cxx11::basic_string<char>*; _Tp = std::__cxx11::basic_string<char>]	24	static
+move.h:73:5:constexpr _Tp&& std::forward(typename std::remove_reference<_From>::type&) [with _Tp = const ParsedCommand&]	16	static
+alloc_traits.h:474:2:) [with _Up = ParsedCommand; _Args = {const ParsedCommand&}; _Tp = ParsedCommand]	24	static
+stl_vector.h:581:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::end() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+vector.tcc:394:7:) [with _Args = {const ParsedCommand&}; _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	56	static
+move.h:73:5:constexpr _Tp&& std::forward(typename std::remove_reference<_From>::type&) [with _Tp = const std::__cxx11::basic_string<char>&]	16	static
+alloc_traits.h:474:2:) [with _Up = std::__cxx11::basic_string<char>; _Args = {const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&}; _Tp = std::__cxx11::basic_string<char>]	24	static
+vector.tcc:394:7:) [with _Args = {const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&}; _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	56	static
+stl_iterator.h:779:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::__normal_iterator(const _Iterator&) [with _Iterator = std::__cxx11::basic_string<char>*; _Container = std::vector<std::__cxx11::basic_string<char> >]	16	static
+stl_iterator.h:844:7:const _Iterator& __gnu_cxx::__normal_iterator<_Iterator, _Container>::base() const [with _Iterator = std::__cxx11::basic_string<char>*; _Container = std::vector<std::__cxx11::basic_string<char> >]	16	static
+stl_vector.h:88:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_vector.h:176:7:void std::_Vector_base<_Tp, _Alloc>::_M_deallocate(std::_Vector_base<_Tp, _Alloc>::pointer, std::size_t) [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+stl_construct.h:127:5:void std::_Destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = ParsedCommand*]	16	static
+stl_vector.h:88:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+allocator.h:139:7:std::allocator< <template-parameter-1-1> >::~allocator() [with _Tp = std::__cxx11::basic_string<char>]	16	static
+stl_vector.h:176:7:void std::_Vector_base<_Tp, _Alloc>::_M_deallocate(std::_Vector_base<_Tp, _Alloc>::pointer, std::size_t) [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	24	static
+stl_construct.h:127:5:void std::_Destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = std::__cxx11::basic_string<char>*]	16	static
+CmdParser.h:20:8:ParsedCommand::ParsedCommand(const ParsedCommand&)	16	static
+new_allocator.h:135:2:) [with _Up = ParsedCommand; _Args = {const ParsedCommand&}; _Tp = ParsedCommand]	32	static
+stl_iterator.h:779:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::__normal_iterator(const _Iterator&) [with _Iterator = ParsedCommand*; _Container = std::vector<ParsedCommand>]	16	static
+stl_vector.h:1497:7:std::vector<_Tp, _Alloc>::size_type std::vector<_Tp, _Alloc>::_M_check_len(std::vector<_Tp, _Alloc>::size_type, const char*) const [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	40	static
+stl_vector.h:563:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::begin() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+stl_iterator.h:962:5:typename __gnu_cxx::__normal_iterator<_Iterator, _Container>::difference_type __gnu_cxx::operator-(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&) [with _Iterator = ParsedCommand*; _Container = std::vector<ParsedCommand>]	24	static
+stl_vector.h:169:7:std::_Vector_base<_Tp, _Alloc>::pointer std::_Vector_base<_Tp, _Alloc>::_M_allocate(std::size_t) [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_iterator.h:844:7:const _Iterator& __gnu_cxx::__normal_iterator<_Iterator, _Container>::base() const [with _Iterator = ParsedCommand*; _Container = std::vector<ParsedCommand>]	16	static
+stl_uninitialized.h:305:5:_ForwardIterator std::__uninitialized_move_if_noexcept_a(_InputIterator, _InputIterator, _ForwardIterator, _Allocator&) [with _InputIterator = ParsedCommand*; _ForwardIterator = ParsedCommand*; _Allocator = std::allocator<ParsedCommand>]	32	static
+new_allocator.h:135:2:) [with _Up = std::__cxx11::basic_string<char>; _Args = {const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&}; _Tp = std::__cxx11::basic_string<char>]	32	static
+stl_vector.h:1497:7:std::vector<_Tp, _Alloc>::size_type std::vector<_Tp, _Alloc>::_M_check_len(std::vector<_Tp, _Alloc>::size_type, const char*) const [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	40	static
+stl_iterator.h:962:5:typename __gnu_cxx::__normal_iterator<_Iterator, _Container>::difference_type __gnu_cxx::operator-(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&) [with _Iterator = std::__cxx11::basic_string<char>*; _Container = std::vector<std::__cxx11::basic_string<char> >]	24	static
+stl_vector.h:169:7:std::_Vector_base<_Tp, _Alloc>::pointer std::_Vector_base<_Tp, _Alloc>::_M_allocate(std::size_t) [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+stl_uninitialized.h:305:5:_ForwardIterator std::__uninitialized_move_if_noexcept_a(_InputIterator, _InputIterator, _ForwardIterator, _Allocator&) [with _InputIterator = std::__cxx11::basic_string<char>*; _ForwardIterator = std::__cxx11::basic_string<char>*; _Allocator = std::allocator<std::__cxx11::basic_string<char> >]	32	static
+allocator.h:131:7:std::allocator< <template-parameter-1-1> >::allocator() [with _Tp = ParsedCommand]	16	static
+alloc_traits.h:461:7:static void std::allocator_traits<std::allocator<_CharT> >::deallocate(std::allocator_traits<std::allocator<_CharT> >::allocator_type&, std::allocator_traits<std::allocator<_CharT> >::pointer, std::allocator_traits<std::allocator<_CharT> >::size_type) [with _Tp = ParsedCommand]	24	static
+move.h:47:5:constexpr _Tp* std::__addressof(_Tp&) [with _Tp = ParsedCommand]	16	static
+stl_construct.h:105:9:static void std::_Destroy_aux<<anonymous> >::__destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = ParsedCommand*; bool <anonymous> = false]	16	static
+allocator.h:131:7:std::allocator< <template-parameter-1-1> >::allocator() [with _Tp = std::__cxx11::basic_string<char>]	16	static
+new_allocator.h:86:7:__gnu_cxx::new_allocator<_Tp>::~new_allocator() [with _Tp = std::__cxx11::basic_string<char>]	16	static
+alloc_traits.h:461:7:static void std::allocator_traits<std::allocator<_CharT> >::deallocate(std::allocator_traits<std::allocator<_CharT> >::allocator_type&, std::allocator_traits<std::allocator<_CharT> >::pointer, std::allocator_traits<std::allocator<_CharT> >::size_type) [with _Tp = std::__cxx11::basic_string<char>]	24	static
+move.h:47:5:constexpr _Tp* std::__addressof(_Tp&) [with _Tp = std::__cxx11::basic_string<char>]	16	static
+stl_construct.h:105:9:static void std::_Destroy_aux<<anonymous> >::__destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = std::__cxx11::basic_string<char>*; bool <anonymous> = false]	16	static
+stl_vector.h:675:7:std::vector<_Tp, _Alloc>::size_type std::vector<_Tp, _Alloc>::max_size() const [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_vector.h:670:7:std::vector<_Tp, _Alloc>::size_type std::vector<_Tp, _Alloc>::size() const [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_algobase.h:219:5:constexpr const _Tp& std::max(const _Tp&, const _Tp&) [with _Tp = unsigned int]	16	static
+alloc_traits.h:435:7:static _Tp* std::allocator_traits<std::allocator<_CharT> >::allocate(std::allocator_traits<std::allocator<_CharT> >::allocator_type&, std::allocator_traits<std::allocator<_CharT> >::size_type) [with _Tp = ParsedCommand]	16	static
+stl_iterator.h:1221:5:_ReturnType std::__make_move_if_noexcept_iterator(_Tp*) [with _Tp = ParsedCommand; _ReturnType = std::move_iterator<ParsedCommand*>]	24	static
+stl_uninitialized.h:287:5:_ForwardIterator std::__uninitialized_copy_a(_InputIterator, _InputIterator, _ForwardIterator, std::allocator<_Tp>&) [with _InputIterator = std::move_iterator<ParsedCommand*>; _ForwardIterator = ParsedCommand*; _Tp = ParsedCommand]	24	static
+stl_vector.h:675:7:std::vector<_Tp, _Alloc>::size_type std::vector<_Tp, _Alloc>::max_size() const [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+stl_vector.h:670:7:std::vector<_Tp, _Alloc>::size_type std::vector<_Tp, _Alloc>::size() const [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+alloc_traits.h:435:7:static _Tp* std::allocator_traits<std::allocator<_CharT> >::allocate(std::allocator_traits<std::allocator<_CharT> >::allocator_type&, std::allocator_traits<std::allocator<_CharT> >::size_type) [with _Tp = std::__cxx11::basic_string<char>]	16	static
+stl_iterator.h:1221:5:_ReturnType std::__make_move_if_noexcept_iterator(_Tp*) [with _Tp = std::__cxx11::basic_string<char>; _ReturnType = std::move_iterator<std::__cxx11::basic_string<char>*>]	24	static
+stl_uninitialized.h:287:5:_ForwardIterator std::__uninitialized_copy_a(_InputIterator, _InputIterator, _ForwardIterator, std::allocator<_Tp>&) [with _InputIterator = std::move_iterator<std::__cxx11::basic_string<char>*>; _ForwardIterator = std::__cxx11::basic_string<char>*; _Tp = std::__cxx11::basic_string<char>]	24	static
+new_allocator.h:79:7:__gnu_cxx::new_allocator<_Tp>::new_allocator() [with _Tp = ParsedCommand]	16	static
+new_allocator.h:116:7:void __gnu_cxx::new_allocator<_Tp>::deallocate(__gnu_cxx::new_allocator<_Tp>::pointer, __gnu_cxx::new_allocator<_Tp>::size_type) [with _Tp = ParsedCommand]	24	static
+stl_construct.h:97:5:void std::_Destroy(_Tp*) [with _Tp = ParsedCommand]	16	static
+new_allocator.h:79:7:__gnu_cxx::new_allocator<_Tp>::new_allocator() [with _Tp = std::__cxx11::basic_string<char>]	16	static
+new_allocator.h:116:7:void __gnu_cxx::new_allocator<_Tp>::deallocate(__gnu_cxx::new_allocator<_Tp>::pointer, __gnu_cxx::new_allocator<_Tp>::size_type) [with _Tp = std::__cxx11::basic_string<char>]	24	static
+stl_construct.h:97:5:void std::_Destroy(_Tp*) [with _Tp = std::__cxx11::basic_string<char>]	16	static
+alloc_traits.h:495:7:static std::allocator_traits<std::allocator<_CharT> >::size_type std::allocator_traits<std::allocator<_CharT> >::max_size(const allocator_type&) [with _Tp = ParsedCommand]	16	static
+stl_vector.h:119:7:const _Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() const [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+new_allocator.h:99:7:_Tp* __gnu_cxx::new_allocator<_Tp>::allocate(__gnu_cxx::new_allocator<_Tp>::size_type, const void*) [with _Tp = ParsedCommand]	24	static
+stl_iterator.h:1036:7:std::move_iterator<_Iterator>::move_iterator(std::move_iterator<_Iterator>::iterator_type) [with _Iterator = ParsedCommand*]	16	static
+stl_uninitialized.h:115:5:_ForwardIterator std::uninitialized_copy(_InputIterator, _InputIterator, _ForwardIterator) [with _InputIterator = std::move_iterator<ParsedCommand*>; _ForwardIterator = ParsedCommand*]	32	static
+alloc_traits.h:495:7:static std::allocator_traits<std::allocator<_CharT> >::size_type std::allocator_traits<std::allocator<_CharT> >::max_size(const allocator_type&) [with _Tp = std::__cxx11::basic_string<char>]	16	static
+stl_vector.h:119:7:const _Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() const [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	16	static
+new_allocator.h:99:7:_Tp* __gnu_cxx::new_allocator<_Tp>::allocate(__gnu_cxx::new_allocator<_Tp>::size_type, const void*) [with _Tp = std::__cxx11::basic_string<char>]	24	static
+stl_iterator.h:1036:7:std::move_iterator<_Iterator>::move_iterator(std::move_iterator<_Iterator>::iterator_type) [with _Iterator = std::__cxx11::basic_string<char>*]	16	static
+stl_uninitialized.h:115:5:_ForwardIterator std::uninitialized_copy(_InputIterator, _InputIterator, _ForwardIterator) [with _InputIterator = std::move_iterator<std::__cxx11::basic_string<char>*>; _ForwardIterator = std::__cxx11::basic_string<char>*]	32	static
+new_allocator.h:129:7:__gnu_cxx::new_allocator<_Tp>::size_type __gnu_cxx::new_allocator<_Tp>::max_size() const [with _Tp = ParsedCommand]	16	static
+stl_uninitialized.h:76:9:static _ForwardIterator std::__uninitialized_copy<_TrivialValueTypes>::__uninit_copy(_InputIterator, _InputIterator, _ForwardIterator) [with _InputIterator = std::move_iterator<ParsedCommand*>; _ForwardIterator = ParsedCommand*; bool _TrivialValueTypes = false]	40	static
+new_allocator.h:129:7:__gnu_cxx::new_allocator<_Tp>::size_type __gnu_cxx::new_allocator<_Tp>::max_size() const [with _Tp = std::__cxx11::basic_string<char>]	16	static
+stl_uninitialized.h:76:9:static _ForwardIterator std::__uninitialized_copy<_TrivialValueTypes>::__uninit_copy(_InputIterator, _InputIterator, _ForwardIterator) [with _InputIterator = std::move_iterator<std::__cxx11::basic_string<char>*>; _ForwardIterator = std::__cxx11::basic_string<char>*; bool _TrivialValueTypes = false]	40	static
+stl_iterator.h:1136:5:bool std::operator!=(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorL>&) [with _Iterator = ParsedCommand*]	16	static
+stl_iterator.h:1057:7:std::move_iterator<_Iterator>& std::move_iterator<_Iterator>::operator++() [with _Iterator = ParsedCommand*]	16	static
+stl_iterator.h:1049:7:std::move_iterator<_Iterator>::reference std::move_iterator<_Iterator>::operator*() const [with _Iterator = ParsedCommand*]	16	static
+move.h:73:5:constexpr _Tp&& std::forward(typename std::remove_reference<_From>::type&) [with _Tp = ParsedCommand]	16	static
+CmdParser.h:20:8:ParsedCommand::ParsedCommand(ParsedCommand&&)	16	static
+stl_construct.h:74:5:) [with _T1 = ParsedCommand; _Args = {ParsedCommand}]	24	static
+stl_iterator.h:1136:5:bool std::operator!=(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorL>&) [with _Iterator = std::__cxx11::basic_string<char>*]	16	static
+stl_iterator.h:1057:7:std::move_iterator<_Iterator>& std::move_iterator<_Iterator>::operator++() [with _Iterator = std::__cxx11::basic_string<char>*]	16	static
+stl_iterator.h:1049:7:std::move_iterator<_Iterator>::reference std::move_iterator<_Iterator>::operator*() const [with _Iterator = std::__cxx11::basic_string<char>*]	16	static
+move.h:73:5:constexpr _Tp&& std::forward(typename std::remove_reference<_From>::type&) [with _Tp = std::__cxx11::basic_string<char>]	16	static
+stl_construct.h:74:5:) [with _T1 = std::__cxx11::basic_string<char>; _Args = {std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >}]	24	static
+stl_iterator.h:1124:5:bool std::operator==(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorL>&) [with _Iterator = ParsedCommand*]	24	static
+stl_iterator.h:1124:5:bool std::operator==(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorL>&) [with _Iterator = std::__cxx11::basic_string<char>*]	24	static
+stl_iterator.h:1045:7:std::move_iterator<_Iterator>::iterator_type std::move_iterator<_Iterator>::base() const [with _Iterator = ParsedCommand*]	16	static
+stl_iterator.h:1045:7:std::move_iterator<_Iterator>::iterator_type std::move_iterator<_Iterator>::base() const [with _Iterator = std::__cxx11::basic_string<char>*]	16	static

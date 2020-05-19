@@ -1,6 +1,35 @@
-string_conversions.h:99:5:) [with _String = std::__cxx11::basic_string<char>; _CharT = char]	36	dynamic
-basic_string.h:6405:3:std::__cxx11::string std::__cxx11::to_string(int)	16	static
-basic_string.h:6034:5:bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]	8	static
-FFBWheel_commands.cpp:33:6:bool FFBWheel::executeSysCommand(ParsedCommand*, std::__cxx11::string*)	40	static,ignoring_inline_asm
-FFBWheel_commands.cpp:11:6:void FFBWheel::executeCommands(std::vector<ParsedCommand>)	96	static
-FFBWheel_commands.cpp:61:6:virtual bool FFBWheel::command(ParsedCommand*, std::__cxx11::string*)	80	static
+core_cm3.h:1762:34:void __NVIC_SystemReset()	4	static,ignoring_inline_asm
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+basic_string.h:6405:3:std::__cxx11::string std::__cxx11::to_string(int)	24	static
+basic_string.h:6416:3:std::__cxx11::string std::__cxx11::to_string(long int)	24	static
+basic_string.h:6421:3:std::__cxx11::string std::__cxx11::to_string(long unsigned int)	24	static
+CmdParser.h:20:8:ParsedCommand::ParsedCommand(const ParsedCommand&)	16	static
+CmdParser.h:20:8:ParsedCommand::~ParsedCommand()	16	static
+FFBWheel_commands.cpp:11:6:void FFBWheel::executeCommands(std::vector<ParsedCommand>)	112	static
+FFBWheel_commands.cpp:33:6:bool FFBWheel::executeSysCommand(ParsedCommand*, std::__cxx11::string*)	56	static
+FFBWheel_commands.cpp:61:6:virtual bool FFBWheel::command(ParsedCommand*, std::__cxx11::string*)	592	static
+string_conversions.h:99:5:) [with _String = std::__cxx11::basic_string<char>; _CharT = char]	52	dynamic
+stl_vector.h:563:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::begin() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+stl_vector.h:581:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::end() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+stl_iterator.h:880:5:bool __gnu_cxx::operator!=(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&) [with _Iterator = ParsedCommand*; _Container = std::vector<ParsedCommand>]	24	static
+stl_iterator.h:800:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>& __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator++() [with _Iterator = ParsedCommand*; _Container = std::vector<ParsedCommand>]	16	static
+stl_iterator.h:792:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::reference __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator*() const [with _Iterator = ParsedCommand*; _Container = std::vector<ParsedCommand>]	16	static
+stl_vector.h:563:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::begin() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	24	static
+stl_vector.h:581:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::end() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	24	static
+stl_iterator.h:880:5:bool __gnu_cxx::operator!=(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&) [with _Iterator = CommandHandler**; _Container = std::vector<CommandHandler*>]	24	static
+stl_iterator.h:800:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>& __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator++() [with _Iterator = CommandHandler**; _Container = std::vector<CommandHandler*>]	16	static
+stl_iterator.h:792:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::reference __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator*() const [with _Iterator = CommandHandler**; _Container = std::vector<CommandHandler*>]	16	static
+basic_string.h:6034:5:bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]	16	static
+stl_algobase.h:219:5:constexpr const _Tp& std::max(const _Tp&, const _Tp&) [with _Tp = int]	16	static
+basic_string.h:604:9:std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(_InputIterator, _InputIterator, const _Alloc&) [with _InputIterator = char*; <template-parameter-2-2> = void; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]	32	static
+basic_string.h:252:9:void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_construct(_InIterator, _InIterator) [with _InIterator = char*; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]	32	static
+stl_iterator.h:779:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::__normal_iterator(const _Iterator&) [with _Iterator = ParsedCommand*; _Container = std::vector<ParsedCommand>]	16	static
+stl_iterator.h:844:7:const _Iterator& __gnu_cxx::__normal_iterator<_Iterator, _Container>::base() const [with _Iterator = ParsedCommand*; _Container = std::vector<ParsedCommand>]	16	static
+stl_iterator.h:779:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::__normal_iterator(const _Iterator&) [with _Iterator = CommandHandler**; _Container = std::vector<CommandHandler*>]	16	static
+stl_iterator.h:844:7:const _Iterator& __gnu_cxx::__normal_iterator<_Iterator, _Container>::base() const [with _Iterator = CommandHandler**; _Container = std::vector<CommandHandler*>]	16	static
+basic_string.h:232:9:void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_construct_aux(_InIterator, _InIterator, std::__false_type) [with _InIterator = char*; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]	40	static
+basic_string.tcc:206:7:void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_construct(_InIterator, _InIterator, std::forward_iterator_tag) [with _FwdIterator = char*; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]	32	static
+type_traits.h:152:5:bool __gnu_cxx::__is_null_pointer(_Type*) [with _Type = char]	16	static
+stl_iterator_base_types.h:205:5:constexpr typename std::iterator_traits<_Iterator>::iterator_category std::__iterator_category(const _Iter&) [with _Iter = char*]	16	static
+stl_iterator_base_funcs.h:138:5:typename std::iterator_traits<_Iterator>::difference_type std::distance(_InputIterator, _InputIterator) [with _InputIterator = char*]	32	static
+stl_iterator_base_funcs.h:98:5:constexpr typename std::iterator_traits<_Iterator>::difference_type std::__distance(_RandomAccessIterator, _RandomAccessIterator, std::random_access_iterator_tag) [with _RandomAccessIterator = char*]	24	static

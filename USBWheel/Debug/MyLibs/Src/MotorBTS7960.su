@@ -1,6 +1,6 @@
-MotorBTS7960.cpp:26:1:MotorBTS7960::~MotorBTS7960()	8	static
-MotorBTS7960.cpp:26:1:virtual MotorBTS7960::~MotorBTS7960()	8	static
-MotorBTS7960.cpp:3:6:void MotorBTS7960::turn(int16_t)	0	static
-MotorBTS7960.cpp:19:1:MotorBTS7960::MotorBTS7960()	8	static
-MotorBTS7960.cpp:32:6:void MotorBTS7960::start()	0	static
-MotorBTS7960.cpp:36:6:void MotorBTS7960::stop()	0	static
+MotorBTS7960.cpp:3:6:void MotorBTS7960::turn(int16_t)	24	static
+MotorBTS7960.cpp:19:1:MotorBTS7960::MotorBTS7960()	16	static
+MotorBTS7960.cpp:26:1:MotorBTS7960::~MotorBTS7960()	16	static
+MotorBTS7960.cpp:26:1:virtual MotorBTS7960::~MotorBTS7960()	16	static
+MotorBTS7960.cpp:32:6:void MotorBTS7960::start()	16	static
+MotorBTS7960.cpp:36:6:void MotorBTS7960::stop()	16	static

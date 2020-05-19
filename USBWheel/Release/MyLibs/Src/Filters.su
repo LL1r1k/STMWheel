@@ -1,7 +1,0 @@
-Filters.cpp:13:1:Biquad::Biquad()	0	static
-Filters.cpp:20:1:Biquad::~Biquad()	0	static
-Filters.cpp:28:7:float Biquad::process(float)	24	static
-Filters.cpp:43:6:void Biquad::calcBiquad()	56	static
-Filters.cpp:23:6:void Biquad::setFc(float)	0	static
-Filters.cpp:35:6:void Biquad::setBiquad(BiquadType, float, float, float)	4	static
-Filters.cpp:16:1:Biquad::Biquad(BiquadType, float, float, float)	8	static

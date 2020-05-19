@@ -1,6 +1,6 @@
-UsbHidHandler.cpp:16:1:UsbHidHandler::~UsbHidHandler()	0	static
-UsbHidHandler.cpp:22:6:virtual void UsbHidHandler::hidGet(uint8_t, uint16_t, uint8_t**)	0	static
-UsbHidHandler.cpp:26:6:virtual void UsbHidHandler::hidOut(uint8_t*)	0	static
-UsbHidHandler.cpp:16:1:virtual UsbHidHandler::~UsbHidHandler()	8	static
-UsbHidHandler.cpp:11:1:UsbHidHandler::UsbHidHandler()	0	static
-UsbHidHandler.cpp:30:6:void UsbHidHandler::registerHidCallback()	0	static
+UsbHidHandler.cpp:11:1:UsbHidHandler::UsbHidHandler()	16	static
+UsbHidHandler.cpp:16:1:UsbHidHandler::~UsbHidHandler()	16	static
+UsbHidHandler.cpp:16:1:virtual UsbHidHandler::~UsbHidHandler()	16	static
+UsbHidHandler.cpp:22:6:virtual void UsbHidHandler::hidGet(uint8_t, uint16_t, uint8_t**)	24	static
+UsbHidHandler.cpp:26:6:virtual void UsbHidHandler::hidOut(uint8_t*)	16	static
+UsbHidHandler.cpp:30:6:void UsbHidHandler::registerHidCallback()	16	static

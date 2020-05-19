@@ -1,5 +1,0 @@
-AdcHandler.cpp:20:6:virtual void AdcHandler::adcUpd(volatile uint32_t*)	0	static
-AdcHandler.cpp:10:1:AdcHandler::~AdcHandler()	24	static
-AdcHandler.cpp:10:1:virtual AdcHandler::~AdcHandler()	8	static
-vector.tcc:394:7:) [with _Args = {AdcHandler*}; _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	32	static
-AdcHandler.cpp:4:1:AdcHandler::AdcHandler()	16	static

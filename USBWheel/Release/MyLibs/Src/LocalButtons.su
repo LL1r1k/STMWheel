@@ -1,5 +1,0 @@
-LocalButtons.cpp:22:1:LocalButtons::~LocalButtons()	0	static
-LocalButtons.cpp:22:1:virtual LocalButtons::~LocalButtons()	8	static
-LocalButtons.cpp:10:1:LocalButtons::LocalButtons()	16	static
-LocalButtons.cpp:27:6:void LocalButtons::readButtons(uint32_t*)	32	static
-LocalButtons.cpp:44:10:uint16_t LocalButtons::getBtnNum()	0	static

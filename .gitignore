@@ -31,3 +31,4 @@
 dist/
 bin/
 build/
+.metadata/

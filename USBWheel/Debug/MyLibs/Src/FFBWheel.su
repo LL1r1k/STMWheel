@@ -1,15 +1,39 @@
-FFBWheel.cpp:154:6:virtual void FFBWheel::adcUpd(volatile uint32_t*)	0	static
-FFBWheel.cpp:206:6:virtual void FFBWheel::timerElapsed(TIM_HandleTypeDef*)	0	static
-FFBWheel.cpp:139:9:int16_t FFBWheel::updateEndstop()	0	static
-FFBWheel.cpp:172:9:int32_t FFBWheel::getEncValue(EncoderLocal*, uint16_t)	24	static
-FFBWheel.cpp:182:6:void FFBWheel::send_report()	16	static
-FFBWheel.cpp:83:6:void FFBWheel::update()	24	static
-FFBWheel.cpp:212:6:void FFBWheel::cdcRcv(char*, uint32_t*)	32	static
-FFBWheel.cpp:218:6:void FFBWheel::usbInit()	0	static
-FFBWheel.cpp:221:6:void FFBWheel::SOF()	0	static
-FFBWheel.cpp:226:16:static FFBWheelConfig FFBWheel::decodeConf()	72	static
-FFBWheel.cpp:28:6:void FFBWheel::restoreFlash()	48	static
-FFBWheel.cpp:7:1:FFBWheel::FFBWheel()	16	static
-FFBWheel.cpp:42:6:void FFBWheel::saveFlash()	64	static
-FFBWheel.cpp:22:1:FFBWheel::~FFBWheel()	8	static
-FFBWheel.cpp:22:1:virtual FFBWheel::~FFBWheel()	8	static
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+std_abs.h:56:3:long int std::abs(long int)	16	static
+FFBWheel.h:47:7:bool FFBWheelConfig::isequal(FFBWheelConfig&)	16	static
+FFBWheel.h:22:8:constexpr FFBWheelConfig::FFBWheelConfig()	16	static
+ffb_defs.h:87:37:constexpr reportHID_t::reportHID_t()	16	static
+FFBWheel.cpp:7:1:FFBWheel::FFBWheel()	24	static
+FFBWheel.cpp:22:1:FFBWheel::~FFBWheel()	16	static
+FFBWheel.cpp:22:1:virtual FFBWheel::~FFBWheel()	16	static
+FFBWheel.cpp:28:6:void FFBWheel::restoreFlash()	56	static
+FFBWheel.cpp:42:6:void FFBWheel::saveFlash()	72	static
+FFBWheel.cpp:83:6:void FFBWheel::update()	32	static
+FFBWheel.cpp:139:9:int16_t FFBWheel::updateEndstop()	24	static
+FFBWheel.cpp:154:6:virtual void FFBWheel::adcUpd(volatile uint32_t*)	24	static
+FFBWheel.cpp:172:9:int32_t FFBWheel::getEncValue(EncoderLocal*, uint16_t)	40	static
+FFBWheel.cpp:182:6:void FFBWheel::send_report()	24	static
+FFBWheel.cpp:206:6:virtual void FFBWheel::timerElapsed(TIM_HandleTypeDef*)	16	static
+FFBWheel.cpp:212:6:void FFBWheel::cdcRcv(char*, uint32_t*)	40	static
+FFBWheel.cpp:218:6:void FFBWheel::usbInit()	16	static
+FFBWheel.cpp:221:6:void FFBWheel::SOF()	16	static
+FFBWheel.cpp:226:16:static FFBWheelConfig FFBWheel::decodeConf()	80	static
+cppmain.h:40:3:T clip(T, C, C) [with T = long int; C = short int]	16	static
+cppmain.h:28:8:int8_t cliptest(T, C, C) [with T = long int; C = long int]	24	static
+cppmain.h:40:3:T clip(T, C, C) [with T = long int; C = long int]	24	static
+cppmain.h:40:3:T clip(T, C, C) [with T = long int; C = int]	24	static
+stl_vector.h:433:7:std::vector<_Tp, _Alloc>::~vector() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+stl_vector.h:81:14:std::_Vector_base<ParsedCommand, std::allocator<ParsedCommand> >::_Vector_impl::~_Vector_impl()	16	static
+stl_vector.h:161:7:std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_vector.h:115:7:std::_Vector_base<_Tp, _Alloc>::_Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_construct.h:203:5:void std::_Destroy(_ForwardIterator, _ForwardIterator, std::allocator<_T2>&) [with _ForwardIterator = ParsedCommand*; _Tp = ParsedCommand]	24	static
+allocator.h:139:7:std::allocator< <template-parameter-1-1> >::~allocator() [with _Tp = ParsedCommand]	16	static
+stl_vector.h:176:7:void std::_Vector_base<_Tp, _Alloc>::_M_deallocate(std::_Vector_base<_Tp, _Alloc>::pointer, std::size_t) [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+stl_construct.h:127:5:void std::_Destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = ParsedCommand*]	16	static
+new_allocator.h:86:7:__gnu_cxx::new_allocator<_Tp>::~new_allocator() [with _Tp = ParsedCommand]	16	static
+alloc_traits.h:461:7:static void std::allocator_traits<std::allocator<_CharT> >::deallocate(std::allocator_traits<std::allocator<_CharT> >::allocator_type&, std::allocator_traits<std::allocator<_CharT> >::pointer, std::allocator_traits<std::allocator<_CharT> >::size_type) [with _Tp = ParsedCommand]	24	static
+move.h:47:5:constexpr _Tp* std::__addressof(_Tp&) [with _Tp = ParsedCommand]	16	static
+stl_construct.h:105:9:static void std::_Destroy_aux<<anonymous> >::__destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = ParsedCommand*; bool <anonymous> = false]	16	static
+new_allocator.h:116:7:void __gnu_cxx::new_allocator<_Tp>::deallocate(__gnu_cxx::new_allocator<_Tp>::pointer, __gnu_cxx::new_allocator<_Tp>::size_type) [with _Tp = ParsedCommand]	24	static
+CmdParser.h:20:8:ParsedCommand::~ParsedCommand()	16	static
+stl_construct.h:97:5:void std::_Destroy(_Tp*) [with _Tp = ParsedCommand]	16	static
