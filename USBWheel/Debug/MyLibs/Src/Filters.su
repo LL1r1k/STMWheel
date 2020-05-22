@@ -1,11 +1,15 @@
-cmath:241:3:constexpr float std::fabs(float)	16	static
-cmath:463:3:constexpr float std::sqrt(float)	16	static
-Filters.cpp:13:1:Biquad::Biquad()	16	static
-Filters.cpp:16:1:Biquad::Biquad(BiquadType, float, float, float)	32	static
-Filters.cpp:20:1:Biquad::~Biquad()	16	static
-Filters.cpp:23:6:void Biquad::setFc(float)	16	static
-Filters.cpp:28:7:float Biquad::process(float)	32	static
-Filters.cpp:35:6:void Biquad::setBiquad(BiquadType, float, float, float)	24	static
-cmath:475:5:constexpr typename __gnu_cxx::__enable_if<std::__is_integer<_Tp>::__value, double>::__type std::sqrt(_Tp) [with _Tp = int]	24	static
-Filters.cpp:43:6:void Biquad::calcBiquad()	40	static
-cmath:415:5:constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up) [with _Tp = int; _Up = double]	32	static
+std_abs.h:74:3:constexpr float std::abs(float)	16	static
+cmath:184:3:constexpr float std::cos(float)	16	static
+cmath:222:3:constexpr float std::exp(float)	16	static
+Filters.cpp:10:1:Filters::Filters()	16	static
+Filters.cpp:16:1:Filters::Filters(float, float, ORDER, TYPE)	24	static
+Filters.cpp:25:1:Filters::~Filters()	16	static
+Filters.cpp:30:6:void Filters::init(uint8_t)	16	static
+Filters.cpp:45:7:float Filters::filterIn(float)	16	static
+Filters.cpp:60:6:void Filters::flush()	24	static
+Filters.cpp:69:14:float Filters::computeLowPass(float)	32	static
+Filters.cpp:95:14:float Filters::computeHighPass(float)	32	static
+Filters.cpp:119:14:void Filters::initLowPass()	24	static
+Filters.cpp:167:14:void Filters::initHighPass()	40	static
+Filters.cpp:206:7:float Filters::ap(float)	24	static
+cmath:415:5:constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up) [with _Tp = float; _Up = double]	32	static

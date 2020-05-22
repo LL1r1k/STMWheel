@@ -9,7 +9,6 @@
 #define FFB_DEFS_H_
 
 #include "cppmain.h"
-#include "Filters.h"
 
 #define FFB_ID_OFFSET 0x00
 #define MAX_EFFECTS 40
@@ -84,6 +83,72 @@
 
 // Only include these for cpp
 #ifdef __cplusplus
+
+struct FFBWheelConfig{
+	uint8_t check = 0x57;
+	uint8_t axes = 0b00000111;
+	uint8_t I2CButtons = 0x01;
+	uint8_t nLocalButtons = 0;
+	uint16_t degreesOfRotation = 900;
+	uint16_t maxpower = 2000;
+	uint16_t encoderPPR = 2000;
+	uint8_t maxAdcCount = 8;
+
+	uint8_t inverted = false;
+	uint8_t endstop_gain = 20;
+	uint8_t constantGain = 100;
+	uint8_t rampGain = 100;
+	uint8_t squareGain = 100;
+	uint8_t sinGain = 100;
+	uint8_t triangleGain = 100;
+	uint8_t sawToothDownGain = 100;
+	uint8_t sawToothUpGain = 100;
+	uint8_t springGain = 100;
+	uint8_t damperGain = 100;
+	uint8_t inertiaGain = 100;
+	uint8_t frictionGain = 100;
+	uint8_t totalGain = 100;
+	uint8_t maxVelosity = 15;
+	uint8_t maxAcceleration = 10;
+	uint8_t maxPositionChange = 15;
+	uint16_t minForce = 20000;
+
+
+	bool isequal(FFBWheelConfig& conf)
+	{
+		if(	check == conf.check &&
+			axes == conf.axes &&
+			I2CButtons == conf.I2CButtons &&
+			nLocalButtons == conf.nLocalButtons &&
+			degreesOfRotation == conf.degreesOfRotation &&
+			maxpower == conf.maxpower &&
+			endstop_gain == conf.endstop_gain &&
+			encoderPPR == conf.encoderPPR &&
+			maxAdcCount == conf.maxAdcCount &&
+			inverted == conf.inverted &&
+			constantGain == conf.constantGain &&
+			rampGain == conf.rampGain &&
+			squareGain == conf.squareGain &&
+			sinGain == conf.sinGain &&
+			triangleGain == conf.triangleGain &&
+			sawToothDownGain == conf.sawToothDownGain &&
+			sawToothUpGain == conf.sawToothUpGain &&
+			springGain == conf.springGain &&
+			damperGain == conf.damperGain &&
+			inertiaGain == conf.inertiaGain &&
+			frictionGain == conf.frictionGain &&
+			totalGain == conf.totalGain &&
+			maxVelosity == conf.maxVelosity &&
+			maxAcceleration == conf.maxAcceleration &&
+			maxPositionChange == conf.maxPositionChange &&
+			minForce == conf.minForce)
+			return true;
+		else
+			return false;
+	}
+};
+
+
 struct  __attribute__((__packed__)) reportHID_t {
 		uint8_t id = 1;
 		uint32_t buttons = 0;
@@ -187,7 +252,6 @@ typedef struct
 	int16_t offset=0;
 	int16_t cpOffset = 0;
 	int32_t last_value = 0;
-	Biquad* filter = nullptr;
 	uint16_t counter=0;						// ms
 	uint16_t period=0;							// ms
 	uint16_t duration=0,fadeTime=0,attackTime=0, elapsedTime = 0;	// ms

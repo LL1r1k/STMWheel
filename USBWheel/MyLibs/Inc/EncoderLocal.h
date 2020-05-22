@@ -17,7 +17,6 @@ public:
 	int32_t getPos();
 	uint32_t getPosCpr();
 	void setPos(int32_t pos);
-	void setOffset(int32_t offset);
 	void setPeriod(uint32_t period);
 	void overflowCallback();
 	void exti(uint16_t GPIO_Pin);
@@ -26,12 +25,26 @@ public:
 	uint32_t getPpr();
 	void setPpr(uint32_t ppr);
 
+	int32_t ppr = 2000;
+	uint32_t offset;
+	uint16_t maxAngle;
+	int32_t maxValue;
+	int32_t minValue;
+	int32_t  currentPosition;
+	int32_t  lastPosition;
+	int32_t  correctPosition;
+	int32_t  currentVelocity;
+	int32_t  lastVelocity;
+	int32_t  maxVelocity;
+	int32_t  currentAcceleration;
+	int32_t  maxAcceleration;
+	int32_t  positionChange;
+	int32_t  maxPositionChange;
+	uint32_t lastEncoderTime;
+
 private:
 	TIM_HandleTypeDef* htim;
-	int32_t offset = 0;
 	uint8_t first = true;
-	int32_t pos = 0; // Extra position counter for overflows
-	int32_t ppr = 2000;
 };
 
 #endif /* ENCODERLOCAL_H_ */

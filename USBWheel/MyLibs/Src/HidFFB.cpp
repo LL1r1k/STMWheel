@@ -2,6 +2,10 @@
 #include "math.h"
 
 HidFFB::HidFFB() {
+	damperFilter = Filters(cutoff_freq_damper, sampling_time_damper, ORDER::OD1);
+	interiaFilter = Filters(cutoff_freq_damper, sampling_time_damper, ORDER::OD1);
+	frictionFilter = Filters(cutoff_freq_damper, sampling_time_damper, ORDER::OD1);
+
 	this->registerHidCallback();
 }
 
@@ -62,7 +66,8 @@ void HidFFB::hidOut(uint8_t* report){
 		}else{
 			effects[id].state = 1; //Start
 			effects[id].counter = 0; // When an effect was stopped reset all parameters that could cause jerking
-			set_filters(&effects[id]);
+			effects[id].elapsedTime = 0;
+			effects[id].startTime = HAL_GetTick();
 		}
 		break;
 	}
@@ -73,20 +78,14 @@ void HidFFB::hidOut(uint8_t* report){
 	}
 
 	default:
-		printf("Got unknown command: %d",event_idx);
 		break;
 	}
 
 }
 
 void HidFFB::free_effect(uint16_t idx){
-	if(idx < MAX_EFFECTS){
+	if(idx < MAX_EFFECTS)
 		effects[idx].type=FFB_EFFECT_NONE;
-		if(effects[idx].filter != nullptr){
-			delete effects[idx].filter;
-			effects[idx].filter = nullptr;
-		}
-	}
 }
 
 
@@ -97,11 +96,9 @@ void HidFFB::hidGet(uint8_t id,uint16_t len,uint8_t** return_buf){
 
 	switch(id){
 	case HID_ID_BLKLDREP:
-		//printf("Get Block Report\n");
 		*return_buf = (uint8_t*)(&this->blockLoad_report);
 		break;
 	case HID_ID_POOLREP:
-		//printf("Get Pool Report\n");
 		*return_buf = (uint8_t*)(&this->pool_report);
 		break;
 	}
@@ -120,7 +117,6 @@ void HidFFB::stop_FFB(){
 }
 
 void HidFFB::ffb_control(uint8_t cmd){
-	printf("Got Control signal: %d\n",cmd);
 	if(cmd & 0x01){ //enable
 		start_FFB();
 	}if(cmd & 0x02){ //disable
@@ -154,12 +150,9 @@ void HidFFB::new_effect(FFB_CreateNewEffect_Feature_Data_t* effect){
 		blockLoad_report.loadStatus = 2;
 		return;
 	}
-	printf("Creating Effect: %d with size %d at %d\n",effect->effectType,effect->byteCount,index);
 
 	FFB_Effect new_effect;
 	new_effect.type = effect->effectType;
-
-	set_filters(&new_effect);
 
 	effects[index-1] = new_effect;
 	// Set block load report
@@ -189,7 +182,6 @@ void HidFFB::set_effect(FFB_SetEffect_t* effect){
 	if(effect_p->type != effect->effectType){
 		effect_p->counter = 0;
 		effect_p->last_value = 0;
-		set_filters(effect_p);
 	}
 
 	effect_p->duration = effect->duration;
@@ -218,22 +210,6 @@ void HidFFB::set_ramp_effect(FFB_SetRampForce_Data_t *effect)
 	effect_p->endMagnitude = effect->endMagnitude;
 }
 
-void HidFFB::set_filters(FFB_Effect* effect){
-	switch(effect->type){
-		case FFB_EFFECT_DAMPER:
-			if(effect->filter != nullptr)
-				effect->filter->setBiquad(damper_type,(float)damper_f/calcfrequency, damper_q, (float)0.0);
-			else
-				effect->filter = new Biquad(damper_type,(float)damper_f/calcfrequency, damper_q, (float)0.0);
-			break;
-		case FFB_EFFECT_FRICTION:
-			if(effect->filter != nullptr)
-				effect->filter->setBiquad(friction_type,(float)friction_f/calcfrequency, friction_q, (float)0.0);
-			else
-				effect->filter = new Biquad(friction_type,(float)friction_f/calcfrequency, friction_q, (float)0.0);
-			break;
-	}
-}
 
 void HidFFB::set_condition(FFB_SetCondition_Data_t* cond){
 	if(cond->parameterBlockOffset != 0) //TODO if more axes are needed. Only X Axis is implemented now for the wheel.
@@ -279,10 +255,22 @@ void HidFFB::reset_ffb(){
 	used_effects = 0;
 }
 
-int32_t HidFFB::calculateEffects(int32_t pos,uint8_t axis=1){
+int32_t HidFFB::ConstantForceCalculator(FFB_Effect *effect)
+{
+	float tempforce = (float)effect->magnitude * effect->gain / 255;
+	return (int32_t)tempforce;
+}
+
+int32_t HidFFB::RampForceCalculator(FFB_Effect* effect)
+{
+	int32_t rampForce = effect->startMagnitude + effect->elapsedTime * (effect->endMagnitude - effect->startMagnitude) / effect->duration;
+	return rampForce;
+}
+
+int32_t HidFFB::calculateEffects(EncoderLocal* encoder){
 	if(!ffb_active){
 		if(idlecenter){
-			return clip<int32_t,int32_t>(-pos,-5000,5000);
+			return clip<int32_t,int32_t>(-encoder->currentPosition,-5000,5000);
 		}else{
 			return 0;
 		}
@@ -293,91 +281,230 @@ int32_t HidFFB::calculateEffects(int32_t pos,uint8_t axis=1){
 	for(uint8_t i = 0;i<MAX_EFFECTS;i++){
 		FFB_Effect* effect = &effects[i];
 		// Filter out inactive effects
-		if(effect->state == 0 || !(axis & effect->axis))
+		if(effect->state == 0 || !(0x01 & effect->axis))
 			continue;
 
 		switch(effect->type){
 		case FFB_EFFECT_CONSTANT:
-			result_torque -= (effect->magnitude * (1+effect->gain)) >> 8;
+			result_torque -= ConstantForceCalculator(effect) * (((float)conf->constantGain * 50.0) / 255.0);
 			break;
-
+	    case FFB_EFFECT_RAMP:
+	    	result_torque -= RampForceCalculator(effect) * (((float)conf->rampGain * 50.0) / 255.0);
+	        break;
 		case FFB_EFFECT_SPRING:
-		{
-			int32_t force = 0;
-			if(pos<effect->offset){
-				force = clip<int32_t,int32_t>(((int32_t)(effect->negativeCoefficient>>3) * (pos - (effect->offset))) >> 6,-effect->negativeSaturation,effect->positiveSaturation);
-			}else{
-				force = clip<int32_t,int32_t>(((int32_t)(effect->positiveCoefficient>>3) * (pos - (effect->offset))) >> 6,-effect->negativeSaturation,effect->positiveSaturation);
-			}
-			result_torque -= force;
+			result_torque -= ConditionForceCalculator(effect, NormalizeRange(encoder->currentPosition, encoder->maxValue)) * (((float)conf->springGain * 50.0) / 255.0);
 			break;
-		}
-
 		case FFB_EFFECT_SQUARE:
-		{
-			int32_t offset = effect->offset * 2;
-			uint32_t magnitude = effect->magnitude;
-			uint32_t phase = effect->phase;
-			uint32_t period = effect->period;
-
-			int32_t maxMagnitude = offset + magnitude;
-			int32_t minMagnitude = offset - magnitude;
-			uint32_t phasetime = (phase * period) / 255;
-			uint32_t timeTemp = phasetime;
-			uint32_t reminder = timeTemp % period;
-			int32_t tempforce;
-			if (reminder > (period / 2))
-				tempforce = minMagnitude;
-			else
-				tempforce = maxMagnitude;
-			tempforce += minMagnitude;
-
-			/*int32_t force =  ((effect->counter + effect->phase) % ((uint32_t)effect->period+2)) < (uint32_t)(effect->period+2)/2 ? -effect->magnitude : effect->magnitude;
-			force += effect->offset;
-			result_torque -= force;*/
+			result_torque -= SquareForceCalculator(effect) * (((float)conf->squareGain * 50.0) / 255.0);
 			break;
-		}
 		case FFB_EFFECT_SINE:
-		{
-			uint16_t t = effect->counter;
-			float freq = 1.0f/(float)(std::max<uint16_t>(effect->period,2));
-			float phase = (float)effect->phase/(float)35999; //degrees
-			float sine =  sinf(2.0*(float)M_PI*(t*freq+phase)) * effect->magnitude;
-			int32_t force = (int32_t)(effect->offset + sine);
-
-			result_torque -= force;
+			result_torque -= SinForceCalculator(effect) * (((float)conf->sinGain * 50.0) / 255.0);
 			break;
-		}
-		case FFB_EFFECT_FRICTION:
+        case FFB_EFFECT_TRIANGLE:
+        	result_torque -= TriangleForceCalculator(effect) * (((float)conf->triangleGain * 50.0) / 255.0);
+        	break;
+        case FFB_EFFECT_SAWTOOTHDOWN:
+        	result_torque -= SawtoothDownForceCalculator(effect) * (((float)conf->sawToothDownGain * 50.0) / 255.0);
+        	break;
+        case FFB_EFFECT_SAWTOOTHUP:
+        	result_torque -= SawtoothUpForceCalculator(effect) * (((float)conf->sawToothUpGain * 50.0) / 255.0);
+          	break;
 		case FFB_EFFECT_DAMPER:
-		{
-			int32_t force = 0;
-
-			if(effect->counter == 0){
-				effect->last_value = pos;
-				break;
-			}
-			int32_t speed = pos - effect->last_value;
-			effect->last_value = pos;
-
-			float val = effect->filter->process(speed);
-			force = clip<int32_t,int32_t>((int32_t)((effect->positiveCoefficient) * val) >> 4,-effect->negativeSaturation,effect->positiveSaturation);
-
-			result_torque -= force;
+			result_torque -= ConditionForceCalculator(effect, NormalizeRange(encoder->currentVelocity, encoder->maxVelocity)) * (((float)conf->damperGain * 50.0) / 255.0);
+		    break;
+		case FFB_EFFECT_INERTIA:
+	        if ( encoder->currentAcceleration < 0 and encoder->positionChange < 0) {
+	        	result_torque -= ConditionForceCalculator(effect, abs(NormalizeRange(encoder->currentAcceleration, encoder->maxAcceleration))) * (((float)conf->inertiaGain * 50.0) / 255.0);
+	        } else if ( encoder->currentAcceleration < 0 and encoder->positionChange > 0) {
+	        	result_torque += ConditionForceCalculator(effect, abs(NormalizeRange(encoder->currentAcceleration, encoder->maxAcceleration))) * (((float)conf->inertiaGain * 50.0) / 255.0);
+	        }
 			break;
-		}
+		case FFB_EFFECT_FRICTION:
+			result_torque -= ConditionForceCalculator(effect, NormalizeRange(encoder->positionChange, encoder->maxPositionChange)) * (((float)conf->frictionGain * 50.0) / 255.0);
+			break;
 		default:
-			// Unsupported effect
 			break;
 		}
-
+		effect->elapsedTime = (uint64_t)HAL_GetTick() - effect->startTime;
 		if(effect->counter++ > effect->duration){
 			effect->state = 0;
 		}
-
+		result_torque =  clip(result_torque, -0x7fff, 0x7fff);
 	}
 	result_torque = (result_torque * (gain+1)) >> 8; // Apply global gain
-
-	return result_torque; //clip(result_torque,-0x7fff,0x7fff);
+	return clip(result_torque, -0x7fff, 0x7fff);
 }
 
+int32_t HidFFB::SquareForceCalculator(FFB_Effect *effect)
+{
+	 int32_t offset = effect->offset * 2;
+	  uint32_t magnitude = effect->magnitude;
+	  uint32_t elapsedTime = effect->elapsedTime;
+	  uint32_t phase = effect->phase;
+	  uint32_t period = effect->period;
+
+	  int32_t maxMagnitude = offset + magnitude;
+	  int32_t minMagnitude = offset - magnitude;
+	  uint32_t phasetime = (phase * period) / 255;
+	  uint32_t timeTemp = elapsedTime + phasetime;
+	  uint32_t reminder = timeTemp % period;
+	  int32_t tempforce;
+	  if (reminder > (period / 2)) tempforce = minMagnitude;
+	  else tempforce = maxMagnitude;
+	  return ApplyEnvelope(effect, tempforce);
+}
+
+int32_t HidFFB::SinForceCalculator(FFB_Effect *effect)
+{
+	float offset = effect->offset * 2;
+	float magnitude = effect->magnitude;
+	float phase = effect->phase;
+	float timeTemp = effect->elapsedTime;
+	float period = effect->period;
+	float angle = ((timeTemp / period) * 2 * (float)3.14159265359 + (float)(phase / 36000));
+	float sine = sin(angle);
+	float tempforce = sine * magnitude;
+	tempforce += offset;
+	return ApplyEnvelope(effect, tempforce);
+}
+
+int32_t HidFFB::TriangleForceCalculator(FFB_Effect *effect)
+{
+	  float offset = effect->offset * 2;
+	  float magnitude = effect->magnitude;
+	  float elapsedTime = effect->elapsedTime;
+	  uint32_t phase = effect->phase;
+	  uint32_t period = effect->period;
+	  float periodF = effect->period;
+
+	  float maxMagnitude = offset + magnitude;
+	  float minMagnitude = offset - magnitude;
+	  uint32_t phasetime = (phase * period) / 255;
+	  uint32_t timeTemp = elapsedTime + phasetime;
+	  float reminder = timeTemp % period;
+	  float slope = ((maxMagnitude - minMagnitude) * 2) / periodF;
+	  float tempforce = 0;
+	  if (reminder > (periodF / 2)) tempforce = slope * (periodF - reminder);
+	  else tempforce = slope * reminder;
+	  tempforce += minMagnitude;
+	  return ApplyEnvelope(effect, tempforce);
+}
+
+int32_t HidFFB::SawtoothDownForceCalculator(FFB_Effect *effect)
+{
+	  float offset = effect->offset * 2;
+	  float magnitude = effect->magnitude;
+	  float elapsedTime = effect->elapsedTime;
+	  float phase = effect->phase;
+	  uint32_t period = effect->period;
+	  float periodF = effect->period;
+
+	  float maxMagnitude = offset + magnitude;
+	  float minMagnitude = offset - magnitude;
+	  int32_t phasetime = (phase * period) / 255;
+	  uint32_t timeTemp = elapsedTime + phasetime;
+	  float reminder = timeTemp % period;
+	  float slope = (maxMagnitude - minMagnitude) / periodF;
+	  float tempforce = 0;
+	  tempforce = slope * (period - reminder);
+	  tempforce += minMagnitude;
+	  return ApplyEnvelope(effect, tempforce);
+}
+
+int32_t HidFFB::SawtoothUpForceCalculator(FFB_Effect *effect)
+{
+	  float offset = effect->offset * 2;
+	  float magnitude = effect->magnitude;
+	  float elapsedTime = effect->elapsedTime;
+	  uint32_t phase = effect->phase;
+	  uint32_t period = effect->period;
+	  float periodF = effect->period;
+
+	  float maxMagnitude = offset + magnitude;
+	  float minMagnitude = offset - magnitude;
+	  int32_t phasetime = (phase * period) / 255;
+	  uint32_t timeTemp = elapsedTime + phasetime;
+	  float reminder = timeTemp % period;
+	  float slope = (maxMagnitude - minMagnitude) / periodF;
+	  float tempforce = 0;
+	  tempforce = slope * reminder;
+	  tempforce += minMagnitude;
+	  return ApplyEnvelope(effect, tempforce);
+}
+
+int32_t HidFFB::ConditionForceCalculator(FFB_Effect *effect, float metric)
+{
+	  float deadBand = effect->deadBand;
+	  float cpOffset = effect->cpOffset;
+	  float negativeCoefficient = -effect->negativeCoefficient;
+	  float positiveSaturation = effect->positiveSaturation;
+	  float positiveCoefficient = effect->positiveCoefficient;
+	  float  tempForce = 0;
+	  if (metric < (cpOffset - deadBand)) {
+	    tempForce = ((float)1.00 * (cpOffset - deadBand) / 10000 - metric) * negativeCoefficient;
+	  }
+	  else if (metric > (cpOffset + deadBand)) {
+	    tempForce = (metric - (float)1.00 * (cpOffset + deadBand) / 10000) * positiveCoefficient;
+	    tempForce = (tempForce > positiveSaturation ? positiveSaturation : tempForce);
+	  }
+	  tempForce = tempForce * effect->gain / 255;
+	  switch (effect->type) {
+	    case FFB_EFFECT_DAMPER:
+	      tempForce = damperFilter.filterIn(tempForce);
+	      break;
+	    case FFB_EFFECT_INERTIA:
+	      tempForce = interiaFilter.filterIn(tempForce);
+	      break;
+	    case FFB_EFFECT_FRICTION:
+	      tempForce = frictionFilter.filterIn(tempForce);
+	      break;
+	    default:
+	      break;
+	  }
+
+	  return (int32_t) tempForce;
+}
+
+int32_t HidFFB::ApplyGain(uint32_t value, uint8_t gain)
+{
+	  return ((value * gain) / 255);
+}
+
+int32_t HidFFB::ApplyEnvelope(FFB_Effect* effect, int32_t value)
+{
+	  int32_t magnitude = ApplyGain(effect->magnitude, effect->gain);
+	  int32_t attackLevel = ApplyGain(effect->attackLevel, effect->gain);
+	  int32_t fadeLevel = ApplyGain(effect->fadeLevel, effect->gain);
+	  int32_t newValue = magnitude;
+	  int32_t attackTime = effect->attackTime;
+	  int32_t fadeTime = effect->fadeTime;
+	  int32_t elapsedTime = effect->elapsedTime;
+	  int32_t duration = effect->duration;
+
+	  if (elapsedTime < attackTime)
+	  {
+	    newValue = (magnitude - attackLevel) * elapsedTime;
+	    newValue /= attackTime;
+	    newValue += attackLevel;
+	  }
+	  if (elapsedTime > (duration - fadeTime))
+	  {
+	    newValue = (magnitude - fadeLevel) * (duration - elapsedTime);
+	    newValue /= fadeTime;
+	    newValue += fadeLevel;
+	  }
+	  float scale = (float)value / (int32_t)0x7fff;
+	  float fvalue = scale * newValue;
+
+	  return (int32_t)fvalue;
+}
+
+float HidFFB::NormalizeRange(int32_t x, int32_t maxValue)
+{
+	  return (float)x * 1.00 / maxValue;
+}
+
+void HidFFB::set_config(FFBWheelConfig *conf)
+{
+	this->conf = conf;
+}

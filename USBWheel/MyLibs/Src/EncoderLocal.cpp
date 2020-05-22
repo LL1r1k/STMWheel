@@ -13,7 +13,7 @@ EncoderLocal::EncoderLocal() {
 
 	this->htim->Instance->CR1 = 1;
 	HAL_TIM_Base_Start_IT(htim);
-
+	offset = 0;
 
 }
 
@@ -24,15 +24,11 @@ EncoderLocal::~EncoderLocal() {
 
 int32_t EncoderLocal::getPos(){
 	int32_t timpos = htim->Instance->CNT - 0x7fff;
-	return timpos + pos + offset;
+	return timpos + offset;
 }
 void EncoderLocal::setPos(int32_t pos){
-	this->pos = pos;
+	this->currentPosition = pos;
 	htim->Instance->CNT = pos+0x7fff;
-}
-
-void EncoderLocal::setOffset(int32_t offset){
-	this->offset = offset;
 }
 
 void EncoderLocal::setPeriod(uint32_t period){
@@ -58,9 +54,9 @@ void EncoderLocal::overflowCallback(){
 		return;
 	}
 	if(htim->Instance->CNT > this->htim->Instance->ARR/2){
-		pos -= htim->Instance->ARR+1;
+		offset -= htim->Instance->ARR+1;
 	}else{
-		pos += htim->Instance->ARR+1;
+		offset += htim->Instance->ARR+1;
 	}
 }
 

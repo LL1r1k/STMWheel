@@ -34,8 +34,8 @@ MyLibs/Src/FFBWheel_commands.o: ../MyLibs/Src/FFBWheel_commands.cpp \
  ../MyLibs/Inc/EncoderLocal.h ../MyLibs/Inc/constants.h \
  ../MyLibs/Inc/ExtiHandler.h ../MyLibs/Inc/TimerHandler.h \
  ../MyLibs/Inc/global_callbacks.h ../MyLibs/Inc/HidFFB.h \
- ../MyLibs/Inc/UsbHidHandler.h ../MyLibs/Inc/ffb_defs.h \
- ../MyLibs/Inc/Filters.h ../MyLibs/Inc/AdcHandler.h \
+ ../MyLibs/Inc/Filters.h ../MyLibs/Inc/UsbHidHandler.h \
+ ../MyLibs/Inc/ffb_defs.h ../MyLibs/Inc/AdcHandler.h \
  ../MyLibs/Inc/CommandHandler.h ../USB/Inc/usbd_cdc_if.h \
  ../USB/Inc/usbd_cdc.h ../USB/Inc/usbd_ioreq.h ../USB/Inc/usbd_def.h \
  ../USB/Inc/usbd_conf.h ../USB/Inc/usbd_core.h ../USB/Inc/usbd_ctlreq.h \
@@ -128,11 +128,11 @@ MyLibs/Src/FFBWheel_commands.o: ../MyLibs/Src/FFBWheel_commands.cpp \
 
 ../MyLibs/Inc/HidFFB.h:
 
+../MyLibs/Inc/Filters.h:
+
 ../MyLibs/Inc/UsbHidHandler.h:
 
 ../MyLibs/Inc/ffb_defs.h:
-
-../MyLibs/Inc/Filters.h:
 
 ../MyLibs/Inc/AdcHandler.h:
 

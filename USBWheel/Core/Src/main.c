@@ -589,10 +589,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void RebootDFU(void) {
-	*((unsigned long *)0x2001FFF0) = 0xDEADBEEF; // End of RAM
-	NVIC_SystemReset();
-}
 /* USER CODE END 4 */
 
 /**

@@ -19,63 +19,6 @@
 #include "eeprom.h"
 #include "ws2812.h"
 
-struct FFBWheelConfig{
-	uint8_t check = 0x57;
-	uint8_t axes = 0b00000111;
-	uint8_t I2CButtons = 0x01;
-	uint8_t nLocalButtons = 0;
-	uint16_t degreesOfRotation = 900;
-	uint16_t power = 2000;
-	uint16_t encoderPPR = 2000;
-	uint8_t maxAdcCount = 8;
-
-	uint8_t inverted = false;
-	uint16_t endstop_gain = 20;
-	uint8_t constantGain = 100;
-	uint8_t rampGain = 100;
-	uint8_t squareGain = 100;
-	uint8_t sinGain = 100;
-	uint8_t triangleGain = 100;
-	uint8_t sawToothDownGain = 100;
-	uint8_t sawToothUpGain = 100;
-	uint8_t springGain = 100;
-	uint8_t damperGain = 100;
-	uint8_t inertiaGain = 100;
-	uint8_t frictionGain = 100;
-	uint8_t totalGain = 100;
-
-	bool isequal(FFBWheelConfig& conf)
-	{
-		if(	check == conf.check &&
-			axes == conf.axes &&
-			I2CButtons == conf.I2CButtons &&
-			nLocalButtons == conf.nLocalButtons &&
-			degreesOfRotation == conf.degreesOfRotation &&
-			power == conf.power &&
-			endstop_gain == conf.endstop_gain &&
-			encoderPPR == conf.encoderPPR &&
-			maxAdcCount == conf.maxAdcCount &&
-			inverted == conf.inverted &&
-			constantGain == conf.constantGain &&
-			rampGain == conf.rampGain &&
-			squareGain == conf.squareGain &&
-			sinGain == conf.sinGain &&
-			triangleGain == conf.triangleGain &&
-			sawToothDownGain == conf.sawToothDownGain &&
-			sawToothUpGain == conf.sawToothUpGain &&
-			springGain == conf.springGain &&
-			damperGain == conf.damperGain &&
-			inertiaGain == conf.inertiaGain &&
-			frictionGain == conf.frictionGain &&
-			totalGain == conf.totalGain)
-			return true;
-		else
-			return false;
-	}
-};
-
-
-
 
 class FFBWheel: public AdcHandler, TimerHandler, CommandHandler{
 public:
@@ -97,8 +40,6 @@ public:
 	void cdcRcv(char* Buf, uint32_t *Len);
 
 	static FFBWheelConfig decodeConf();
-	static void encodeConf(FFBWheelConfig conf);
-
 
 	void adcUpd(volatile uint32_t* ADC_BUF);
 	void timerElapsed(TIM_HandleTypeDef* htim);
@@ -108,7 +49,7 @@ public:
 	uint8_t adcCount =0;
 
 	int32_t getEncValue(EncoderLocal* enc,uint16_t degrees);
-
+	void initEncoder();
 	CmdParser parser = CmdParser();
 
 private:

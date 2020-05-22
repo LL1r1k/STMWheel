@@ -9,8 +9,10 @@
 #define HIDFFB_H_
 
 #include "main.h"
+#include <Filters.h>
 #include <UsbHidHandler.h>
 #include "ffb_defs.h"
+#include "EncoderLocal.h"
 
 class HidFFB: public UsbHidHandler {
 public:
@@ -19,14 +21,9 @@ public:
 
 	void hidOut(uint8_t* report);
 	void hidGet(uint8_t id,uint16_t len,uint8_t** return_buf);
-	int32_t calculateEffects(int32_t pos,uint8_t axis); //Axis: 1/2 pos: current position scaled from -0x7fff to 0x7fff
+	int32_t calculateEffects(EncoderLocal* encoder); //Axis: 1/2 pos: current position scaled from -0x7fff to 0x7fff
+    void set_config(FFBWheelConfig* conf);
 	bool idlecenter = true;
-
-	float damper_f = 50 , damper_q = 0.2;
-	BiquadType damper_type = BiquadType::lowpass;
-	float friction_f = 50 , friction_q = 0.2;
-	BiquadType friction_type = BiquadType::lowpass;
-	const uint16_t calcfrequency = 1000;
 
 	uint32_t hid_out_period = 0; // ms since last out report for measuring update rate
 
@@ -48,7 +45,20 @@ private:
 	void start_FFB();
 	void stop_FFB();
 
-	void set_filters(FFB_Effect* effect);
+
+
+	int32_t ConstantForceCalculator(FFB_Effect* effect);
+	int32_t RampForceCalculator(FFB_Effect* effect);
+	int32_t SquareForceCalculator(FFB_Effect* effect);
+	int32_t SinForceCalculator(FFB_Effect* effect);
+	int32_t TriangleForceCalculator(FFB_Effect* effect);
+	int32_t SawtoothDownForceCalculator(FFB_Effect* effect);
+	int32_t SawtoothUpForceCalculator(FFB_Effect* effect);
+	int32_t ConditionForceCalculator(FFB_Effect* effect, float metric);
+
+    int32_t ApplyGain(uint32_t value, uint8_t gain);
+    int32_t ApplyEnvelope(FFB_Effect* effect, int32_t value);
+    float NormalizeRange(int32_t x, int32_t maxValue);
 
 	uint8_t report_counter = 0;
 	uint16_t report_counter_hid = 0;
@@ -58,11 +68,18 @@ private:
 	bool ffb_active = false;
 	FFB_BlockLoad_Feature_Data_t blockLoad_report;
 	FFB_PIDPool_Feature_Data_t pool_report;
+	FFBWheelConfig* conf;
 
 	reportFFB_status_t reportFFBStatus;
 	FFB_Effect effects[MAX_EFFECTS];
 
 	uint32_t lastOut = 0;
+
+	const float cutoff_freq_damper   = 5.0;  //Cutoff frequency in Hz
+	const float sampling_time_damper = 0.001; //Sampling time in seconds.
+	Filters damperFilter;
+	Filters interiaFilter;
+	Filters frictionFilter;
 
 };
 
