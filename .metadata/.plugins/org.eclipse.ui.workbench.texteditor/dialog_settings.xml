@@ -6,8 +6,11 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="printf"/>
+		<item key="selection" value=" + &quot; &quot;;"/>
 		<list key="findhistory">
+			<item value=";"/>
+			<item value="to_string"/>
+			<item value="to_s"/>
 			<item value="printf"/>
 			<item value="printg"/>
 			<item value="Wheel.encoder."/>
@@ -20,11 +23,13 @@
 			<item value="Peri"/>
 			<item value="Perd"/>
 			<item value="sin"/>
-			<item value="HID_ID_CTRLREP"/>
-			<item value="ID 2"/>
-			<item value="ID 6"/>
 		</list>
 		<list key="replacehistory">
+			<item value=" + &quot; &quot;;"/>
+			<item value=" + &quot; &quot;"/>
+			<item value="std::to_string"/>
+			<item value="to_string"/>
+			<item value=");"/>
 			<item value="enc-&gt;"/>
 			<item value="CUSTOM_HID_FS_BINTERVAL"/>
 		</list>

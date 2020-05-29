@@ -45,45 +45,12 @@ void FFBWheel::saveFlash(){
 	FFBWheelConfig savedconf = decodeConf();
 	if(savedconf.isequal(conf))
 		return;
-	uint32_t buf[8] = {0};
-	buf[0] =(uint8_t)conf.check & 0xff;
-	buf[0] |= ((uint8_t)conf.axes & 0xff) << 8;
-	buf[0] |= ((uint8_t)conf.I2CButtons & 0xff) << 16;
-	buf[0] |= ((uint8_t)conf.nLocalButtons & 0xff) << 24;
-
-	buf[1] = (uint16_t)conf.degreesOfRotation & 0xffff;
-	buf[1] |= ((uint16_t)conf.maxpower & 0xffff) << 16;
-
-	buf[2] = (uint8_t)conf.endstop_gain & 0xff;
-	//free 8 bit
-	buf[2] |= ((uint16_t)conf.encoderPPR & 0xffff) << 16;
-
-	buf[3] = (uint8_t)conf.maxAdcCount & 0xff;
-	buf[3] |= ((uint8_t)conf.inverted & 0xff) << 8;
-	buf[3] |= ((uint8_t)conf.constantGain & 0xff) << 16;
-	buf[3] |= ((uint8_t)conf.rampGain & 0xff) << 24;
-
-	buf[4] = (uint8_t)conf.squareGain & 0xff;
-	buf[4] |= ((uint8_t)conf.sinGain & 0xff) << 8;
-	buf[4] |= ((uint8_t)conf.triangleGain & 0xff) << 16;
-	buf[4] |= ((uint8_t)conf.sawToothDownGain & 0xff) << 24;
-
-	buf[5] = (uint8_t)conf.sawToothUpGain & 0xff;
-	buf[5] |= ((uint8_t)conf.springGain & 0xff) << 8;
-	buf[5] |= ((uint8_t)conf.damperGain & 0xff) << 16;
-	buf[5] |= ((uint8_t)conf.inertiaGain & 0xff) << 24;
-
-	buf[6] = (uint8_t)conf.frictionGain & 0xff;
-	buf[6] |= ((uint8_t)conf.totalGain & 0xff) << 8;
-	buf[6] |= ((uint8_t)conf.maxVelosity & 0xff) << 16;
-	buf[6] |= ((uint8_t)conf.maxAcceleration & 0xff) << 24;
-
-	buf[7] = (uint8_t)conf.maxAcceleration & 0xff;
-	buf[7] |= ((uint8_t)conf.maxPositionChange & 0xff) << 8;
-	buf[7] |= ((uint16_t)conf.minForce & 0xffff) << 16;
+	uint32_t* buf = (uint32_t*)&conf;
+	uint8_t len = sizeof(FFBWheelConfig);
+	len = len / 4 + (len % 4 != 0 ? 1 : 0);
 
 	EE_Format();
-	EE_Writes(0x00, 8, buf);
+	EE_Writes(0x00, len, buf);
 }
 
 /*
@@ -237,53 +204,15 @@ void FFBWheel::SOF(){
 }
 
 FFBWheelConfig FFBWheel::decodeConf(){
-	uint32_t buf[8] = {0};
-	FFBWheelConfig conf;
+	uint8_t len = sizeof(FFBWheelConfig);
+	len = len / 4 + (len % 4 != 0 ? 1 : 0);
+	uint32_t* buf = new uint32_t[len];
+	FFBWheelConfig* conf;
 
-	EE_Reads(0x00, 8, buf);
-	conf.check = buf[0] & 0xff;
-	if(conf.check != 0x57)
-	{
-		conf = FFBWheelConfig();
-		conf.check = 0x00;
-		return conf;
-	}
-	conf.axes = (buf[0] >> 8)& 0xff;
-	conf.I2CButtons = (buf[0] >> 16) & 0xff;
-	conf.nLocalButtons= (buf[0] >> 24) & 0xff;
+	EE_Reads(0x00, len, buf);
 
-	conf.degreesOfRotation= buf[1] & 0xffff;
-	conf.maxpower= (buf[1] >> 16) & 0xffff;
-
-	conf.endstop_gain= buf[2] & 0xff;
-	//free 8 bit
-	conf.encoderPPR= (buf[2] >> 16) & 0xffff;
-
-	conf.maxAdcCount = buf[3] & 0xff;
-	conf.inverted = (buf[3] >> 8) & 0xff;
-	conf.constantGain = (buf[3] >> 16) & 0xff;
-	conf.rampGain = (buf[3] >> 24) & 0xff;
-
-	conf.squareGain = buf[4] & 0xff;
-	conf.sinGain = (buf[4] >> 8) & 0xff;
-	conf.triangleGain = (buf[4] >> 16) & 0xff;
-	conf.sawToothDownGain = (buf[4] >> 24) & 0xff;
-
-	conf.sawToothUpGain = buf[5] & 0xff;
-	conf.springGain = (buf[5] >> 8) & 0xff;
-	conf.damperGain = (buf[5] >> 16) & 0xff;
-	conf.inertiaGain = (buf[5] >> 24) & 0xff;
-
-	conf.frictionGain = buf[6] & 0xff;
-	conf.totalGain = (buf[6] >> 8) & 0xff;
-	conf.maxVelosity = (buf[6] >> 16) & 0xff;
-	conf.maxAcceleration = (buf[6] >> 24) & 0xff;
-
-	conf.maxAcceleration = buf[7] & 0xff;
-	conf.maxPositionChange = (buf[7] >> 8) & 0xff;
-	conf.minForce = (buf[7] >> 16) & 0xffff;
-
-	return conf;
+	conf = (FFBWheelConfig*)buf;
+	return *conf;
 }
 
 void FFBWheel::initEncoder()

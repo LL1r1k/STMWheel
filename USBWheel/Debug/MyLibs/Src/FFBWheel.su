@@ -7,18 +7,18 @@ FFBWheel.cpp:7:1:FFBWheel::FFBWheel()	24	static
 FFBWheel.cpp:24:1:FFBWheel::~FFBWheel()	16	static
 FFBWheel.cpp:24:1:virtual FFBWheel::~FFBWheel()	16	static
 FFBWheel.cpp:30:6:void FFBWheel::restoreFlash()	56	static
-FFBWheel.cpp:44:6:void FFBWheel::saveFlash()	80	static
-FFBWheel.cpp:92:6:void FFBWheel::update()	32	static
-FFBWheel.cpp:140:9:int16_t FFBWheel::updateEndstop()	40	static
-FFBWheel.cpp:154:6:virtual void FFBWheel::adcUpd(volatile uint32_t*)	24	static
-FFBWheel.cpp:172:9:int32_t FFBWheel::getEncValue(EncoderLocal*, uint16_t)	48	static
-FFBWheel.cpp:195:6:void FFBWheel::send_report()	24	static
-FFBWheel.cpp:219:6:virtual void FFBWheel::timerElapsed(TIM_HandleTypeDef*)	16	static
-FFBWheel.cpp:225:6:void FFBWheel::cdcRcv(char*, uint32_t*)	40	static
-FFBWheel.cpp:231:6:void FFBWheel::usbInit()	16	static
-FFBWheel.cpp:234:6:void FFBWheel::SOF()	16	static
-FFBWheel.cpp:239:16:static FFBWheelConfig FFBWheel::decodeConf()	88	static
-FFBWheel.cpp:289:6:void FFBWheel::initEncoder()	24	static
+FFBWheel.cpp:44:6:void FFBWheel::saveFlash()	56	static
+FFBWheel.cpp:59:6:void FFBWheel::update()	32	static
+FFBWheel.cpp:107:9:int16_t FFBWheel::updateEndstop()	40	static
+FFBWheel.cpp:121:6:virtual void FFBWheel::adcUpd(volatile uint32_t*)	24	static
+FFBWheel.cpp:139:9:int32_t FFBWheel::getEncValue(EncoderLocal*, uint16_t)	48	static
+FFBWheel.cpp:162:6:void FFBWheel::send_report()	24	static
+FFBWheel.cpp:186:6:virtual void FFBWheel::timerElapsed(TIM_HandleTypeDef*)	16	static
+FFBWheel.cpp:192:6:void FFBWheel::cdcRcv(char*, uint32_t*)	40	static
+FFBWheel.cpp:198:6:void FFBWheel::usbInit()	16	static
+FFBWheel.cpp:201:6:void FFBWheel::SOF()	16	static
+FFBWheel.cpp:206:16:static FFBWheelConfig FFBWheel::decodeConf()	40	static
+FFBWheel.cpp:218:6:void FFBWheel::initEncoder()	24	static
 cppmain.h:40:3:T clip(T, C, C) [with T = long int; C = short int]	16	static
 cppmain.h:28:8:int8_t cliptest(T, C, C) [with T = long int; C = long int]	24	static
 cppmain.h:40:3:T clip(T, C, C) [with T = long int; C = long int]	24	static

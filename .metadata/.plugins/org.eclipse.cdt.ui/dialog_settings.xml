@@ -64,4 +64,21 @@
 		<item key="org.eclipse.cdt.internal.ui.text.COutlineInformationControlDIALOG_USE_PERSISTED_SIZE" value="true"/>
 		<item key="org.eclipse.cdt.internal.ui.text.COutlineInformationControlDIALOG_USE_PERSISTED_LOCATION" value="true"/>
 	</section>
+	<section name="org.eclipse.cdt.internal.ui.typehierarchy.OpenTypeInHierarchyActionSettings">
+		<item key="show_namespaces" value="false"/>
+		<item key="show_classes" value="true"/>
+		<item key="show_structs" value="true"/>
+		<item key="show_typedefs" value="true"/>
+		<item key="show_enums" value="true"/>
+		<item key="show_unions" value="true"/>
+		<item key="show_functions" value="false"/>
+		<item key="show_variables" value="false"/>
+		<item key="show_enumerators" value="false"/>
+		<item key="show_macros" value="false"/>
+		<item key="show_lowlevel" value="true"/>
+		<item key="x" value="744"/>
+		<item key="y" value="78"/>
+		<item key="width" value="432"/>
+		<item key="height" value="663"/>
+	</section>
 </section>
