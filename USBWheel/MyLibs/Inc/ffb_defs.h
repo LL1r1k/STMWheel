@@ -91,10 +91,10 @@ struct FFBWheelConfig{
 	uint8_t nLocalButtons = 0;
 	uint16_t degreesOfRotation = 900;
 	uint16_t maxpower = 2000;
-	uint16_t encoderPPR = 2000;
+	uint16_t encoderPPR = 8500;
 	uint8_t maxAdcCount = 8;
 
-	uint8_t inverted = false;
+	uint8_t inverted = 1;
 	uint8_t endstop_gain = 20;
 	uint8_t constantGain = 100;
 	uint8_t rampGain = 100;

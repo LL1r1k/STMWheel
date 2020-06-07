@@ -106,7 +106,7 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 				if(cmd->type == CMDtype::get){
 					*reply+=std::to_string(this->conf.inverted);
 				}else if(cmd->type == CMDtype::set){
-					this->conf.inverted = cmd->val;
+					this->conf.inverted = (uint8_t)cmd->val;
 					*reply += "OK";
 				}
 
@@ -239,6 +239,12 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 		}else{
 			*reply += "Err. Setup enctype first";
 		}
+	}else if(cmd->cmd == "default"){
+			if(cmd->type == CMDtype::get){
+				FFBWheelConfig defConf;
+				this->conf = defConf;
+				*reply += "OK";
+			}
 	}else if(cmd->cmd == "all"){
 		if(cmd->type == CMDtype::get){
 			uint8_t* buf8 = (uint8_t*)&conf;
@@ -283,7 +289,7 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 	}else if(cmd->cmd == "help"){
 		flag = false;
 		*reply += ""
-				", save, zeroenc, maxPower, degrees, axismask, ppr, adcmax, inverted, constantGain, rampGain, squareGain, sinGain, triangleGain, sawToothDownGain, sawToothUpGain, springGain, damperGain, inertiaGain, frictionGain, endstopGain, totalGain, maxVelosity, maxAcceleration, maxPositionChange, minPower, pos, hidrate, led, all, help\n"; // TODO
+				", save, zeroenc, maxPower, degrees, axismask, ppr, adcmax, inverted, constantGain, rampGain, squareGain, sinGain, triangleGain, sawToothDownGain, sawToothUpGain, springGain, damperGain, inertiaGain, frictionGain, endstopGain, totalGain, maxVelosity, maxAcceleration, maxPositionChange, minPower, pos, hidrate, led, all, default, help\n"; // TODO
 	}else{
 		flag = false;
 	}

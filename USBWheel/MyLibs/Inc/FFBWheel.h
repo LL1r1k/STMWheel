@@ -71,6 +71,8 @@ private:
 	volatile uint32_t adc_buf2[ADC_PINS];
 	reportHID_t reportHID;
 
+	int32_t map(int32_t x, int32_t in_min, int32_t in_max, int32_t out_min, int32_t out_max);
+
 
 	int32_t lastScaledEnc = 0;
 	int32_t scaledEnc = 0;

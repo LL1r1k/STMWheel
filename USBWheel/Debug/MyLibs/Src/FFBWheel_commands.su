@@ -6,7 +6,7 @@ CmdParser.h:20:8:ParsedCommand::ParsedCommand(const ParsedCommand&)	16	static
 CmdParser.h:20:8:ParsedCommand::~ParsedCommand()	16	static
 FFBWheel_commands.cpp:11:6:void FFBWheel::executeCommands(std::vector<ParsedCommand>)	112	static
 FFBWheel_commands.cpp:33:6:bool FFBWheel::executeSysCommand(ParsedCommand*, std::__cxx11::string*)	32	static
-FFBWheel_commands.cpp:53:6:virtual bool FFBWheel::command(ParsedCommand*, std::__cxx11::string*)	704	static
+FFBWheel_commands.cpp:53:6:virtual bool FFBWheel::command(ParsedCommand*, std::__cxx11::string*)	736	static
 string_conversions.h:99:5:) [with _String = std::__cxx11::basic_string<char>; _CharT = char]	52	dynamic
 stl_vector.h:563:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::begin() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
 stl_vector.h:581:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::end() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static

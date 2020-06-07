@@ -68,7 +68,6 @@ void FFBWheel::update(){
 
 		torque = 0;
 		scaledEnc = getEncValue(enc, conf.degreesOfRotation);
-		scaledEnc *= conf.inverted ? 1 : -1;
 
 		update_flag = false;
 
@@ -96,11 +95,19 @@ void FFBWheel::update(){
 
 	if(endstopTorque!=lasttorque || updateTorque){
 		torque = clip<int32_t,int16_t>(torque, -this->conf.maxpower, this->conf.maxpower);
-		torque += +endstopTorque;
+		if(torque > 0) torque = map(torque, 0, this->conf.maxpower, MIN(this->conf.minForce, this->conf.maxpower), this->conf.maxpower);
+		else if (torque < 0) torque = map(torque, 0, -this->conf.maxpower, MAX(-this->conf.minForce, -this->conf.maxpower), -this->conf.maxpower);
+		torque += endstopTorque;
 		torque = clip<int32_t,int16_t>(torque, -0x7fff, 0x7fff);
-		torque *= conf.inverted ? 1 : -1;
+		if(conf.inverted == true)
+			torque *=-1;
 		drv->turn(torque);
 	}
+}
+
+int32_t FFBWheel::map(int32_t x, int32_t in_min, int32_t in_max, int32_t out_min, int32_t out_max)
+{
+	 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 
@@ -142,6 +149,8 @@ int32_t FFBWheel::getEncValue(EncoderLocal* enc,uint16_t degrees){
 	}
 
 	enc->currentPosition = enc->getPos();
+	if(conf.inverted == true)
+		enc->currentPosition *=-1;
 	enc->positionChange = enc->currentPosition - enc->lastPosition;
 	uint32_t currentEncoderTime = (int32_t) HAL_GetTick();
 	int16_t diffTime = (int16_t)(currentEncoderTime -  enc->lastEncoderTime) ;
@@ -226,4 +235,7 @@ void FFBWheel::initEncoder()
 	enc->correctPosition = 0;
 	enc->lastEncoderTime = (uint32_t)HAL_GetTick();
 	enc->lastVelocity = 0;
+	enc->maxVelocity = conf.maxVelosity;
+	enc->maxAcceleration = conf.maxAcceleration;
+	enc->maxPositionChange = conf.maxPositionChange;
 }
