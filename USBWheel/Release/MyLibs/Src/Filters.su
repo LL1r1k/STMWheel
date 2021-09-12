@@ -1,0 +1,8 @@
+Filters.cpp:10:1:Filters::Filters()	0	static
+Filters.cpp:25:1:Filters::~Filters()	0	static
+Filters.cpp:45:7:float Filters::filterIn(float)	16	static
+Filters.cpp:60:6:void Filters::flush()	0	static
+Filters.cpp:119:14:void Filters::initLowPass()	48	static
+Filters.cpp:30:6:void Filters::init(uint8_t)	40	static
+Filters.cpp:16:1:Filters::Filters(float, float, ORDER, TYPE)	40	static
+Filters.cpp:206:7:float Filters::ap(float)	24	static

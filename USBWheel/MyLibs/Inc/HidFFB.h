@@ -18,7 +18,7 @@ class HidFFB: public UsbHidHandler {
 public:
 	HidFFB();
 	virtual ~HidFFB();
-
+	void setFilterFQ(float f, float q);
 	void hidOut(uint8_t* report);
 	void hidGet(uint8_t id,uint16_t len,uint8_t** return_buf);
 	int32_t calculateEffects(EncoderLocal* encoder); //Axis: 1/2 pos: current position scaled from -0x7fff to 0x7fff
@@ -75,12 +75,16 @@ private:
 
 	uint32_t lastOut = 0;
 
-	const float cutoff_freq_damper   = 5.0;  //Cutoff frequency in Hz
-	const float sampling_time_damper = 0.001; //Sampling time in seconds.
-	Filters damperFilter;
-	Filters interiaFilter;
-	Filters frictionFilter;
+	float damper_f = 50 , damper_q = 0.2;
+	float friction_f = 50 , friction_q = 0.2;
+	float inertia_f = 20 , inertia_q = 0.2;
+	const uint32_t calcfrequency = 1000;
+	const float cfFilter_qfloatScaler = 0.01;
 
+	Biquad damperFilter;
+	Biquad interiaFilter;
+	Biquad frictionFilter;
+	Biquad constantFilter;
 };
 
 #endif /* HIDFFB_H_ */

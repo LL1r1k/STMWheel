@@ -7,205 +7,146 @@
 
 #include <Filters.h>
 
-Filters::Filters()
-{
-	// TODO Auto-generated constructor stub
+#include <math.h>
 
+Biquad::Biquad(){
+	z1 = z2 = 0.0;
+}
+Biquad::Biquad(BiquadType type, float Fc, float Q, float peakGainDB) {
+    setBiquad(type, Fc, Q, peakGainDB);
 }
 
-Filters::Filters(float hz_, float ts_, ORDER od_, TYPE ty_) :
-  ts( ts_ ),
-  hz( hz_ ),
-  od( od_ ),
-  ty( ty_ )
-{
-  init();
+Biquad::~Biquad() {
 }
 
-Filters::~Filters()
-{
-	// TODO Auto-generated destructor stub
+void Biquad::setFc(float Fc) {
+	Fc = clip<float,float>(Fc,0,0.5);
+    this->Fc = Fc;
+    calcBiquad();
 }
 
-void Filters::init(uint8_t doFlush) {
-  if(doFlush) flush();
-  f_err  = false;
-  f_warn = false;
-
-  switch ((uint8_t)ty) {
-    case (uint8_t)TYPE::LOWPASS :
-      initLowPass();
-      break;
-    case (uint8_t)TYPE::HIGHPASS :
-      initHighPass();
-      break;
-  }
+void Biquad::setQ(float Q) {
+    this->Q = Q;
+    calcBiquad();
 }
 
-float Filters::filterIn(float input) {
-  if(f_err) return 0.0;
-
-  switch ((uint8_t)ty) {
-    case (uint8_t)TYPE::LOWPASS :
-      return computeLowPass(input);
-      break;
-    case (uint8_t)TYPE::HIGHPASS :
-      return computeHighPass(input);
-      break;
-    default:
-      return input;
-  }
+float Biquad::process(float in) {
+	float out = in * a0 + z1;
+    z1 = in * a1 + z2 - b1 * out;
+    z2 = in * a2 - b2 * out;
+    return out;
 }
 
-void Filters::flush() {
-  for(uint8_t i=0; i<MAX_ORDER; i++) {
-    u[i] = 0.0;
-    y[i] = 0.0;
-  }
+void Biquad::setBiquad(BiquadType type, float Fc, float Q, float peakGainDB) {
+	Fc = clip<float,float>(Fc,0,0.5);
+    this->type = type;
+    this->Q = Q;
+    this->Fc = Fc;
+    this->peakGain = peakGainDB;
+    calcBiquad();
 }
 
-// PRIVATE METHODS  * * * * * * * * * * * * * * * * * * * *
+/*
+ * Updates parameters and resets the biquad filter
+ */
+void Biquad::calcBiquad(void) {
+	z1 = 0.0;
+	z2 = 0.0;
+    float norm;
+    float V = pow(10, fabs(peakGain) / 20.0);
+    float K = tan(M_PI * Fc);
+    switch (this->type) {
+        case BiquadType::lowpass:
+            norm = 1 / (1 + K / Q + K * K);
+            a0 = K * K * norm;
+            a1 = 2 * a0;
+            a2 = a0;
+            b1 = 2 * (K * K - 1) * norm;
+            b2 = (1 - K / Q + K * K) * norm;
+            break;
 
-inline float Filters::computeLowPass(float input) {
-  for(uint8_t i=MAX_ORDER-1; i>0; i--) {
-    y[i] = y[i-1];
-    u[i] = u[i-1];
-  }
+        case BiquadType::highpass:
+            norm = 1 / (1 + K / Q + K * K);
+            a0 = 1 * norm;
+            a1 = -2 * a0;
+            a2 = a0;
+            b1 = 2 * (K * K - 1) * norm;
+            b2 = (1 - K / Q + K * K) * norm;
+            break;
 
-  switch((uint8_t)od) {
-    case (uint8_t)ORDER::OD1:
-        y[0] = k1*y[1] + k0*input;
-      break;
-    case (uint8_t)ORDER::OD2:
-        y[0] = k1*y[1] - k2*y[2] + (k0*input)/KM;
-      break;
-    case (uint8_t)ORDER::OD3:
-        y[0] = k1*y[1] - k2*y[2] + k3*y[3] + (k0*input)/KM;
-      break;
-    case (uint8_t)ORDER::OD4:
-        y[0] = k1*y[1] - k2*y[2] + k3*y[3] - k4*y[4] + (k0*input)/KM;
-      break;
-    default:
-        y[0] = input;
-      break;
-  }
-  return y[0];
+        case BiquadType::bandpass:
+            norm = 1 / (1 + K / Q + K * K);
+            a0 = K / Q * norm;
+            a1 = 0;
+            a2 = -a0;
+            b1 = 2 * (K * K - 1) * norm;
+            b2 = (1 - K / Q + K * K) * norm;
+            break;
+
+        case BiquadType::notch:
+            norm = 1 / (1 + K / Q + K * K);
+            a0 = (1 + K * K) * norm;
+            a1 = 2 * (K * K - 1) * norm;
+            a2 = a0;
+            b1 = a1;
+            b2 = (1 - K / Q + K * K) * norm;
+            break;
+
+        case BiquadType::peak:
+            if (peakGain >= 0) {    // boost
+                norm = 1 / (1 + 1/Q * K + K * K);
+                a0 = (1 + V/Q * K + K * K) * norm;
+                a1 = 2 * (K * K - 1) * norm;
+                a2 = (1 - V/Q * K + K * K) * norm;
+                b1 = a1;
+                b2 = (1 - 1/Q * K + K * K) * norm;
+            }
+            else {    // cut
+                norm = 1 / (1 + V/Q * K + K * K);
+                a0 = (1 + 1/Q * K + K * K) * norm;
+                a1 = 2 * (K * K - 1) * norm;
+                a2 = (1 - 1/Q * K + K * K) * norm;
+                b1 = a1;
+                b2 = (1 - V/Q * K + K * K) * norm;
+            }
+            break;
+        case BiquadType::lowshelf:
+            if (peakGain >= 0) {    // boost
+                norm = 1 / (1 + sqrt(2) * K + K * K);
+                a0 = (1 + sqrt(2*V) * K + V * K * K) * norm;
+                a1 = 2 * (V * K * K - 1) * norm;
+                a2 = (1 - sqrt(2*V) * K + V * K * K) * norm;
+                b1 = 2 * (K * K - 1) * norm;
+                b2 = (1 - sqrt(2) * K + K * K) * norm;
+            }
+            else {    // cut
+                norm = 1 / (1 + sqrt(2*V) * K + V * K * K);
+                a0 = (1 + sqrt(2) * K + K * K) * norm;
+                a1 = 2 * (K * K - 1) * norm;
+                a2 = (1 - sqrt(2) * K + K * K) * norm;
+                b1 = 2 * (V * K * K - 1) * norm;
+                b2 = (1 - sqrt(2*V) * K + V * K * K) * norm;
+            }
+            break;
+        case BiquadType::highshelf:
+            if (peakGain >= 0) {    // boost
+                norm = 1 / (1 + sqrt(2) * K + K * K);
+                a0 = (V + sqrt(2*V) * K + K * K) * norm;
+                a1 = 2 * (K * K - V) * norm;
+                a2 = (V - sqrt(2*V) * K + K * K) * norm;
+                b1 = 2 * (K * K - 1) * norm;
+                b2 = (1 - sqrt(2) * K + K * K) * norm;
+            }
+            else {    // cut
+                norm = 1 / (V + sqrt(2*V) * K + K * K);
+                a0 = (1 + sqrt(2) * K + K * K) * norm;
+                a1 = 2 * (K * K - 1) * norm;
+                a2 = (1 - sqrt(2) * K + K * K) * norm;
+                b1 = 2 * (K * K - V) * norm;
+                b2 = (V - sqrt(2*V) * K + K * K) * norm;
+            }
+            break;
+    }
+
+    return;
 }
-
-inline float Filters::computeHighPass(float input) {
-  for(uint8_t i=MAX_ORDER-1; i>0; i--) {
-    y[i] = y[i-1];
-    u[i] = u[i-1];
-  }
-  u[0] = input;
-
-  switch((uint8_t)od) {
-    case (uint8_t)ORDER::OD1:
-        y[0] = k1*y[1] + j0*u[0] + j1*u[1];
-      break;
-    case (uint8_t)ORDER::OD2:
-    case (uint8_t)ORDER::OD3:
-    case (uint8_t)ORDER::OD4:
-        y[0] = k1*y[1] + k2*y[2] + j0*u[0] + j1*u[1] + j2*u[2];
-      break;
-    default:
-        y[0] = u[0];
-      break;
-  }
-  return y[0];
-}
-
-
-inline void  Filters::initLowPass() {
-  switch((uint8_t)od) {
-    case (uint8_t)ORDER::OD1:
-        a  = 2.0*PI*hz;
-        k1 = exp(-a*ts);
-        k0 = 1.0 - k1;
-      break;
-    case (uint8_t)ORDER::OD2:
-        a  = -PI*hz*SQRT2;
-        b  =  PI*hz*SQRT2;
-        k2 = ap(exp(2.0*ts*a));
-        k1 = ap(2.0*exp(a*ts)*cos(b*ts));
-        k0 = ap(1.0*KM - k1*KM + k2*KM);
-      break;
-    case (uint8_t)ORDER::OD3:
-        a  = -PI*hz;
-        b  =  PI*hz*SQRT3;
-        c  =  2.0*PI*hz;
-        b3 = exp(-c*ts);
-        b2 = exp(2.0*ts*a);
-        b1 = 2.0*exp(a*ts)*cos(b*ts);
-        k3 = ap(b2*b3);
-        k2 = ap(b2 + b1*b3);
-        k1 = ap(b1 + b3);
-        k0 = ap(1.0*KM - b1*KM + b2*KM -b3*KM + b1*KM*b3 - b2*KM*b3);
-      break;
-    case (uint8_t)ORDER::OD4:
-        a  = -0.3827*2.0*PI*hz;
-        b  =  0.9238*2.0*PI*hz;
-        c  = -0.9238*2.0*PI*hz;
-        d  =  0.3827*2.0*PI*hz;
-        b4 = exp(2.0*ts*c);
-        b3 = 2.0*exp(c*ts)*cos(d*ts);
-        b2 = exp(2.0*ts*a);
-        b1 = 2.0*exp(a*ts)*cos(b*ts);
-        k4 = ap(b2*b4);
-        k3 = ap(b1*b4 + b2*b3);
-        k2 = ap(b4 + b1*b3 + b2);
-        k1 = ap(b1 + b3);
-        k0 = ap(1.0*KM - k1*KM + k2*KM - k3*KM + k4*KM);
-      break;
-  }
-}
-
-// a0..aN Terms are the TF's denominator coeffs;
-// b0..bN Terms are the TF's numerator coeffs;
-// k0..kN Terms multiply the diff. equation state terms (y) with 0 to N delays, respectively
-// j0..jN Terms multiply the diff. equation input terms (u) with 0 to N delays, respectively
-inline void  Filters::initHighPass() {
-  // Bilinear transformation
-  float k  = 2.0/ts;
-  float w0 = 2.0*PI*hz;
-
-  switch((uint8_t)od) {
-      case (uint8_t)ORDER::OD1:
-          // TF Terms
-          b0 =  k;
-          b1 = -k;
-          a0 = (w0 + k);
-          a1 = (w0 - k);
-          // Diff equation terms
-          j0 =  b0/a0;
-          j1 =  b1/a0;
-          k1 = -a1/a0;
-        break;
-      case (uint8_t)ORDER::OD2:
-      case (uint8_t)ORDER::OD3:
-      case (uint8_t)ORDER::OD4:
-          float_t w0sq = pow(w0, 2.0);
-          float_t ksq  = pow(k,  2.0);
-          // TF Terms
-          b0 = ksq;
-          b1 = -2.0*ksq;
-          b2 = ksq;
-          a0 = w0sq + k*w0 + ksq;
-          a1 = 2.0*w0sq - 2.0*ksq;
-          a2 = w0sq - k*w0 + ksq;
-          // Diff equation terms
-          j0 = b0/a0;
-          j1 = b1/a0;
-          j2 = b2/a0;
-          k1 = -a1/a0;
-          k2 = -a2/a0;
-        break;
-      }
-}
-
-float Filters::ap(float p) {
-  f_err  = f_err  | (abs(p) <= EPSILON );
-  f_warn = f_warn | (abs(p) <= WEPSILON);
-  return (f_err) ? 0.0 : p;
-}
-

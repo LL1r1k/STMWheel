@@ -49,16 +49,17 @@ bool FFBWheel::executeSysCommand(ParsedCommand* cmd,std::string* reply){
 	}
 	return flag;
 }
-volatile const SimDisplayPacket* telemetry;
+volatile const SimDisplayPacket* Oldtelemetry;
 bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 	bool flag = true;
 	// ------------ General commands ----------------
 	if(cmd->cmd == "save"){
-		this->saveFlash();
+		needSave = true;
 		*reply+="OK";
 	}else if(cmd->cmd == "zeroenc"){
 		if(cmd->type == CMDtype::get){
 			this->enc->setPos(0);
+
 			*reply += "OK";
 		}
 	}else if(cmd->cmd == "maxPower"){
@@ -66,6 +67,22 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 			*reply+=std::to_string(conf.maxpower);
 		}else if(cmd->type == CMDtype::set){
 			this->conf.maxpower = cmd->val;
+			*reply += "OK";
+		}
+	}else if(cmd->cmd == "filterF"){
+		if(cmd->type == CMDtype::get){
+			*reply+=std::to_string(conf.cfFilter_f);
+		}else if(cmd->type == CMDtype::set){
+			this->conf.cfFilter_f = cmd->val;
+			setCfFilter(this->conf.cfFilter_f, this->conf.cfFilter_q);
+			*reply += "OK";
+		}
+	}else if(cmd->cmd == "filterQ"){
+		if(cmd->type == CMDtype::get){
+			*reply+=std::to_string(conf.cfFilter_q);
+		}else if(cmd->type == CMDtype::set){
+			this->conf.cfFilter_q = cmd->val;
+			setCfFilter(this->conf.cfFilter_f, this->conf.cfFilter_q);
 			*reply += "OK";
 		}
 	}else if(cmd->cmd == "degrees"){
@@ -109,7 +126,6 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 					this->conf.inverted = (uint8_t)cmd->val;
 					*reply += "OK";
 				}
-
 	}else if(cmd->cmd == "constantGain"){
 				if(cmd->type == CMDtype::get){
 					*reply+=std::to_string(this->conf.constantGain);
@@ -229,7 +245,13 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 					this->conf.minForce = cmd->val;
 					*reply += "OK";
 				}
-
+	}else if(cmd->cmd == "wheelNUM"){
+				if(cmd->type == CMDtype::get){
+					*reply+=std::to_string(this->conf.wheelNUM);
+				}else if(cmd->type == CMDtype::set){
+					this->conf.wheelNUM = cmd->val;
+					*reply += "OK";
+				}
 	}else if(cmd->cmd == "pos"){
 		if(cmd->type == CMDtype::get){
 			*reply+=std::to_string(this->enc->getPos());
@@ -272,26 +294,53 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 		}
 	}else if(cmd->type == CMDtype::dash){
 		flag = true;
-		telemetry = (SimDisplayPacket*)(cmd->cmd.c_str());
-		uint8_t rgb_array = 0;
-		if (telemetry->status == SDP_STATUS_OFF)
+		Oldtelemetry = (SimDisplayPacket*)(cmd->cmd.c_str());
+		uint16_t rgb_array = 0;
+		if (Oldtelemetry->status == SDP_STATUS_OFF)
 			setup_rpm_ws2812(rgb_array);
-		else if (telemetry->status == SDP_STATUS_LIVE && telemetry->rpm <= (telemetry->shftrpm*100/95))
+		else if (Oldtelemetry->status == SDP_STATUS_LIVE)
 		{
-			if(telemetry->rpm < telemetry->optrpm)
-				rgb_array = std::max(0, telemetry->rpm - 1500) * 8 / (telemetry->optrpm - 1500);
-			else if(telemetry->rpm < telemetry->shftrpm)
-				rgb_array = 8 + (telemetry->rpm - telemetry->optrpm)*4/(telemetry->shftrpm - telemetry->optrpm);
-			else
-				rgb_array = 12 + (telemetry->rpm - telemetry->shftrpm)*4/((telemetry->shftrpm*100/95) - telemetry->shftrpm);
-			setup_rpm_ws2812(rgb_array);
+			//*reply+= std::to_string(telemetry->rpm) + " : " + std::to_string(telemetry->optrpm) + " : " + std::to_string(telemetry->shftrpm);
+			uint16_t maxrpm = Oldtelemetry->optrpm/90*100;
+			uint16_t shiftrpm = Oldtelemetry->optrpm/95*100;
+			uint16_t optrpm = Oldtelemetry->optrpm;
+			if(Oldtelemetry->rpm <= maxrpm)
+			{
+				if(Oldtelemetry->rpm < optrpm)
+					rgb_array = std::max(0, ((Oldtelemetry->rpm - 1500) * 8 / (optrpm- 1500)));
+				else if(Oldtelemetry->rpm < shiftrpm)
+					rgb_array = 8 + (Oldtelemetry->rpm - optrpm)*4/(shiftrpm - optrpm);
+				else
+					rgb_array = 12 + (Oldtelemetry->rpm - shiftrpm)*4/((shiftrpm*100/95) - shiftrpm);
+				setup_rpm_ws2812(rgb_array);
+			}
 		}
 	}else if(cmd->cmd == "help"){
 		flag = false;
 		*reply += ""
 				", save, zeroenc, maxPower, degrees, axismask, ppr, adcmax, inverted, constantGain, rampGain, squareGain, sinGain, triangleGain, sawToothDownGain, sawToothUpGain, springGain, damperGain, inertiaGain, frictionGain, endstopGain, totalGain, maxVelosity, maxAcceleration, maxPositionChange, minPower, pos, hidrate, led, all, default, help\n"; // TODO
+	}else if(cmd->type == CMDtype::simhub){
+		uint16_t size = cmd->cmd.length();
+		char* pstr = (char*)cmd->cmd.c_str();
+		uint16_t count = 0;
+		uint16_t i = 0;
+		uint16_t idx = 0;
+		for(;i<size;i++)
+			if(*(pstr+i) == ':')
+			{
+				count = atoi(pstr+i+1);
+				i++;
+				break;
+			}
+		for(;i<size;i++)
+			if(*(pstr+i) == ':')
+			{
+				int16_t tmp = atoi(pstr+i+1);
+				i2cBuffer[idx++] = tmp;
+			}
+		i2cSize = count * 2;
 	}else{
-		flag = false;
+		//flag = false;
 	}
 
 

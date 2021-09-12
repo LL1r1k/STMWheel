@@ -2,9 +2,10 @@
 #include "math.h"
 
 HidFFB::HidFFB() {
-	damperFilter = Filters(cutoff_freq_damper, sampling_time_damper, ORDER::OD1);
-	interiaFilter = Filters(cutoff_freq_damper, sampling_time_damper, ORDER::OD1);
-	frictionFilter = Filters(cutoff_freq_damper, sampling_time_damper, ORDER::OD1);
+	damperFilter = Biquad(BiquadType::lowpass, (float)damper_f / (float)calcfrequency, damper_q, (float)0.0);
+	interiaFilter = Biquad(BiquadType::lowpass, (float)friction_f / (float)calcfrequency, friction_q, (float)0.0);
+	frictionFilter = Biquad(BiquadType::lowpass, (float)inertia_f / (float)calcfrequency, inertia_q, (float)0.0);
+	constantFilter = Biquad(BiquadType::lowpass, (float)500/ (float)calcfrequency, cfFilter_qfloatScaler * (71), (float)0.0);
 
 	this->registerHidCallback();
 }
@@ -13,6 +14,11 @@ HidFFB::~HidFFB() {
 
 }
 
+void HidFFB::setFilterFQ(float f, float q)
+{
+	constantFilter.setFc(f);
+	constantFilter.setQ(q);
+}
 
 void HidFFB::hidOut(uint8_t* report){
 	hid_out_period = HAL_GetTick() - lastOut; // For measuring update rate
@@ -258,6 +264,10 @@ void HidFFB::reset_ffb(){
 int32_t HidFFB::ConstantForceCalculator(FFB_Effect *effect)
 {
 	float tempforce = (float)effect->magnitude * effect->gain / 255;
+	if (conf->cfFilter_f < calcfrequency / 2)
+	{
+		tempforce = constantFilter.process(tempforce);
+	}
 	return (int32_t)tempforce;
 }
 
@@ -450,13 +460,13 @@ int32_t HidFFB::ConditionForceCalculator(FFB_Effect *effect, float metric)
 	  tempForce = tempForce * effect->gain / 255;
 	  switch (effect->type) {
 	    case FFB_EFFECT_DAMPER:
-	      tempForce = damperFilter.filterIn(tempForce);
+	      tempForce = damperFilter.process(tempForce);
 	      break;
 	    case FFB_EFFECT_INERTIA:
-	      tempForce = interiaFilter.filterIn(tempForce);
+	      tempForce = interiaFilter.process(tempForce);
 	      break;
 	    case FFB_EFFECT_FRICTION:
-	      tempForce = frictionFilter.filterIn(tempForce);
+	      tempForce = frictionFilter.process(tempForce);
 	      break;
 	    default:
 	      break;

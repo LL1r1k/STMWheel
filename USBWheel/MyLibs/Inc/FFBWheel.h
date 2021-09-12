@@ -29,12 +29,13 @@ public:
 	void executeCommands(std::vector<ParsedCommand> commands);
 	bool command(ParsedCommand* cmd,std::string* reply);
 	bool executeSysCommand(ParsedCommand* cmd,std::string* reply);
-
 	void SOF();
 	void usbInit(); // initialize a composite usb device
 
 	void saveFlash();
 	void restoreFlash();
+
+	void setCfFilter(uint32_t f,uint8_t q);
 
 	void update();
 	void cdcRcv(char* Buf, uint32_t *Len);
@@ -52,9 +53,17 @@ public:
 	void initEncoder();
 	CmdParser parser = CmdParser();
 
+	uint8_t* pi2cBuf;
+
+	uint8_t i2cButtonsBuffer[9] = {0,};
+
+	uint8_t needSave = false;
 private:
 	void send_report();
 	int16_t updateEndstop();
+
+	int16_t i2cBuffer[255] = {0,};
+	uint16_t i2cSize = 0;
 
 	HidFFB* ffb;
 	TIM_HandleTypeDef* timer_update;
@@ -84,6 +93,7 @@ private:
 	int32_t velocityFFgain = 30000;
 	int32_t velocityFFconst = 0;
 
+	uint16_t I2C_SLAVE_ADDR = 0x48;
 };
 
 #endif /* SRC_FFBWHEEL_H_ */

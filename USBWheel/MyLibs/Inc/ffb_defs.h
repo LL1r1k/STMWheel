@@ -86,7 +86,7 @@
 
 struct FFBWheelConfig{
 	uint8_t check = 0x57;
-	uint8_t axes = 0b00000111;
+	uint8_t axes = 0b00110111;
 	uint8_t I2CButtons = 0x01;
 	uint8_t nLocalButtons = 0;
 	uint16_t degreesOfRotation = 900;
@@ -112,7 +112,9 @@ struct FFBWheelConfig{
 	uint8_t maxAcceleration = 10;
 	uint8_t maxPositionChange = 15;
 	uint16_t minForce = 20000;
-
+	uint8_t wheelNUM = 1;
+	uint32_t cfFilter_f = 500;
+	uint8_t cfFilter_q = 70;
 
 	bool isequal(FFBWheelConfig& conf)
 	{
@@ -141,7 +143,10 @@ struct FFBWheelConfig{
 			maxVelosity == conf.maxVelosity &&
 			maxAcceleration == conf.maxAcceleration &&
 			maxPositionChange == conf.maxPositionChange &&
-			minForce == conf.minForce)
+			minForce == conf.minForce &&
+			wheelNUM == conf.wheelNUM &&
+			cfFilter_f  == conf.cfFilter_f  &&
+			cfFilter_q == conf.cfFilter_q)
 			return true;
 		else
 			return false;
@@ -152,6 +157,8 @@ struct FFBWheelConfig{
 struct  __attribute__((__packed__)) reportHID_t {
 		uint8_t id = 1;
 		uint32_t buttons = 0;
+		uint32_t buttons2 = 0;
+		uint32_t buttons3 = 0;
 		int16_t X = 0;
 		int16_t Y = 0;
 		int16_t Z = 0;

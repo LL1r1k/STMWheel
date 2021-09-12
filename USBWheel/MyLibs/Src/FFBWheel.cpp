@@ -4,11 +4,18 @@
 // TODO class type for parser? (Simhub for example)
 //////////////////////////////////////////////
 
+extern I2C_HandleTypeDef hi2c1;
+
 FFBWheel::FFBWheel() {
+
+	restoreFlash(); // Load parameters
 
 	// Create HID FFB handler. Will receive all usb messages directly
 	this->ffb = new HidFFB();
+	ffb->set_config(&conf);
+	setCfFilter(conf.cfFilter_f, conf.cfFilter_q);
 
+	pi2cBuf = (uint8_t*)&i2cBuffer;
 
 	// Setup a timer
 	extern TIM_HandleTypeDef htim3;
@@ -16,9 +23,6 @@ FFBWheel::FFBWheel() {
 	this->timer_update->Instance->ARR = 250;
 	this->timer_update->Instance->CR1 = 1;
 	HAL_TIM_Base_Start_IT(this->timer_update);
-
-	restoreFlash(); // Load parameters
-	ffb->set_config(&conf);
 }
 
 FFBWheel::~FFBWheel() {
@@ -26,6 +30,16 @@ FFBWheel::~FFBWheel() {
 	delete enc;
 }
 
+void FFBWheel::setCfFilter(uint32_t freq, uint8_t q){
+	conf.cfFilter_q = clip<uint8_t, uint8_t>(q,0,127);
+
+	if(freq == 0)
+		freq = 500;
+	conf.cfFilter_f = freq;
+	float f = (float)conf.cfFilter_f / (float)1000;
+
+	ffb->setFilterFQ(f, (float)0.01 * (conf.cfFilter_q+1));
+}
 
 void FFBWheel::restoreFlash(){
 
@@ -34,7 +48,7 @@ void FFBWheel::restoreFlash(){
 
 	drv = new MotorBTS7960();
 	enc = new EncoderLocal();
-	btns = new LocalButtons();
+	//btns = new LocalButtons();
 
 	drv->start();
 	initEncoder();
@@ -60,7 +74,6 @@ void FFBWheel::update(){
 	int16_t lasttorque = endstopTorque;
 	bool updateTorque = false;
 	if(drv == nullptr || enc == nullptr){
-		pulseSysLed();
 		return;
 	}
 
@@ -73,7 +86,6 @@ void FFBWheel::update(){
 
 		if(abs(scaledEnc) > 0xffff){
 			drv->stop();
-			pulseSysLed();
 		}
 		endstopTorque = updateEndstop();
 
@@ -99,7 +111,7 @@ void FFBWheel::update(){
 		else if (torque < 0) torque = map(torque, 0, -this->conf.maxpower, MAX(-this->conf.minForce, -this->conf.maxpower), -this->conf.maxpower);
 		torque += endstopTorque;
 		torque = clip<int32_t,int16_t>(torque, -0x7fff, 0x7fff);
-		if(conf.inverted == true)
+		if(conf.inverted == false)
 			torque *=-1;
 		drv->turn(torque);
 	}
@@ -135,7 +147,7 @@ void FFBWheel::adcUpd(volatile uint32_t* ADC_BUF){
 	{
 		for(uint8_t i = 0;i<ADC_PINS;i++)
 		{
-			this->adc_buf[i] = this->adc_buf2[i]/conf.maxAdcCount;
+			this->adc_buf[i] = this->adc_buf2[i]/ (conf.maxAdcCount + 1);
 			this->adc_buf2[i]= 0;
 		}
 		adcCount = 0;
@@ -173,19 +185,40 @@ void FFBWheel::send_report(){
 
 	// Read buttons
 	reportHID.buttons = 0;
-	uint32_t buf = 0;
-	btns->readButtons(&buf);
-	reportHID.buttons = buf;
+	reportHID.buttons2 = 0;
+	reportHID.buttons3 = 0;
+
+	/*uint32_t buf = 0;
+	btns->readButtons(&buf, &conf);*/
+	uint8_t rotaryPos[3] = {0, };
+	rotaryPos[0] = i2cButtonsBuffer[2] & 0b1111;
+	rotaryPos[1] = (i2cButtonsBuffer[2] >> 4) & 0b1111;
+	rotaryPos[2] = i2cButtonsBuffer[3] & 0b1111;
+	reportHID.buttons = i2cButtonsBuffer[0] | (i2cButtonsBuffer[1] << 8) | (i2cButtonsBuffer[4] << 16) | (((i2cButtonsBuffer[3] >> 4) & 0b1111) << 24);
+	reportHID.buttons2 |= 1 <<rotaryPos[0];
+	reportHID.buttons2 |= 1 << (12 + rotaryPos[1]);
+	if(rotaryPos[2] < 8 )
+		reportHID.buttons2 |= 1 << (24 + rotaryPos[2]);
+	else
+		reportHID.buttons3 |= 1 << (rotaryPos[2] - 8);
+
+	reportHID.buttons ^= 1 << 7;
+	reportHID.buttons ^= 1 << 10;
+
 
 	// Encoder
 	reportHID.X = clip(lastScaledEnc,-0x7fff,0x7fff);
+
+	int16_t ry = i2cButtonsBuffer[6] | (i2cButtonsBuffer[5] << 8);
+	int16_t rz = i2cButtonsBuffer[8] | (i2cButtonsBuffer[7] << 8);
+
 	// Analog values read by DMA
 	uint16_t axes = this->conf.axes;
-	reportHID.Y 	=  	(axes & 0x01 << 1) ? ((adc_buf[0] & 0xFFF) << 4)	-0x7fff : 0;
+	reportHID.Y 	=  	(axes & 0x01 << 3) ? ((adc_buf[2] & 0xFFF) << 4)	-0x7fff : 0;
 	reportHID.Z		=  	(axes & 0x01 << 2) ? ((adc_buf[1] & 0xFFF) << 4)	-0x7fff : 0;
-	reportHID.RX	=  	(axes & 0x01 << 3) ? ((adc_buf[2] & 0xFFF) << 4)	-0x7fff : 0;
-	reportHID.RY	=	(axes & 0x01 << 4) ? ((adc_buf[3] & 0xFFF) << 4)	-0x7fff : 0;
-	reportHID.RZ	= 	(axes & 0x01 << 5) ? ((adc_buf[4] & 0xFFF) << 4)	-0x7fff : 0;
+	reportHID.RX	=  	(axes & 0x01 << 1) ? ((adc_buf[0] & 0xFFF) << 4)	-0x7fff : 0;
+	reportHID.RY	=	(axes & 0x01 << 4) ? ((ry & 0xFFF) << 4)	-0x7fff : 0;
+	reportHID.RZ	= 	(axes & 0x01 << 5) ? ((rz & 0xFFF) << 4)	-0x7fff : 0;
 	reportHID.Slider= 	(axes & 0x01 << 6) ? ((adc_buf[5] & 0xFFF) << 4)	-0x7fff : 0;
 
 	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, reinterpret_cast<uint8_t*>(&reportHID), sizeof(reportHID_t));

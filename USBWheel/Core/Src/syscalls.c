@@ -78,6 +78,8 @@ __attribute__((weak)) int _read(int file, char *ptr, int len)
 return len;
 }
 
+uint32_t lastWriteTime = 0;
+
 __attribute__((weak)) int _write(int file, char *ptr, int len)
 {
 	uint8_t status = CDC_Transmit_FS(ptr, len);

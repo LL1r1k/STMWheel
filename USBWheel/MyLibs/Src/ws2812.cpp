@@ -1,7 +1,5 @@
 #include <ws2812.h>
 
-extern TIM_HandleTypeDef htim2;
-
 uint16_t BUF_DMA [ARRAY_LEN] = {0};
 uint8_t bright = 128;
 RGB LED_RPM []= {

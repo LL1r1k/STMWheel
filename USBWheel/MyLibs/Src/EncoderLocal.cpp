@@ -37,7 +37,7 @@ void EncoderLocal::setPeriod(uint32_t period){
 
 void EncoderLocal::exti(uint16_t GPIO_Pin){
 	if(GPIO_Pin == ENCODER_Z_Pin){
-		// Encoder Z pin activated
+		//setPos(0);
 	}
 }
 

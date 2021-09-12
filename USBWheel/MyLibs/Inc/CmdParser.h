@@ -15,7 +15,7 @@
 
 
 enum class CMDtype{
-	set,setat,get,getat,none,help,err, dash
+	set,setat,get,getat,none,help,err, dash, simhub
 };
 struct ParsedCommand
 {
@@ -46,6 +46,7 @@ public:
 	void clear();
 
 	std::string buffer;
+	uint16_t needRead = 0;
 
 	bool add(char* Buf, uint32_t *Len);
 	std::vector<ParsedCommand> parse();
