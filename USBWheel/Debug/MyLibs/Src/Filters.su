@@ -1,8 +1,13 @@
-Filters.cpp:12:1:Biquad::Biquad()	0	static
-Filters.cpp:15:1:Biquad::Biquad(BiquadType, float, float, float)	56	static
-Filters.cpp:19:1:Biquad::~Biquad()	0	static
-Filters.cpp:22:6:void Biquad::setFc(float)	56	static
-Filters.cpp:28:6:void Biquad::setQ(float)	56	static
-Filters.cpp:33:7:float Biquad::process(float)	24	static
-Filters.cpp:40:6:void Biquad::setBiquad(BiquadType, float, float, float)	56	static
-Filters.cpp:52:6:void Biquad::calcBiquad()	56	static
+cmath:241:3:constexpr float std::fabs(float)	16	static
+cmath:463:3:constexpr float std::sqrt(float)	16	static
+Filters.cpp:12:1:Biquad::Biquad()	16	static
+Filters.cpp:15:1:Biquad::Biquad(BiquadType, float, float, float)	32	static
+Filters.cpp:19:1:Biquad::~Biquad()	16	static
+Filters.cpp:22:6:void Biquad::setFc(float)	16	static
+Filters.cpp:28:6:void Biquad::setQ(float)	16	static
+Filters.cpp:33:7:float Biquad::process(float)	32	static
+Filters.cpp:40:6:void Biquad::setBiquad(BiquadType, float, float, float)	24	static
+cmath:475:5:constexpr typename __gnu_cxx::__enable_if<std::__is_integer<_Tp>::__value, double>::__type std::sqrt(_Tp) [with _Tp = int]	16	static
+Filters.cpp:52:6:void Biquad::calcBiquad()	40	static
+cppmain.h:39:3:T clip(T, C, C) [with T = float; C = float]	24	static
+cmath:415:5:constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up) [with _Tp = int; _Up = double]	24	static

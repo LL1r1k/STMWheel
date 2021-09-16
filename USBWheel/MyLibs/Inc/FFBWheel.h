@@ -54,9 +54,7 @@ public:
 	CmdParser parser = CmdParser();
 
 	uint8_t* pi2cBuf;
-
 	uint8_t i2cButtonsBuffer[9] = {0,};
-
 	uint8_t needSave = false;
 private:
 	void send_report();
@@ -68,6 +66,7 @@ private:
 	HidFFB* ffb;
 	TIM_HandleTypeDef* timer_update;
 	int32_t torque = 0; // last torque
+	float torqueScaler = 0;
 	int32_t endstopTorque = 0; // last torque
 	FFBWheelConfig conf;
 

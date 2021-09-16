@@ -1,23 +1,40 @@
-FFBWheel.cpp:140:6:virtual void FFBWheel::adcUpd(volatile uint32_t*)	4	static
-FFBWheel.cpp:228:6:virtual void FFBWheel::timerElapsed(TIM_HandleTypeDef*)	0	static
-FFBWheel.h:46:7:virtual void FFBWheel::_ZThn4_N8FFBWheel12timerElapsedEP17TIM_HandleTypeDef(TIM_HandleTypeDef*)	0	static
-FFBWheel.cpp:33:6:void FFBWheel::setCfFilter(uint32_t, uint8_t)	24	static
-FFBWheel.cpp:44:6:void FFBWheel::restoreFlash()	64	static
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+std_abs.h:56:3:long int std::abs(long int)	16	static
+ffb_defs.h:101:8:constexpr FFBWheelConfig::FFBWheelConfig()	16	static
+ffb_defs.h:123:37:constexpr reportHID_t::reportHID_t()	16	static
 FFBWheel.cpp:9:1:FFBWheel::FFBWheel()	32	static
-FFBWheel.cpp:58:6:void FFBWheel::saveFlash()	64	static
-FFBWheel.cpp:120:9:int32_t FFBWheel::map(int32_t, int32_t, int32_t, int32_t, int32_t)	4	static
-FFBWheel.cpp:126:9:int16_t FFBWheel::updateEndstop()	16	static
-FFBWheel.cpp:158:9:int32_t FFBWheel::getEncValue(EncoderLocal*, uint16_t)	24	static
-FFBWheel.cpp:183:6:void FFBWheel::send_report()	16	static
-FFBWheel.cpp:73:6:void FFBWheel::update()	32	static
-FFBWheel.cpp:234:6:void FFBWheel::cdcRcv(char*, uint32_t*)	32	static
-FFBWheel.cpp:240:6:void FFBWheel::usbInit()	0	static
-FFBWheel.cpp:243:6:void FFBWheel::SOF()	0	static
-FFBWheel.cpp:248:16:static FFBWheelConfig FFBWheel::decodeConf()	16	static
-FFBWheel.cpp:260:6:void FFBWheel::initEncoder()	24	static
-FFBWheel.cpp:28:1:FFBWheel::~FFBWheel()	8	static
-FFBWheel.h:26:10:virtual void* FFBWheel::_ZThn8_N8FFBWheelD0Ev()	16	static
-FFBWheel.h:26:10:virtual void* FFBWheel::_ZThn4_N8FFBWheelD0Ev()	16	static
-FFBWheel.cpp:28:1:virtual FFBWheel::~FFBWheel()	8	static
-FFBWheel.h:26:10:virtual void* FFBWheel::_ZThn8_N8FFBWheelD1Ev()	16	static
-FFBWheel.h:26:10:virtual void* FFBWheel::_ZThn4_N8FFBWheelD1Ev()	16	static
+FFBWheel.cpp:31:1:FFBWheel::~FFBWheel()	16	static
+FFBWheel.cpp:31:1:virtual FFBWheel::~FFBWheel()	16	static
+FFBWheel.cpp:36:6:void FFBWheel::setCfFilter(uint32_t, uint8_t)	24	static
+FFBWheel.cpp:47:6:void FFBWheel::restoreFlash()	48	static
+FFBWheel.cpp:61:6:void FFBWheel::saveFlash()	96	static
+FFBWheel.cpp:131:6:void FFBWheel::update()	24	static
+FFBWheel.cpp:181:9:int32_t FFBWheel::map(int32_t, int32_t, int32_t, int32_t, int32_t)	24	static
+FFBWheel.cpp:187:9:int16_t FFBWheel::updateEndstop()	32	static
+FFBWheel.cpp:201:6:virtual void FFBWheel::adcUpd(volatile uint32_t*)	24	static
+FFBWheel.cpp:219:9:int32_t FFBWheel::getEncValue(EncoderLocal*, uint16_t)	32	static
+FFBWheel.cpp:241:6:void FFBWheel::send_report()	32	static
+FFBWheel.cpp:287:6:virtual void FFBWheel::timerElapsed(TIM_HandleTypeDef*)	16	static
+stl_vector.h:125:14:std::_Vector_base<ParsedCommand, std::allocator<ParsedCommand> >::_Vector_impl::~_Vector_impl()	16	static
+FFBWheel.cpp:293:6:void FFBWheel::cdcRcv(char*, uint32_t*)	40	static
+FFBWheel.cpp:299:6:void FFBWheel::usbInit()	16	static
+FFBWheel.cpp:302:6:void FFBWheel::SOF()	16	static
+FFBWheel.cpp:307:16:static FFBWheelConfig FFBWheel::decodeConf()	40	static
+FFBWheel.cpp:319:6:void FFBWheel::initEncoder()	16	static
+cppmain.h:39:3:T clip(T, C, C) [with T = long int; C = long int]	24	static
+cppmain.h:27:8:int8_t cliptest(T, C, C) [with T = long int; C = long int]	24	static
+cppmain.h:39:3:T clip(T, C, C) [with T = long int; C = int]	24	static
+stl_vector.h:675:7:std::vector<_Tp, _Alloc>::~vector() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+allocator.h:153:7:std::allocator< <template-parameter-1-1> >::~allocator() [with _Tp = ParsedCommand]	16	static
+stl_vector.h:330:7:std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_vector.h:273:7:std::_Vector_base<_Tp, _Alloc>::_Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
+stl_construct.h:203:5:void std::_Destroy(_ForwardIterator, _ForwardIterator, std::allocator<_T2>&) [with _ForwardIterator = ParsedCommand*; _Tp = ParsedCommand]	24	static
+new_allocator.h:89:7:__gnu_cxx::new_allocator<_Tp>::~new_allocator() [with _Tp = ParsedCommand]	16	static
+stl_vector.h:347:7:void std::_Vector_base<_Tp, _Alloc>::_M_deallocate(std::_Vector_base<_Tp, _Alloc>::pointer, std::size_t) [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	24	static
+stl_construct.h:127:5:void std::_Destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = ParsedCommand*]	16	static
+alloc_traits.h:469:7:static void std::allocator_traits<std::allocator<_CharT> >::deallocate(std::allocator_traits<std::allocator<_CharT> >::allocator_type&, std::allocator_traits<std::allocator<_CharT> >::pointer, std::allocator_traits<std::allocator<_CharT> >::size_type) [with _Tp = ParsedCommand]	24	static
+stl_construct.h:105:9:static void std::_Destroy_aux<<anonymous> >::__destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = ParsedCommand*; bool <anonymous> = false]	16	static
+new_allocator.h:119:7:void __gnu_cxx::new_allocator<_Tp>::deallocate(__gnu_cxx::new_allocator<_Tp>::pointer, __gnu_cxx::new_allocator<_Tp>::size_type) [with _Tp = ParsedCommand]	24	static
+move.h:47:5:constexpr _Tp* std::__addressof(_Tp&) [with _Tp = ParsedCommand]	16	static
+CmdParser.h:20:8:ParsedCommand::~ParsedCommand()	16	static
+stl_construct.h:97:5:void std::_Destroy(_Tp*) [with _Tp = ParsedCommand]	16	static

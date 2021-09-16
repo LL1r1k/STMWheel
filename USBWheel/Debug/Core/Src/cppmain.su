@@ -1,7 +1,8 @@
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
 cppmain.cpp:19:6:void HAL_I2C_ListenCpltCallback(I2C_HandleTypeDef*)	16	static
-cppmain.cpp:31:6:void HAL_I2C_AddrCallback(I2C_HandleTypeDef*, uint8_t, uint16_t)	8	static
-cppmain.cpp:39:6:void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef*)	8	static
-cppmain.cpp:44:6:void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef*)	8	static
-cppmain.cpp:49:6:void HAL_I2C_ErrorCallback(I2C_HandleTypeDef*)	8	static
-cppmain.cpp:55:6:void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef*)	0	static
-cppmain.cpp:63:6:void cppmain()	32	static
+cppmain.cpp:31:6:void HAL_I2C_AddrCallback(I2C_HandleTypeDef*, uint8_t, uint16_t)	16	static
+cppmain.cpp:39:6:void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef*)	16	static
+cppmain.cpp:44:6:void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef*)	16	static
+cppmain.cpp:49:6:void HAL_I2C_ErrorCallback(I2C_HandleTypeDef*)	16	static
+cppmain.cpp:55:6:void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef*)	16	static
+cppmain.cpp:63:6:void cppmain()	16	static

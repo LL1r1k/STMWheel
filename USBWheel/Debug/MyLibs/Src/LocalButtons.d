@@ -30,7 +30,7 @@ MyLibs/Src/LocalButtons.o: ../MyLibs/Src/LocalButtons.cpp \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h \
  ../MyLibs/Inc/ledEffects.h ../MyLibs/Inc/i2ckeypad.h \
- ../MyLibs/Inc/ffb_defs.h
+ ../MyLibs/Inc/ffb_defs.h ../MyLibs/Inc/Filters.h
 
 ../MyLibs/Inc/LocalButtons.h:
 
@@ -101,3 +101,5 @@ MyLibs/Src/LocalButtons.o: ../MyLibs/Src/LocalButtons.cpp \
 ../MyLibs/Inc/i2ckeypad.h:
 
 ../MyLibs/Inc/ffb_defs.h:
+
+../MyLibs/Inc/Filters.h:

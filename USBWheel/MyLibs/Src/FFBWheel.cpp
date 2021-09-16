@@ -13,7 +13,7 @@ FFBWheel::FFBWheel() {
 	// Create HID FFB handler. Will receive all usb messages directly
 	this->ffb = new HidFFB();
 	ffb->set_config(&conf);
-	setCfFilter(conf.cfFilter_f, conf.cfFilter_q);
+	//setCfFilter(conf.cfFilter_f, conf.cfFilter_q);
 
 	pi2cBuf = (uint8_t*)&i2cBuffer;
 
@@ -23,6 +23,9 @@ FFBWheel::FFBWheel() {
 	this->timer_update->Instance->ARR = 250;
 	this->timer_update->Instance->CR1 = 1;
 	HAL_TIM_Base_Start_IT(this->timer_update);
+
+	float effect_margin_scaler = ((float)conf.totalGain/255.0);
+	this->torqueScaler = ((float)this->conf.maxpower / (float)0x7fff) * effect_margin_scaler;
 }
 
 FFBWheel::~FFBWheel() {
@@ -31,14 +34,14 @@ FFBWheel::~FFBWheel() {
 }
 
 void FFBWheel::setCfFilter(uint32_t freq, uint8_t q){
-	conf.cfFilter_q = clip<uint8_t, uint8_t>(q,0,127);
+	/*cfFilter_q = clip<uint8_t, uint8_t>(q,0,127);
 
 	if(freq == 0)
 		freq = 500;
-	conf.cfFilter_f = freq;
-	float f = (float)conf.cfFilter_f / (float)1000;
+	cfFilter_f = freq;
+	float f = (float)cfFilter_f / (float)1000;
 
-	ffb->setFilterFQ(f, (float)0.01 * (conf.cfFilter_q+1));
+	ffb->setFilterFQ(f, (float)0.01 * (cfFilter_q+1));*/
 }
 
 void FFBWheel::restoreFlash(){
@@ -57,7 +60,14 @@ void FFBWheel::restoreFlash(){
 // Saves parameters to flash
 void FFBWheel::saveFlash(){
 	FFBWheelConfig savedconf = decodeConf();
-	if(savedconf.isequal(conf))
+
+	uint8_t savedCofdArr[sizeof(FFBWheelConfig)];
+	memcpy(savedCofdArr, &savedconf, sizeof(FFBWheelConfig));
+
+	uint8_t confArr[sizeof(FFBWheelConfig)];
+	memcpy(confArr, &conf, sizeof(FFBWheelConfig));
+
+	if(savedCofdArr == confArr)
 		return;
 	uint32_t* buf = (uint32_t*)&conf;
 	uint8_t len = sizeof(FFBWheelConfig);
@@ -70,6 +80,54 @@ void FFBWheel::saveFlash(){
 /*
  * Periodical update method. Called from main loop
  */
+
+typedef struct{
+	int16_t curHours;
+	int16_t curMins;
+	int16_t curSecs;
+	int16_t gear;
+	int16_t ersBar;
+	int16_t fuelBar;
+	int16_t mix;
+	int16_t ers;
+	int16_t fuel;
+	int16_t fuelDelta;
+	int16_t tireFL;
+	int16_t tireFR;
+	int16_t tireRL;
+	int16_t tireRR;
+	int16_t rpm;
+	int16_t lapsRemains;
+	int16_t position;
+	int16_t brakeBias;
+	int16_t speed;
+	int16_t brakeFL;
+	int16_t brakeFR;
+	int16_t brakeRL;
+	int16_t brakeRR;
+	int16_t engineTemp;
+	int16_t oilTemp;
+	int16_t differential;
+	int16_t curLapSec;
+	int16_t curLapMs;
+	int16_t bestLapSec;
+	int16_t bestLapMs;
+	int16_t lastLapSec;
+	int16_t lastLapMs;
+	int16_t deltaAheadSec;
+	int16_t deltaAheadMs;
+	int16_t deltaBehindSec;
+	int16_t deltaBehindMs;
+	int16_t deltaToBestSec;
+	int16_t deltaToBestMs;
+	int16_t safetyCarDeltaSec;
+	int16_t safetyCarDeltaMs;
+	int16_t flags;
+	int16_t LEDBrightnes;
+	int16_t led[5];
+} Telemetry;
+Telemetry tmpT = {0,};
+
 void FFBWheel::update(){
 	int16_t lasttorque = endstopTorque;
 	bool updateTorque = false;
@@ -81,7 +139,6 @@ void FFBWheel::update(){
 
 		torque = 0;
 		scaledEnc = getEncValue(enc, conf.degreesOfRotation);
-
 		update_flag = false;
 
 		if(abs(scaledEnc) > 0xffff){
@@ -91,30 +148,34 @@ void FFBWheel::update(){
 
 	}
 	if(usb_update_flag){
-		speed = scaledEnc - lastScaledEnc;
 		lastScaledEnc = scaledEnc;
 
 		usb_update_flag = false;
 		torque = ffb->calculateEffects(enc);
-
 		if(endstopTorque == 0 || (endstopTorque > 0 && torque > 0) || (endstopTorque < 0 && torque < 0))
-		{
-			torque *= ((float)this->conf.totalGain / (float)100.00);
 			updateTorque = true;
-		}
 		this->send_report();
 	}
 
 	if(endstopTorque!=lasttorque || updateTorque){
-		torque = clip<int32_t,int16_t>(torque, -this->conf.maxpower, this->conf.maxpower);
-		if(torque > 0) torque = map(torque, 0, this->conf.maxpower, MIN(this->conf.minForce, this->conf.maxpower), this->conf.maxpower);
-		else if (torque < 0) torque = map(torque, 0, -this->conf.maxpower, MAX(-this->conf.minForce, -this->conf.maxpower), -this->conf.maxpower);
+		torque *= torqueScaler;
 		torque += endstopTorque;
-		torque = clip<int32_t,int16_t>(torque, -0x7fff, 0x7fff);
-		if(conf.inverted == false)
-			torque *=-1;
+		torque = (conf.inverted) ? torque : -torque;
+		torque = clip<int32_t, int32_t>(torque, -0x7fff, 0x7fff);
+		enc->currentTorque = torque;
+
+		/*torque = clip<int32_t,int16_t>(torque, -this->conf.maxpower, this->conf.maxpower);
+		if(torque > 0) torque = map(torque, 0, this->conf.maxpower, MIN(this->conf.minForce, this->conf.maxpower), this->conf.maxpower);
+		else if (torque < 0) torque = map(torque, 0, -this->conf.maxpower, MAX(-this->conf.minForce, -this->conf.maxpower), -this->conf.maxpower);*/
+
 		drv->turn(torque);
+
+		/*tmpT.brakeFL = torque / 10;
+		tmpT.flags = 8;
+		memcpy(i2cBuffer, &tmpT, sizeof(tmpT));*/
+
 	}
+
 }
 
 int32_t FFBWheel::map(int32_t x, int32_t in_min, int32_t in_max, int32_t out_min, int32_t out_max)
@@ -160,22 +221,19 @@ int32_t FFBWheel::getEncValue(EncoderLocal* enc,uint16_t degrees){
 			return 0x7fff; // Return center if no encoder present
 	}
 
-	enc->currentPosition = enc->getPos();
-	if(conf.inverted == true)
-		enc->currentPosition *=-1;
-	enc->positionChange = enc->currentPosition - enc->lastPosition;
-	uint32_t currentEncoderTime = (int32_t) HAL_GetTick();
-	int16_t diffTime = (int16_t)(currentEncoderTime -  enc->lastEncoderTime) ;
-	if (diffTime > 0) {
-		enc->currentVelocity = enc->positionChange / diffTime;
-		enc->currentAcceleration = (abs(enc->currentVelocity) - abs(enc->lastVelocity)) / diffTime;
-		enc->lastEncoderTime = currentEncoderTime;
-		enc->lastVelocity = enc->currentVelocity;
-	}
-	enc->lastPosition = enc->currentPosition;
-
-	float angle = 360.0*((float)enc->currentPosition/(float)enc->getPosCpr());
+	float angle = 360.0 * enc->getPos_f();
 	int32_t val = (0xffff / (float)degrees) * angle;
+	if (conf.inverted)
+		val= -val;
+
+	enc->currentPosition = val;
+	enc->currentSpeed= enc->currentPosition - enc->lastPosition;
+	enc->currentAcceleration = enc->currentSpeed - enc->lastSpeed;
+	enc->lastPosition = enc->currentPosition;
+	enc->lastSpeed = enc->currentSpeed;
+	enc->lastTorque = enc->currentTorque;
+	enc->currentTorque = 0;
+
 	return val;
 }
 
@@ -219,7 +277,8 @@ void FFBWheel::send_report(){
 	reportHID.RX	=  	(axes & 0x01 << 1) ? ((adc_buf[0] & 0xFFF) << 4)	-0x7fff : 0;
 	reportHID.RY	=	(axes & 0x01 << 4) ? ((ry & 0xFFF) << 4)	-0x7fff : 0;
 	reportHID.RZ	= 	(axes & 0x01 << 5) ? ((rz & 0xFFF) << 4)	-0x7fff : 0;
-	reportHID.Slider= 	(axes & 0x01 << 6) ? ((adc_buf[5] & 0xFFF) << 4)	-0x7fff : 0;
+	reportHID.Dial  =   0;
+	reportHID.Slider= 	0;
 
 	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, reinterpret_cast<uint8_t*>(&reportHID), sizeof(reportHID_t));
 
@@ -260,15 +319,5 @@ FFBWheelConfig FFBWheel::decodeConf(){
 void FFBWheel::initEncoder()
 {
 	enc->setPpr(conf.encoderPPR);
-	enc->maxAngle = conf.degreesOfRotation;
-	enc->maxValue = (float)enc->maxAngle / 2 / 360 * enc->ppr;
-	enc->minValue = -enc->maxValue;
-	enc->currentPosition = 0;
-	enc->lastPosition = 0;
-	enc->correctPosition = 0;
-	enc->lastEncoderTime = (uint32_t)HAL_GetTick();
-	enc->lastVelocity = 0;
-	enc->maxVelocity = conf.maxVelosity;
-	enc->maxAcceleration = conf.maxAcceleration;
-	enc->maxPositionChange = conf.maxPositionChange;
+	enc->degree = conf.degreesOfRotation;
 }

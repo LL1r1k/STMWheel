@@ -21,6 +21,12 @@ EncoderLocal::~EncoderLocal() {
 	this->htim->Instance->CR1 = 0;
 }
 
+float EncoderLocal::getPos_f(){
+	if(getPpr() == 0){
+		return 0.0;
+	}
+	return (float)this->getPos() / (float)this->getPpr();
+}
 
 int32_t EncoderLocal::getPos(){
 	int32_t timpos = htim->Instance->CNT - 0x7fff;

@@ -23,42 +23,33 @@ public:
 	void hidGet(uint8_t id,uint16_t len,uint8_t** return_buf);
 	int32_t calculateEffects(EncoderLocal* encoder); //Axis: 1/2 pos: current position scaled from -0x7fff to 0x7fff
     void set_config(FFBWheelConfig* conf);
-	bool idlecenter = true;
 
 	uint32_t hid_out_period = 0; // ms since last out report for measuring update rate
 
 private:
 	// HID
 
-	uint8_t find_free_effect(uint8_t type);
-	void new_effect(FFB_CreateNewEffect_Feature_Data_t* effect);
-	void free_effect(uint16_t id);
-	void ffb_control(uint8_t cmd);
-	void reset_ffb();
-	void set_effect(FFB_SetEffect_t* effect);
-	void set_condition(FFB_SetCondition_Data_t* cond);
-	void set_envelope(FFB_SetEnvelope_Data_t* envelop);
-
-	void set_constant_effect(FFB_SetConstantForce_Data_t* effect);
-	void set_ramp_effect(FFB_SetRampForce_Data_t* effect);
-	void set_periodic(FFB_SetPeriodic_Data_t* report);
 	void start_FFB();
 	void stop_FFB();
+	void reset_ffb();
 
+	int32_t calcNonConditionEffectForce(FFB_Effect *effect);
+	int32_t calcComponentForce(FFB_Effect *effect, int32_t forceVector, EncoderLocal* encoder);
+	int32_t calcConditionEffectForce(FFB_Effect *effect, float  metric, uint8_t gain,int32_t pos, uint8_t idx, float scale, float angle_ratio);
+    int32_t applyEnvelope(FFB_Effect* effect, int32_t value);
 
+    void new_effect(FFB_CreateNewEffect_Feature_Data_t* effect);
+    void set_effect(FFB_SetEffect_t* effect);
+    void free_effect(uint16_t idx);
+    uint8_t find_free_effect(uint8_t type);
+    void ffb_control(uint8_t cmd);
+    void set_envelope(FFB_SetEnvelope_Data_t *report);
+    void set_condition(FFB_SetCondition_Data_t *cond);
+    void set_periodic(FFB_SetPeriodic_Data_t* report);
+    void set_constant_effect(FFB_SetConstantForce_Data_t* effect);
+    void set_ramp(FFB_SetRamp_Data_t *report);
 
-	int32_t ConstantForceCalculator(FFB_Effect* effect);
-	int32_t RampForceCalculator(FFB_Effect* effect);
-	int32_t SquareForceCalculator(FFB_Effect* effect);
-	int32_t SinForceCalculator(FFB_Effect* effect);
-	int32_t TriangleForceCalculator(FFB_Effect* effect);
-	int32_t SawtoothDownForceCalculator(FFB_Effect* effect);
-	int32_t SawtoothUpForceCalculator(FFB_Effect* effect);
-	int32_t ConditionForceCalculator(FFB_Effect* effect, float metric);
-
-    int32_t ApplyGain(uint32_t value, uint8_t gain);
-    int32_t ApplyEnvelope(FFB_Effect* effect, int32_t value);
-    float NormalizeRange(int32_t x, int32_t maxValue);
+    void sendStatusReport(uint8_t effect);
 
 	uint8_t report_counter = 0;
 	uint16_t report_counter_hid = 0;

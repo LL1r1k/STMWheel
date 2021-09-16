@@ -1,32 +1,36 @@
-HidFFB.cpp:98:6:virtual void HidFFB::hidGet(uint8_t, uint16_t, uint8_t**)	0	static
-HidFFB.cpp:13:1:HidFFB::~HidFFB()	8	static
-HidFFB.cpp:13:1:virtual HidFFB::~HidFFB()	8	static
-HidFFB.cpp:4:1:HidFFB::HidFFB()	96	static
-HidFFB.cpp:17:6:void HidFFB::setFilterFQ(float, float)	16	static
-HidFFB.cpp:92:6:void HidFFB::free_effect(uint16_t)	0	static
-HidFFB.cpp:113:6:void HidFFB::start_FFB()	0	static
-HidFFB.cpp:118:6:void HidFFB::stop_FFB()	0	static
-HidFFB.cpp:125:6:void HidFFB::ffb_control(uint8_t)	4	static
-HidFFB.cpp:147:6:void HidFFB::set_constant_effect(FFB_SetConstantForce_Data_t*)	4	static
-HidFFB.cpp:151:6:void HidFFB::new_effect(FFB_CreateNewEffect_Feature_Data_t*)	80	static
-HidFFB.cpp:23:6:virtual void HidFFB::hidOut(uint8_t*)	24	static
-HidFFB.cpp:173:6:void HidFFB::set_effect(FFB_SetEffect_t*)	16	static
-HidFFB.cpp:201:6:void HidFFB::set_envelope(FFB_SetEnvelope_Data_t*)	4	static
-HidFFB.cpp:211:6:void HidFFB::set_ramp_effect(FFB_SetRampForce_Data_t*)	0	static
-HidFFB.cpp:220:6:void HidFFB::set_condition(FFB_SetCondition_Data_t*)	8	static
-HidFFB.cpp:234:6:void HidFFB::set_periodic(FFB_SetPeriodic_Data_t*)	12	static
-HidFFB.cpp:244:9:uint8_t HidFFB::find_free_effect(uint8_t)	0	static
-HidFFB.cpp:255:6:void HidFFB::reset_ffb()	0	static
-HidFFB.cpp:264:9:int32_t HidFFB::ConstantForceCalculator(FFB_Effect*)	16	static
-HidFFB.cpp:274:9:int32_t HidFFB::RampForceCalculator(FFB_Effect*)	0	static
-HidFFB.cpp:348:9:int32_t HidFFB::SquareForceCalculator(FFB_Effect*)	24	static
-HidFFB.cpp:367:9:int32_t HidFFB::SinForceCalculator(FFB_Effect*)	24	static
-HidFFB.cpp:381:9:int32_t HidFFB::TriangleForceCalculator(FFB_Effect*)	40	static
-HidFFB.cpp:403:9:int32_t HidFFB::SawtoothDownForceCalculator(FFB_Effect*)	32	static
-HidFFB.cpp:424:9:int32_t HidFFB::SawtoothUpForceCalculator(FFB_Effect*)	32	static
-HidFFB.cpp:445:9:int32_t HidFFB::ConditionForceCalculator(FFB_Effect*, float)	48	static
-HidFFB.cpp:280:9:int32_t HidFFB::calculateEffects(EncoderLocal*)	64	static
-HidFFB.cpp:478:9:int32_t HidFFB::ApplyGain(uint32_t, uint8_t)	0	static
-HidFFB.cpp:483:9:int32_t HidFFB::ApplyEnvelope(FFB_Effect*, int32_t)	24	static
-HidFFB.cpp:512:7:float HidFFB::NormalizeRange(int32_t, int32_t)	16	static
-HidFFB.cpp:517:6:void HidFFB::set_config(FFBWheelConfig*)	0	static
+std_abs.h:56:3:long int std::abs(long int)	16	static
+cmath:184:3:constexpr float std::cos(float)	16	static
+cmath:425:3:constexpr float std::sin(float)	16	static
+ffb_defs.h:224:27:FFB_BlockLoad_Feature_Data_t::FFB_BlockLoad_Feature_Data_t()	16	static
+ffb_defs.h:239:27:constexpr FFB_PIDPool_Feature_Data_t::FFB_PIDPool_Feature_Data_t()	16	static
+ffb_defs.h:178:27:constexpr reportFFB_status_t::reportFFB_status_t()	16	static
+HidFFB.cpp:5:1:HidFFB::HidFFB()	16	static
+HidFFB.cpp:14:1:HidFFB::~HidFFB()	16	static
+HidFFB.cpp:14:1:virtual HidFFB::~HidFFB()	16	static
+HidFFB.cpp:18:6:void HidFFB::setFilterFQ(float, float)	24	static
+HidFFB.cpp:24:6:virtual void HidFFB::hidOut(uint8_t*)	24	static
+HidFFB.cpp:88:6:virtual void HidFFB::hidGet(uint8_t, uint16_t, uint8_t**)	24	static
+HidFFB.cpp:103:6:void HidFFB::sendStatusReport(uint8_t)	16	static
+HidFFB.cpp:120:6:void HidFFB::ffb_control(uint8_t)	16	static
+HidFFB.cpp:141:6:void HidFFB::new_effect(FFB_CreateNewEffect_Feature_Data_t*)	104	static
+HidFFB.cpp:163:9:uint8_t HidFFB::find_free_effect(uint8_t)	24	static
+HidFFB.cpp:173:6:void HidFFB::set_effect(FFB_SetEffect_t*)	24	static
+HidFFB.cpp:198:6:void HidFFB::set_envelope(FFB_SetEnvelope_Data_t*)	24	static
+HidFFB.cpp:209:6:void HidFFB::set_condition(FFB_SetCondition_Data_t*)	24	static
+HidFFB.cpp:231:6:void HidFFB::set_periodic(FFB_SetPeriodic_Data_t*)	24	static
+HidFFB.cpp:242:6:void HidFFB::set_constant_effect(FFB_SetConstantForce_Data_t*)	16	static
+HidFFB.cpp:246:6:void HidFFB::set_ramp(FFB_SetRamp_Data_t*)	24	static
+HidFFB.cpp:254:6:void HidFFB::start_FFB()	16	static
+HidFFB.cpp:259:6:void HidFFB::stop_FFB()	16	static
+HidFFB.cpp:263:6:void HidFFB::reset_ffb()	24	static
+HidFFB.cpp:272:6:void HidFFB::free_effect(uint16_t)	16	static
+HidFFB.cpp:278:9:int32_t HidFFB::calculateEffects(EncoderLocal*)	32	static
+stl_algobase.h:222:5:constexpr const _Tp& std::max(const _Tp&, const _Tp&) [with _Tp = short unsigned int]	16	static
+HidFFB.cpp:303:9:int32_t HidFFB::calcNonConditionEffectForce(FFB_Effect*)	216	static
+HidFFB.cpp:417:9:int32_t HidFFB::applyEnvelope(FFB_Effect*, int32_t)	48	static
+HidFFB.cpp:443:9:int32_t HidFFB::calcComponentForce(FFB_Effect*, int32_t, EncoderLocal*)	96	static
+HidFFB.cpp:524:9:int32_t HidFFB::calcConditionEffectForce(FFB_Effect*, float, uint8_t, int32_t, uint8_t, float, float)	40	static
+HidFFB.cpp:542:6:void HidFFB::set_config(FFBWheelConfig*)	16	static
+move.h:99:5:constexpr typename std::remove_reference<_Tp>::type&& std::move(_Tp&&) [with _Tp = FFB_Effect&]	16	static
+cppmain.h:39:3:T clip(T, C, C) [with T = long unsigned int; C = long unsigned int]	24	static
+cppmain.h:39:3:T clip(T, C, C) [with T = long int; C = long int]	24	static

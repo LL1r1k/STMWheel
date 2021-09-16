@@ -9,9 +9,13 @@
 #define FFB_DEFS_H_
 
 #include "cppmain.h"
+#include "Filters.h"
 
 #define FFB_ID_OFFSET 0x00
 #define MAX_EFFECTS 40
+
+#define MAX_AXIS 2
+#define DIRECTION_ENABLE (1 << MAX_AXIS)
 
 // HID Descriptor definitions - Axes
 #define HID_USAGE_X		0x30
@@ -55,13 +59,18 @@
 #define HID_ID_CTRLREP	0x0C	// Usage PID Device Control
 #define HID_ID_GAINREP	0x0D	// Usage Device Gain Report
 #define HID_ID_SETCREP	0x0E	// Usage Set Custom Force Report
-
 // Features
 #define HID_ID_NEWEFREP	0x11	// Usage Create New Effect Report
 #define HID_ID_BLKLDREP	0x12	// Usage Block Load Report
 #define HID_ID_POOLREP	0x13	// Usage PID Pool Report
 
-#define FFB_EFFECT_NONE		0x00
+// Control
+#define HID_ID_CUSTOMCMD 0xAF   // Custom cmd
+//#define HID_ID_CUSTOMCMD_IN 0xA2   // Custom cmd in
+//#define HID_ID_CUSTOMCMD_OUT 0xA1   // Custom cmd out
+
+
+#define FFB_EFFECT_NONE			0x00
 #define FFB_EFFECT_CONSTANT		0x01
 #define FFB_EFFECT_RAMP			0x02
 #define FFB_EFFECT_SQUARE 		0x03
@@ -73,13 +82,18 @@
 #define FFB_EFFECT_DAMPER		0x09
 #define FFB_EFFECT_INERTIA		0x0A
 #define FFB_EFFECT_FRICTION		0x0B
-#define FFB_EFFECT_CUSTOM	0x0C
+#define FFB_EFFECT_CUSTOM		0x0C
 
-#define HID_ACTUATOR_POWER 0x08
-#define HID_SAFETY_SWITCH 0x04
-#define HID_ENABLE_ACTUATORS 0x02
+#define HID_ACTUATOR_POWER 		0x08
+#define HID_SAFETY_SWITCH 		0x04
+#define HID_ENABLE_ACTUATORS 	0x02
+#define HID_EFFECT_PAUSE		0x01
 #define HID_ENABLE_ACTUATORS_MASK 0xFD
-#define HID_EFFECT_PLAYING 0x10
+#define HID_EFFECT_PLAYING 		0x10
+
+#define HID_DIRECTION_ENABLE 0x04
+#define FFB_EFFECT_DURATION_INFINITE 0xffff
+
 
 // Only include these for cpp
 #ifdef __cplusplus
@@ -87,213 +101,223 @@
 struct FFBWheelConfig{
 	uint8_t check = 0x57;
 	uint8_t axes = 0b00110111;
-	uint8_t I2CButtons = 0x01;
-	uint8_t nLocalButtons = 0;
-	uint16_t degreesOfRotation = 900;
-	uint16_t maxpower = 2000;
-	uint16_t encoderPPR = 8500;
+	uint16_t degreesOfRotation = 540;
+	uint16_t maxpower = 0x7fff;
+	uint16_t minForce = 0;
+	uint16_t encoderPPR = 4600;
 	uint8_t maxAdcCount = 8;
-
 	uint8_t inverted = 1;
-	uint8_t endstop_gain = 20;
+	uint8_t endstop_gain = 50;
 	uint8_t constantGain = 100;
-	uint8_t rampGain = 100;
-	uint8_t squareGain = 100;
-	uint8_t sinGain = 100;
-	uint8_t triangleGain = 100;
-	uint8_t sawToothDownGain = 100;
-	uint8_t sawToothUpGain = 100;
 	uint8_t springGain = 100;
 	uint8_t damperGain = 100;
 	uint8_t inertiaGain = 100;
 	uint8_t frictionGain = 100;
-	uint8_t totalGain = 100;
-	uint8_t maxVelosity = 15;
-	uint8_t maxAcceleration = 10;
-	uint8_t maxPositionChange = 15;
-	uint16_t minForce = 20000;
+	uint8_t totalGain = 0xff;
 	uint8_t wheelNUM = 1;
-	uint32_t cfFilter_f = 500;
-	uint8_t cfFilter_q = 70;
-
-	bool isequal(FFBWheelConfig& conf)
-	{
-		if(	check == conf.check &&
-			axes == conf.axes &&
-			I2CButtons == conf.I2CButtons &&
-			nLocalButtons == conf.nLocalButtons &&
-			degreesOfRotation == conf.degreesOfRotation &&
-			maxpower == conf.maxpower &&
-			endstop_gain == conf.endstop_gain &&
-			encoderPPR == conf.encoderPPR &&
-			maxAdcCount == conf.maxAdcCount &&
-			inverted == conf.inverted &&
-			constantGain == conf.constantGain &&
-			rampGain == conf.rampGain &&
-			squareGain == conf.squareGain &&
-			sinGain == conf.sinGain &&
-			triangleGain == conf.triangleGain &&
-			sawToothDownGain == conf.sawToothDownGain &&
-			sawToothUpGain == conf.sawToothUpGain &&
-			springGain == conf.springGain &&
-			damperGain == conf.damperGain &&
-			inertiaGain == conf.inertiaGain &&
-			frictionGain == conf.frictionGain &&
-			totalGain == conf.totalGain &&
-			maxVelosity == conf.maxVelosity &&
-			maxAcceleration == conf.maxAcceleration &&
-			maxPositionChange == conf.maxPositionChange &&
-			minForce == conf.minForce &&
-			wheelNUM == conf.wheelNUM &&
-			cfFilter_f  == conf.cfFilter_f  &&
-			cfFilter_q == conf.cfFilter_q)
-			return true;
-		else
-			return false;
-	}
 };
+
+// HID gamepad report
 
 
 struct  __attribute__((__packed__)) reportHID_t {
-		uint8_t id = 1;
-		uint32_t buttons = 0;
-		uint32_t buttons2 = 0;
-		uint32_t buttons3 = 0;
-		int16_t X = 0;
-		int16_t Y = 0;
-		int16_t Z = 0;
-		int16_t RX = 0;
-		int16_t RY = 0;
-		int16_t RZ = 0;
-		int16_t Slider = 0;
-	};
+	uint8_t id = 1;
+	uint32_t buttons = 0;
+	uint32_t buttons2 = 0;
+	uint32_t buttons3 = 0;
+	int16_t X = 0;
+	int16_t Y = 0;
+	int16_t Z = 0;
+	int16_t RX = 0;
+	int16_t RY = 0;
+	int16_t RZ = 0;
+	int16_t Dial = 0;
+	int16_t Slider = 0;
+};
+
+/*
+ * Helper function to access analog axes in packed HID report struct
+ */
+inline void setHidReportAxis(reportHID_t *report, uint8_t idx, int16_t val){
+	switch(idx){
+	case 0:
+		report->X = val;
+		break;
+	case 1:
+		report->Y = val;
+		break;
+	case 2:
+		report->Z = val;
+		break;
+	case 3:
+		report->RX = val;
+		break;
+	case 4:
+		report->RY = val;
+		break;
+	case 5:
+		report->RZ = val;
+		break;
+	case 6:
+		report->Dial = val;
+		break;
+	case 7:
+		report->Slider = val;
+		break;
+	default:
+		return;
+	}
+}
 
 typedef struct
 {
 	const uint8_t	reportId = HID_ID_STATE+FFB_ID_OFFSET;
-	uint8_t	effectBlockIndex = 1;	//EffectId (1..40)
+	uint8_t	effectBlockIndex = 1;	//EffectId
 	uint8_t	status = (HID_ACTUATOR_POWER) | (HID_ENABLE_ACTUATORS);	// Bits: 0=Device Paused,1=Actuators Enabled,2=Safety Switch,3=Actuator Power, 4=Effect Playing
 
 } __attribute__((packed)) reportFFB_status_t;
 
 
-
 typedef struct
-	{ // FFB: Set Effect Output Report
-	uint8_t		reportId = 1;	// =1
+	{
+	uint8_t		reportId = 1;
 	uint8_t		effectBlockIndex = 0;	// 1..max_effects
-	uint8_t		effectType = 0;	// 1..12 (effect usages: 26,27,30,31,32,33,34,40,41,42,43,28)
+	uint8_t		effectType = 0;
 	uint16_t	duration = 0; // 0..32767 ms
 	uint16_t	triggerRepeatInterval = 0; // 0..32767 ms
 	uint16_t	samplePeriod = 0;	// 0..32767 ms
-	uint8_t		gain = 255;	// 0..255	 (physical 0..10000)
-	uint8_t		triggerButton = 0;	// button ID (0..8)
+	uint16_t	startDelay = 0;	// 0..32767 ms
+	uint8_t		gain = 255;	// 0..255 scaler
+	uint8_t		triggerButton = 0;	// button ID. unused
 	uint8_t		enableAxis = 0; // bits: 0=X, 1=Y, 2=DirectionEnable
-	uint8_t		directionX = 0;	// angle (0=0 .. 255=360deg)
-	uint8_t		directionY = 0;	// angle (0=0 .. 255=360deg)
+	uint16_t	directionX = 0;	// angle (0=0 .. 36000=360deg)
+	uint16_t	directionY = 0;	// angle (0=0 .. 36000=360deg)
+#if MAX_AXIS == 3
+	uint8_t directionZ = 0; // angle (0=0 .. 255=360deg)
+#endif
+	//	uint16_t	typeSpecificBlockOffsetX = 0; // Needed?
+	//	uint16_t	typeSpecificBlockOffsetY = 0;
+//	uint16_t	startDelay;	// 0..32767 ms
 } __attribute__((packed)) FFB_SetEffect_t;
 
 typedef struct
-	{ // FFB: Set Condition Output Report
-	uint8_t	reportId;	//
-	uint8_t	effectBlockIndex;	// 1..40
-	uint8_t	parameterBlockOffset;	// bits: 0..3=parameterBlockOffset, 4..5=instance1, 6..7=instance2
-	int16_t  cpOffset;	// -128..127
-	int16_t	positiveCoefficient;
-	int16_t	negativeCoefficient;
-	uint16_t	positiveSaturation;
+	{
+	uint8_t		reportId;
+	uint8_t		effectBlockIndex;	// 1..max_effects
+	uint8_t		parameterBlockOffset;	// bits: 0..3=parameterBlockOffset, 4..5=instance1, 6..7=instance2
+	int16_t  	cpOffset;	// Center
+	int16_t		positiveCoefficient; // Scaler for positive range
+	int16_t		negativeCoefficient;
+	uint16_t	positiveSaturation;	// Clipping point for positive range
 	uint16_t	negativeSaturation;
 	uint16_t	deadBand;
 } __attribute__((packed)) FFB_SetCondition_Data_t;
 
+
+
 typedef struct
-	{ // FFB: PID Block Load Feature Report
-	uint8_t	reportId = HID_ID_BLKLDREP;	// =2
-	uint8_t effectBlockIndex;	// 1..40
+	{
+	uint8_t	reportId = HID_ID_BLKLDREP;
+	uint8_t effectBlockIndex;	// 1..max_effects
 	uint8_t	loadStatus;	// 1=Success,2=Full,3=Error
-	uint16_t	ramPoolAvailable;	// =0 or 0xFFFF?
+	uint16_t	ramPoolAvailable;
 } __attribute__((packed)) FFB_BlockLoad_Feature_Data_t;
 
 typedef struct
-	{ // FFB: Create New Effect Feature Report
+	{
 	uint8_t		reportId;
-	uint8_t	effectType;	// Enum (1..12): ET 26,27,30,31,32,33,34,40,41,42,43,28
-	uint16_t	byteCount;	// 0..511
+	uint8_t	effectType;	// Effect type ID
+	uint16_t	byteCount;	// Size of custom effects
 } __attribute__((packed)) FFB_CreateNewEffect_Feature_Data_t;
 
 typedef struct
-	{ // FFB: PID Pool Feature Report
+	{
 	uint8_t	reportId = HID_ID_POOLREP;
 	uint16_t	ramPoolSize = MAX_EFFECTS;
 	uint8_t		maxSimultaneousEffects = MAX_EFFECTS;
-	uint8_t		memoryManagement = 3;	// Bits: 0=DeviceManagedPool, 1=SharedParameterBlocks
+	uint8_t		memoryManagement = 1;	// 0=DeviceManagedPool, 1=SharedParameterBlocks
 } __attribute__((packed)) FFB_PIDPool_Feature_Data_t;
 
 
 typedef struct
-	{ // FFB: Set Periodic Output Report
-	uint8_t	reportId;	// =4
+	{
+	uint8_t	reportId;
 	uint8_t	effectBlockIndex;
 	uint16_t magnitude;
 	int16_t	offset;
 	uint16_t	phase;	// degrees
-	uint16_t	period;	// 0..32767 ms
+	uint32_t	period;	// 0..32767 ms
 } __attribute__((packed)) FFB_SetPeriodic_Data_t;
 
 typedef struct
 {
+	uint8_t reportId;
+	uint8_t effectBlockIndex;
+	uint16_t attackLevel;
+	uint16_t fadeLevel;
+	uint32_t attackTime;
+	uint32_t fadeTime;
+} __attribute__((packed)) FFB_SetEnvelope_Data_t;
+
+typedef struct
+{
+	uint8_t reportId;
+	uint8_t effectBlockIndex;
+	uint16_t startLevel;
+	uint16_t endLevel;
+} __attribute__((packed)) FFB_SetRamp_Data_t;
+
+typedef struct
+{
+	int16_t cpOffset = 0; // Center point
+	int16_t positiveCoefficient = 0;
+	int16_t negativeCoefficient = 0;
+	uint16_t positiveSaturation = 0;
+	uint16_t negativeSaturation = 0;
+	uint16_t deadBand = 0;
+
+} __attribute__((packed)) FFB_Effect_Condition;
+
+// Internal struct for storing effects
+typedef struct
+{
 	volatile uint8_t state = 0;
-	uint8_t type=FFB_EFFECT_NONE;
-	uint8_t gain=255;
-	int16_t attackLevel, fadeLevel;
-	int16_t	positiveCoefficient=0;
-	int16_t	negativeCoefficient=0;
-	uint16_t	positiveSaturation=0;
-	uint16_t	negativeSaturation=0;
-	int16_t magnitude = 0;
-	int16_t startMagnitude = 0;
-	int16_t  endMagnitude = 0;
-	uint8_t directionX = 0;
-	uint8_t directionY = 0;
-	int16_t phase=0;
-	int16_t offset=0;
-	int16_t cpOffset = 0;
-	int32_t last_value = 0;
-	uint16_t counter=0;						// ms
-	uint16_t period=0;							// ms
-	uint16_t duration=0,fadeTime=0,attackTime=0, elapsedTime = 0;	// ms
-	uint64_t startTime = 0;
+	uint8_t type = FFB_EFFECT_NONE; // Type
+	int16_t offset = 0;				// Center point
+	uint8_t gain = 255;				// Scaler. often unused
+	int16_t magnitude = 0;			// High res intensity of effect
+	int16_t startLevel = 0;			// Ramp effect
+	int16_t endLevel = 0;			// Ramp effect
+	uint8_t enableAxis = 0;			// Active axis
+	uint16_t directionX = 0;		// angle (0=0 .. 36000=360deg)
+	uint16_t directionY = 0;		// angle (0=0 .. 36000=360deg)
+#if MAX_AXIS == 3
+	uint8_t directionZ = 0; // angle (0=0 .. 255=360deg)
+#endif
+	uint8_t conditionsCount = 0;
+	FFB_Effect_Condition conditions[MAX_AXIS];
+	int16_t phase = 0;
+	uint16_t period = 0;
+	uint32_t duration = 0;					 // Duration in ms
+	uint16_t attackLevel = 0, fadeLevel = 0; // Envelope effect
+	uint32_t attackTime = 0, fadeTime = 0;	 // Envelope effect
+
+	Biquad* filter[MAX_AXIS] = { nullptr };
+	uint16_t startDelay = 0;
+	uint32_t startTime = 0;	  // Elapsed time in ms before effect starts
 	uint16_t samplePeriod = 0;
-	uint8_t axis = 0;
-	uint16_t	deadBand = 0;
+	bool useEnvelope = false;
 } FFB_Effect;
+
 
 
 // --------------- Effects------------------------
 typedef struct
-	{ // FFB: Set ConstantForce Output Report
-	uint8_t	reportId;	// =5
-	uint8_t	effectBlockIndex;	// 1..40
-	int16_t magnitude;	// -10000..10000 (set by hid descriptor report)
+	{
+	uint8_t	reportId;
+	uint8_t	effectBlockIndex;	// 1..max_effects
+	int16_t magnitude;	// High res intensity
 } __attribute__((packed)) FFB_SetConstantForce_Data_t;
-
-typedef struct
-	{ // FFB: Set Ramp Force Report
-	  uint8_t	reportId;	// =6
-	  uint8_t	effectBlockIndex;	// 1..40
-	  int16_t startMagnitude;
-	  int16_t	endMagnitude;
-} __attribute__((packed)) FFB_SetRampForce_Data_t;
-
-typedef struct
-	{ // FFB: Set Envelope  Report
-	  uint8_t	reportId;	// =2
-	  uint8_t	effectBlockIndex;	// 1..40
-	  uint16_t attackLevel;
-	  uint16_t	fadeLevel;
-	  uint16_t	attackTime;	// ms
-	  uint16_t	fadeTime;	// ms
-} __attribute__((packed)) FFB_SetEnvelope_Data_t;
 
 #endif //c++
 

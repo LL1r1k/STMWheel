@@ -1,9 +1,104 @@
-global_callbacks.cpp:22:6:void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef*)	16	static
-global_callbacks.cpp:29:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	16	static
-global_callbacks.cpp:36:6:void HAL_GPIO_EXTI_Callback(uint16_t)	16	static
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+stl_vector.h:125:14:std::_Vector_base<AdcHandler*, std::allocator<AdcHandler*> >::_Vector_impl::~_Vector_impl()	16	static
+stl_vector.h:285:7:std::_Vector_base<_Tp, _Alloc>::_Vector_base() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	16	static
+stl_vector.h:484:7:std::vector<_Tp, _Alloc>::vector() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	16	static
+stl_vector.h:125:14:std::_Vector_base<CommandHandler*, std::allocator<CommandHandler*> >::_Vector_impl::~_Vector_impl()	16	static
+stl_vector.h:285:7:std::_Vector_base<_Tp, _Alloc>::_Vector_base() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	16	static
+stl_vector.h:484:7:std::vector<_Tp, _Alloc>::vector() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	16	static
+global_callbacks.cpp:22:6:void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef*)	32	static
+stl_vector.h:125:14:std::_Vector_base<TimerHandler*, std::allocator<TimerHandler*> >::_Vector_impl::~_Vector_impl()	16	static
+stl_vector.h:285:7:std::_Vector_base<_Tp, _Alloc>::_Vector_base() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	16	static
+stl_vector.h:484:7:std::vector<_Tp, _Alloc>::vector() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	16	static
+global_callbacks.cpp:29:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	32	static
+stl_vector.h:125:14:std::_Vector_base<ExtiHandler*, std::allocator<ExtiHandler*> >::_Vector_impl::~_Vector_impl()	16	static
+stl_vector.h:285:7:std::_Vector_base<_Tp, _Alloc>::_Vector_base() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	16	static
+stl_vector.h:484:7:std::vector<_Tp, _Alloc>::vector() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	16	static
+global_callbacks.cpp:36:6:void HAL_GPIO_EXTI_Callback(uint16_t)	32	static
 global_callbacks.cpp:42:6:void CDC_Callback(uint8_t*, uint32_t*)	16	static
-global_callbacks.cpp:49:6:void USBD_OutEvent_HID(uint8_t*)	0	static
-global_callbacks.cpp:53:6:void USBD_GetEvent_HID(uint8_t, uint16_t, uint8_t**)	8	static
-global_callbacks.cpp:58:6:void USB_SOF()	0	static
-global_callbacks.cpp:61:1:cpp)	12	static
+global_callbacks.cpp:49:6:void USBD_OutEvent_HID(uint8_t*)	16	static
+global_callbacks.cpp:53:6:void USBD_GetEvent_HID(uint8_t, uint16_t, uint8_t**)	24	static
+global_callbacks.cpp:58:6:void USB_SOF()	8	static
+stl_vector.h:128:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	16	static
+allocator.h:153:7:std::allocator< <template-parameter-1-1> >::~allocator() [with _Tp = AdcHandler*]	16	static
+stl_vector.h:330:7:std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	16	static
+stl_vector.h:128:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	16	static
+allocator.h:153:7:std::allocator< <template-parameter-1-1> >::~allocator() [with _Tp = CommandHandler*]	16	static
+stl_vector.h:330:7:std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	16	static
+stl_vector.h:808:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::begin() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	24	static
+stl_vector.h:826:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::end() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	24	static
+stl_iterator.h:907:5:bool __gnu_cxx::operator!=(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&) [with _Iterator = AdcHandler**; _Container = std::vector<AdcHandler*>]	24	static
+stl_iterator.h:827:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>& __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator++() [with _Iterator = AdcHandler**; _Container = std::vector<AdcHandler*>]	16	static
+stl_iterator.h:819:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::reference __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator*() const [with _Iterator = AdcHandler**; _Container = std::vector<AdcHandler*>]	16	static
+stl_vector.h:128:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	16	static
+allocator.h:153:7:std::allocator< <template-parameter-1-1> >::~allocator() [with _Tp = TimerHandler*]	16	static
+stl_vector.h:330:7:std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	16	static
+stl_vector.h:808:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::begin() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	24	static
+stl_vector.h:826:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::end() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	24	static
+stl_iterator.h:907:5:bool __gnu_cxx::operator!=(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&) [with _Iterator = TimerHandler**; _Container = std::vector<TimerHandler*>]	24	static
+stl_iterator.h:827:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>& __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator++() [with _Iterator = TimerHandler**; _Container = std::vector<TimerHandler*>]	16	static
+stl_iterator.h:819:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::reference __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator*() const [with _Iterator = TimerHandler**; _Container = std::vector<TimerHandler*>]	16	static
+stl_vector.h:128:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	16	static
+allocator.h:153:7:std::allocator< <template-parameter-1-1> >::~allocator() [with _Tp = ExtiHandler*]	16	static
+stl_vector.h:330:7:std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	16	static
+stl_vector.h:808:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::begin() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	24	static
+stl_vector.h:826:7:std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::end() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	24	static
+stl_iterator.h:907:5:bool __gnu_cxx::operator!=(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&) [with _Iterator = ExtiHandler**; _Container = std::vector<ExtiHandler*>]	24	static
+stl_iterator.h:827:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>& __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator++() [with _Iterator = ExtiHandler**; _Container = std::vector<ExtiHandler*>]	16	static
+stl_iterator.h:819:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::reference __gnu_cxx::__normal_iterator<_Iterator, _Container>::operator*() const [with _Iterator = ExtiHandler**; _Container = std::vector<ExtiHandler*>]	16	static
+allocator.h:138:7:std::allocator< <template-parameter-1-1> >::allocator() [with _Tp = AdcHandler*]	16	static
+stl_vector.h:94:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl_data::_Vector_impl_data() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	16	static
+new_allocator.h:89:7:__gnu_cxx::new_allocator<_Tp>::~new_allocator() [with _Tp = AdcHandler*]	16	static
+stl_vector.h:347:7:void std::_Vector_base<_Tp, _Alloc>::_M_deallocate(std::_Vector_base<_Tp, _Alloc>::pointer, std::size_t) [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	24	static
+allocator.h:138:7:std::allocator< <template-parameter-1-1> >::allocator() [with _Tp = CommandHandler*]	16	static
+stl_vector.h:94:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl_data::_Vector_impl_data() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	16	static
+new_allocator.h:89:7:__gnu_cxx::new_allocator<_Tp>::~new_allocator() [with _Tp = CommandHandler*]	16	static
+stl_vector.h:347:7:void std::_Vector_base<_Tp, _Alloc>::_M_deallocate(std::_Vector_base<_Tp, _Alloc>::pointer, std::size_t) [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	24	static
+stl_iterator.h:806:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::__normal_iterator(const _Iterator&) [with _Iterator = AdcHandler**; _Container = std::vector<AdcHandler*>]	16	static
+stl_iterator.h:871:7:const _Iterator& __gnu_cxx::__normal_iterator<_Iterator, _Container>::base() const [with _Iterator = AdcHandler**; _Container = std::vector<AdcHandler*>]	16	static
+allocator.h:138:7:std::allocator< <template-parameter-1-1> >::allocator() [with _Tp = TimerHandler*]	16	static
+stl_vector.h:94:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl_data::_Vector_impl_data() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	16	static
+new_allocator.h:89:7:__gnu_cxx::new_allocator<_Tp>::~new_allocator() [with _Tp = TimerHandler*]	16	static
+stl_vector.h:347:7:void std::_Vector_base<_Tp, _Alloc>::_M_deallocate(std::_Vector_base<_Tp, _Alloc>::pointer, std::size_t) [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	24	static
+stl_iterator.h:806:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::__normal_iterator(const _Iterator&) [with _Iterator = TimerHandler**; _Container = std::vector<TimerHandler*>]	16	static
+stl_iterator.h:871:7:const _Iterator& __gnu_cxx::__normal_iterator<_Iterator, _Container>::base() const [with _Iterator = TimerHandler**; _Container = std::vector<TimerHandler*>]	16	static
+allocator.h:138:7:std::allocator< <template-parameter-1-1> >::allocator() [with _Tp = ExtiHandler*]	16	static
+stl_vector.h:94:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl_data::_Vector_impl_data() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	16	static
+new_allocator.h:89:7:__gnu_cxx::new_allocator<_Tp>::~new_allocator() [with _Tp = ExtiHandler*]	16	static
+stl_vector.h:347:7:void std::_Vector_base<_Tp, _Alloc>::_M_deallocate(std::_Vector_base<_Tp, _Alloc>::pointer, std::size_t) [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	24	static
+stl_iterator.h:806:7:__gnu_cxx::__normal_iterator<_Iterator, _Container>::__normal_iterator(const _Iterator&) [with _Iterator = ExtiHandler**; _Container = std::vector<ExtiHandler*>]	16	static
+stl_iterator.h:871:7:const _Iterator& __gnu_cxx::__normal_iterator<_Iterator, _Container>::base() const [with _Iterator = ExtiHandler**; _Container = std::vector<ExtiHandler*>]	16	static
+new_allocator.h:80:7:__gnu_cxx::new_allocator<_Tp>::new_allocator() [with _Tp = AdcHandler*]	16	static
+alloc_traits.h:469:7:static void std::allocator_traits<std::allocator<_Tp1> >::deallocate(std::allocator_traits<std::allocator<_Tp1> >::allocator_type&, std::allocator_traits<std::allocator<_Tp1> >::pointer, std::allocator_traits<std::allocator<_Tp1> >::size_type) [with _Tp = AdcHandler*]	24	static
+new_allocator.h:80:7:__gnu_cxx::new_allocator<_Tp>::new_allocator() [with _Tp = CommandHandler*]	16	static
+alloc_traits.h:469:7:static void std::allocator_traits<std::allocator<_Tp1> >::deallocate(std::allocator_traits<std::allocator<_Tp1> >::allocator_type&, std::allocator_traits<std::allocator<_Tp1> >::pointer, std::allocator_traits<std::allocator<_Tp1> >::size_type) [with _Tp = CommandHandler*]	24	static
+new_allocator.h:80:7:__gnu_cxx::new_allocator<_Tp>::new_allocator() [with _Tp = TimerHandler*]	16	static
+alloc_traits.h:469:7:static void std::allocator_traits<std::allocator<_Tp1> >::deallocate(std::allocator_traits<std::allocator<_Tp1> >::allocator_type&, std::allocator_traits<std::allocator<_Tp1> >::pointer, std::allocator_traits<std::allocator<_Tp1> >::size_type) [with _Tp = TimerHandler*]	24	static
+new_allocator.h:80:7:__gnu_cxx::new_allocator<_Tp>::new_allocator() [with _Tp = ExtiHandler*]	16	static
+alloc_traits.h:469:7:static void std::allocator_traits<std::allocator<_Tp1> >::deallocate(std::allocator_traits<std::allocator<_Tp1> >::allocator_type&, std::allocator_traits<std::allocator<_Tp1> >::pointer, std::allocator_traits<std::allocator<_Tp1> >::size_type) [with _Tp = ExtiHandler*]	24	static
+new_allocator.h:119:7:void __gnu_cxx::new_allocator<_Tp>::deallocate(__gnu_cxx::new_allocator<_Tp>::pointer, __gnu_cxx::new_allocator<_Tp>::size_type) [with _Tp = AdcHandler*]	24	static
+new_allocator.h:119:7:void __gnu_cxx::new_allocator<_Tp>::deallocate(__gnu_cxx::new_allocator<_Tp>::pointer, __gnu_cxx::new_allocator<_Tp>::size_type) [with _Tp = CommandHandler*]	24	static
+new_allocator.h:119:7:void __gnu_cxx::new_allocator<_Tp>::deallocate(__gnu_cxx::new_allocator<_Tp>::pointer, __gnu_cxx::new_allocator<_Tp>::size_type) [with _Tp = TimerHandler*]	24	static
+new_allocator.h:119:7:void __gnu_cxx::new_allocator<_Tp>::deallocate(__gnu_cxx::new_allocator<_Tp>::pointer, __gnu_cxx::new_allocator<_Tp>::size_type) [with _Tp = ExtiHandler*]	24	static
+global_callbacks.cpp:61:1:void __static_initialization_and_destruction_0(int, int)	16	static
+stl_vector.h:675:7:std::vector<_Tp, _Alloc>::~vector() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	24	static
+stl_vector.h:675:7:std::vector<_Tp, _Alloc>::~vector() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	24	static
+stl_vector.h:675:7:std::vector<_Tp, _Alloc>::~vector() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	24	static
+stl_vector.h:675:7:std::vector<_Tp, _Alloc>::~vector() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	24	static
+stl_vector.h:273:7:std::_Vector_base<_Tp, _Alloc>::_Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() [with _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	16	static
+stl_construct.h:203:5:void std::_Destroy(_ForwardIterator, _ForwardIterator, std::allocator<_T2>&) [with _ForwardIterator = ExtiHandler**; _Tp = ExtiHandler*]	24	static
+stl_vector.h:273:7:std::_Vector_base<_Tp, _Alloc>::_Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() [with _Tp = TimerHandler*; _Alloc = std::allocator<TimerHandler*>]	16	static
+stl_construct.h:203:5:void std::_Destroy(_ForwardIterator, _ForwardIterator, std::allocator<_T2>&) [with _ForwardIterator = TimerHandler**; _Tp = TimerHandler*]	24	static
+stl_vector.h:273:7:std::_Vector_base<_Tp, _Alloc>::_Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() [with _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	16	static
+stl_construct.h:203:5:void std::_Destroy(_ForwardIterator, _ForwardIterator, std::allocator<_T2>&) [with _ForwardIterator = CommandHandler**; _Tp = CommandHandler*]	24	static
+stl_vector.h:273:7:std::_Vector_base<_Tp, _Alloc>::_Tp_alloc_type& std::_Vector_base<_Tp, _Alloc>::_M_get_Tp_allocator() [with _Tp = AdcHandler*; _Alloc = std::allocator<AdcHandler*>]	16	static
+stl_construct.h:203:5:void std::_Destroy(_ForwardIterator, _ForwardIterator, std::allocator<_T2>&) [with _ForwardIterator = AdcHandler**; _Tp = AdcHandler*]	24	static
+stl_construct.h:127:5:void std::_Destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = ExtiHandler**]	16	static
+stl_construct.h:127:5:void std::_Destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = TimerHandler**]	16	static
+stl_construct.h:127:5:void std::_Destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = CommandHandler**]	16	static
+stl_construct.h:127:5:void std::_Destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = AdcHandler**]	16	static
+stl_construct.h:117:9:static void std::_Destroy_aux<true>::__destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = ExtiHandler**]	16	static
+stl_construct.h:117:9:static void std::_Destroy_aux<true>::__destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = TimerHandler**]	16	static
+stl_construct.h:117:9:static void std::_Destroy_aux<true>::__destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = CommandHandler**]	16	static
+stl_construct.h:117:9:static void std::_Destroy_aux<true>::__destroy(_ForwardIterator, _ForwardIterator) [with _ForwardIterator = AdcHandler**]	16	static
+global_callbacks.cpp:61:1:cpp)	8	static
 global_callbacks.cpp:61:1:cpp)	8	static

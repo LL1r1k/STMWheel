@@ -67,22 +67,8 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 			*reply+=std::to_string(conf.maxpower);
 		}else if(cmd->type == CMDtype::set){
 			this->conf.maxpower = cmd->val;
-			*reply += "OK";
-		}
-	}else if(cmd->cmd == "filterF"){
-		if(cmd->type == CMDtype::get){
-			*reply+=std::to_string(conf.cfFilter_f);
-		}else if(cmd->type == CMDtype::set){
-			this->conf.cfFilter_f = cmd->val;
-			setCfFilter(this->conf.cfFilter_f, this->conf.cfFilter_q);
-			*reply += "OK";
-		}
-	}else if(cmd->cmd == "filterQ"){
-		if(cmd->type == CMDtype::get){
-			*reply+=std::to_string(conf.cfFilter_q);
-		}else if(cmd->type == CMDtype::set){
-			this->conf.cfFilter_q = cmd->val;
-			setCfFilter(this->conf.cfFilter_f, this->conf.cfFilter_q);
+			float effect_margin_scaler = ((float)conf.totalGain/255.0);
+			this->torqueScaler = ((float)this->conf.maxpower / (float)0x7fff) * effect_margin_scaler;
 			*reply += "OK";
 		}
 	}else if(cmd->cmd == "degrees"){
@@ -90,9 +76,7 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 			*reply+=std::to_string(this->conf.degreesOfRotation);
 		}else if(cmd->type == CMDtype::set){
 			this->conf.degreesOfRotation = cmd->val;
-			enc->maxAngle = conf.degreesOfRotation;
-			enc->maxValue = (float)enc->maxAngle / 2 / 360 * enc->ppr;
-			enc->minValue = -enc->maxValue;
+			enc->degree = conf.degreesOfRotation;
 			*reply += "OK";
 		}
 	}else if(cmd->cmd == "axismask"){
@@ -131,48 +115,6 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 					*reply+=std::to_string(this->conf.constantGain);
 				}else if(cmd->type == CMDtype::set){
 					this->conf.constantGain = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "rampGain"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.rampGain);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.rampGain = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "squareGain"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.squareGain);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.squareGain = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "sinGain"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.sinGain);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.sinGain = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "triangleGain"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.triangleGain);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.triangleGain = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "sawToothDownGain"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.sawToothDownGain);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.sawToothDownGain = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "sawToothUpGain"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.sawToothUpGain);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.sawToothUpGain = cmd->val;
 					*reply += "OK";
 				}
 	}else if(cmd->cmd == "springGain"){
@@ -215,27 +157,8 @@ bool FFBWheel::command(ParsedCommand* cmd,std::string* reply){
 					*reply+=std::to_string(this->conf.totalGain);
 				}else if(cmd->type == CMDtype::set){
 					this->conf.totalGain = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "maxVelosity"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.maxVelosity);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.maxVelosity = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "maxAcceleration"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.maxAcceleration);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.maxAcceleration = cmd->val;
-					*reply += "OK";
-				}
-	}else if(cmd->cmd == "maxPositionChange"){
-				if(cmd->type == CMDtype::get){
-					*reply+=std::to_string(this->conf.maxPositionChange);
-				}else if(cmd->type == CMDtype::set){
-					this->conf.maxPositionChange = cmd->val;
+					float effect_margin_scaler = ((float)conf.totalGain/255.0);
+					this->torqueScaler = ((float)this->conf.maxpower / (float)0x7fff) * effect_margin_scaler;
 					*reply += "OK";
 				}
 	}else if(cmd->cmd == "minPower"){
