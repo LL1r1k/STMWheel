@@ -33,6 +33,8 @@ private:
 	void stop_FFB();
 	void reset_ffb();
 
+	int32_t updateIdleSpringForce(EncoderLocal* enc);
+
 	int32_t calcNonConditionEffectForce(FFB_Effect *effect);
 	int32_t calcComponentForce(FFB_Effect *effect, int32_t forceVector, EncoderLocal* encoder);
 	int32_t calcConditionEffectForce(FFB_Effect *effect, float  metric, uint8_t gain,int32_t pos, uint8_t idx, float scale, float angle_ratio);

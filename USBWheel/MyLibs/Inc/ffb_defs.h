@@ -115,6 +115,8 @@ struct FFBWheelConfig{
 	uint8_t frictionGain = 100;
 	uint8_t totalGain = 0xff;
 	uint8_t wheelNUM = 1;
+	uint8_t idleSpring = 0;
+	uint8_t idleDamper = 0;
 };
 
 // HID gamepad report

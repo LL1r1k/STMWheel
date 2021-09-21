@@ -275,9 +275,22 @@ void HidFFB::free_effect(uint16_t idx){
 	}
 }
 
+int32_t HidFFB::updateIdleSpringForce(EncoderLocal* enc)
+{
+	float idlespringscale = clip<int32_t, int32_t>((int32_t)conf->idleSpring*50, 0, 10000);
+	int16_t idlespringclip = 0.5f + ((float)conf->idleSpring * 0.01f);
+	return clip<int32_t,int32_t>((int32_t)(-enc->currentPosition * idlespringscale), -idlespringclip, idlespringclip);
+}
+
 int32_t HidFFB::calculateEffects(EncoderLocal* encoder){
+	int32_t idleForce = 0;
 	if(!ffb_active){
-		return 0;
+		idleForce += updateIdleSpringForce();
+	}
+
+	if(damperIntensity != 0){
+		float speedFiltered = damperFilter.process(encoder->currentSpeed) * (float)conf->idleDamper * 1.5;
+		idleForce -= clip<float, int32_t>(speedFiltered, -10000, 10000);
 	}
 
 	int32_t forceX = 0;
