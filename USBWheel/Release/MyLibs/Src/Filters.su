@@ -1,7 +1,8 @@
-Filters.cpp:13:1:Biquad::Biquad()	0	static
-Filters.cpp:20:1:Biquad::~Biquad()	0	static
-Filters.cpp:28:7:float Biquad::process(float)	24	static
-Filters.cpp:43:6:void Biquad::calcBiquad()	56	static
-Filters.cpp:23:6:void Biquad::setFc(float)	0	static
-Filters.cpp:35:6:void Biquad::setBiquad(BiquadType, float, float, float)	4	static
-Filters.cpp:16:1:Biquad::Biquad(BiquadType, float, float, float)	8	static
+Filters.cpp:10:1:Filters::Filters()	0	static
+Filters.cpp:25:1:Filters::~Filters()	0	static
+Filters.cpp:45:7:float Filters::filterIn(float)	16	static
+Filters.cpp:60:6:void Filters::flush()	0	static
+Filters.cpp:119:14:void Filters::initLowPass()	48	static
+Filters.cpp:30:6:void Filters::init(uint8_t)	40	static
+Filters.cpp:16:1:Filters::Filters(float, float, ORDER, TYPE)	40	static
+Filters.cpp:206:7:float Filters::ap(float)	24	static

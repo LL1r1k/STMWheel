@@ -1,5 +1,4 @@
 ExtiHandler.cpp:27:6:virtual void ExtiHandler::exti(uint16_t)	0	static
 ExtiHandler.cpp:17:1:ExtiHandler::~ExtiHandler()	24	static
-ExtiHandler.cpp:17:1:virtual ExtiHandler::~ExtiHandler()	8	static
-vector.tcc:394:7:) [with _Args = {ExtiHandler*}; _Tp = ExtiHandler*; _Alloc = std::allocator<ExtiHandler*>]	32	static
-ExtiHandler.cpp:12:1:ExtiHandler::ExtiHandler()	16	static
+ExtiHandler.cpp:17:1:virtual ExtiHandler::~ExtiHandler()	24	static
+ExtiHandler.cpp:12:1:ExtiHandler::ExtiHandler()	32	static

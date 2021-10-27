@@ -24,15 +24,28 @@ void CmdParser::clear(){
 
 bool CmdParser::add(char* Buf, uint32_t *Len){
 	bool flag = false;
-	for(uint32_t i=0;i<*Len;i++){
-		// Replace end markers
-		if(*(Buf+i) == '\n' || *(Buf+i) == '\r' || *(Buf+i) == ';'|| *(Buf+i) == ' '){
-			*(Buf+i) = (uint8_t)';';
+	if(*Buf == 0x2a)
+		needRead = atoi(Buf+1);
+	if(needRead != 0)
+	{
+		needRead -= *Len;
+		this->buffer.append((char*)Buf,*Len);
+		if(needRead == 0)
 			flag = true;
-		}
 	}
+	else
+	{
+		for(uint32_t i=0;i<*Len;i++){
+				// Replace end markers
+				if(*(Buf+i) == '\n' || *(Buf+i) == '\r' || *(Buf+i) == ';'){
+					*(Buf+i) = (uint8_t)';';
+					flag = true;
+					needRead = 0;
+				}
+			}
 
-	this->buffer.append((char*)Buf,*Len);
+			this->buffer.append((char*)Buf,*Len);
+	}
 
 	return flag;
 }
@@ -49,6 +62,15 @@ std::vector<ParsedCommand> CmdParser::parse(){
 	{
 		ParsedCommand cmd;
 		cmd.type = CMDtype::dash;
+		cmd.cmd = buffer;
+		buffer.clear();
+		commands.push_back(cmd);
+		return commands;
+	}
+	if((uint8_t)test[0] == 0x2a)
+	{
+		ParsedCommand cmd;
+		cmd.type = CMDtype::simhub;
 		cmd.cmd = buffer;
 		buffer.clear();
 		commands.push_back(cmd);

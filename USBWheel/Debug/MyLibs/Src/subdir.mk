@@ -1,5 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
+# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
@@ -19,6 +20,7 @@ CPP_SRCS += \
 ../MyLibs/Src/TimerHandler.cpp \
 ../MyLibs/Src/UsbHidHandler.cpp \
 ../MyLibs/Src/global_callbacks.cpp \
+../MyLibs/Src/i2ckeypad.cpp \
 ../MyLibs/Src/ledEffects.cpp \
 ../MyLibs/Src/ws2812.cpp 
 
@@ -38,6 +40,7 @@ OBJS += \
 ./MyLibs/Src/TimerHandler.o \
 ./MyLibs/Src/UsbHidHandler.o \
 ./MyLibs/Src/global_callbacks.o \
+./MyLibs/Src/i2ckeypad.o \
 ./MyLibs/Src/ledEffects.o \
 ./MyLibs/Src/ws2812.o 
 
@@ -57,43 +60,12 @@ CPP_DEPS += \
 ./MyLibs/Src/TimerHandler.d \
 ./MyLibs/Src/UsbHidHandler.d \
 ./MyLibs/Src/global_callbacks.d \
+./MyLibs/Src/i2ckeypad.d \
 ./MyLibs/Src/ledEffects.d \
 ./MyLibs/Src/ws2812.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-MyLibs/Src/AdcHandler.o: ../MyLibs/Src/AdcHandler.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/AdcHandler.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/CmdParser.o: ../MyLibs/Src/CmdParser.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/CmdParser.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/CommandHandler.o: ../MyLibs/Src/CommandHandler.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/CommandHandler.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/EncoderLocal.o: ../MyLibs/Src/EncoderLocal.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/EncoderLocal.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/ExtiHandler.o: ../MyLibs/Src/ExtiHandler.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/ExtiHandler.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/FFBWheel.o: ../MyLibs/Src/FFBWheel.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/FFBWheel.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/FFBWheel_commands.o: ../MyLibs/Src/FFBWheel_commands.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/FFBWheel_commands.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/FFBWheel_usb_init.o: ../MyLibs/Src/FFBWheel_usb_init.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/FFBWheel_usb_init.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/Filters.o: ../MyLibs/Src/Filters.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/Filters.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/HidFFB.o: ../MyLibs/Src/HidFFB.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/HidFFB.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/LocalButtons.o: ../MyLibs/Src/LocalButtons.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/LocalButtons.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/MotorBTS7960.o: ../MyLibs/Src/MotorBTS7960.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/MotorBTS7960.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/TimerHandler.o: ../MyLibs/Src/TimerHandler.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/TimerHandler.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/UsbHidHandler.o: ../MyLibs/Src/UsbHidHandler.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/UsbHidHandler.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/global_callbacks.o: ../MyLibs/Src/global_callbacks.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/global_callbacks.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/ledEffects.o: ../MyLibs/Src/ledEffects.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/ledEffects.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-MyLibs/Src/ws2812.o: ../MyLibs/Src/ws2812.cpp
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -Os -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"MyLibs/Src/ws2812.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
+MyLibs/Src/%.o: ../MyLibs/Src/%.cpp MyLibs/Src/subdir.mk
+	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DDEBUG -DSTM32F103xB -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../MyLibs/Inc -I../USB/Inc -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 

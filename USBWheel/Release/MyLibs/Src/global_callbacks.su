@@ -5,5 +5,5 @@ global_callbacks.cpp:42:6:void CDC_Callback(uint8_t*, uint32_t*)	16	static
 global_callbacks.cpp:49:6:void USBD_OutEvent_HID(uint8_t*)	0	static
 global_callbacks.cpp:53:6:void USBD_GetEvent_HID(uint8_t, uint16_t, uint8_t**)	8	static
 global_callbacks.cpp:58:6:void USB_SOF()	0	static
-global_callbacks.cpp:61:1:cpp)	0	static
+global_callbacks.cpp:61:1:cpp)	12	static
 global_callbacks.cpp:61:1:cpp)	8	static

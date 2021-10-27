@@ -9,6 +9,8 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="H:\STM\STM4"/>
+			<item value="H:\STM4"/>
 			<item value="H:\STM3"/>
 			<item value="H:\STM"/>
 		</list>
@@ -21,5 +23,12 @@
 		<item key="DIALOG_WIDTH" value="500"/>
 		<item key="DIALOG_HEIGHT" value="419"/>
 		<item key="TOGGLE_SELECTED" value="false"/>
+	</section>
+	<section name="TaskPropertiesDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="607"/>
+		<item key="DIALOG_Y_ORIGIN" value="340"/>
+		<item key="DIALOG_WIDTH" value="723"/>
+		<item key="DIALOG_HEIGHT" value="283"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 	</section>
 </section>

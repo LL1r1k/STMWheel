@@ -6,25 +6,31 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="fadeTime"/>
+		<item key="selection" value=" + &quot; &quot;;"/>
 		<list key="findhistory">
-			<item value="fadeTime"/>
-			<item value="attackTime"/>
-			<item value="elapsedTime"/>
-			<item value="counter"/>
-			<item value="count"/>
-			<item value="time"/>
-			<item value="power"/>
-			<item value="axes"/>
-			<item value="process"/>
-			<item value="enc"/>
-			<item value="adcUpd"/>
-			<item value="timer_update"/>
-			<item value="update_flag"/>
-			<item value="EEPROM_VIRTUAL_ADDRESS_MAX"/>
-			<item value="EEPROM_VIRTUAL_ADDRESS_MIN"/>
+			<item value=";"/>
+			<item value="to_string"/>
+			<item value="to_s"/>
+			<item value="printf"/>
+			<item value="printg"/>
+			<item value="Wheel.encoder."/>
+			<item value="filter"/>
+			<item value="period"/>
+			<item value="cond"/>
+			<item value="tria"/>
+			<item value="ramp"/>
+			<item value="кьфз"/>
+			<item value="Peri"/>
+			<item value="Perd"/>
+			<item value="sin"/>
 		</list>
 		<list key="replacehistory">
+			<item value=" + &quot; &quot;;"/>
+			<item value=" + &quot; &quot;"/>
+			<item value="std::to_string"/>
+			<item value="to_string"/>
+			<item value=");"/>
+			<item value="enc-&gt;"/>
 			<item value="CUSTOM_HID_FS_BINTERVAL"/>
 		</list>
 	</section>

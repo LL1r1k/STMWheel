@@ -1,4 +1,4 @@
-usbd_custom_hid_if.c:797:15:CUSTOM_HID_Init_FS	0	static
-usbd_custom_hid_if.c:830:15:CUSTOM_HID_GetEvent_FS	8	static
-usbd_custom_hid_if.c:821:15:CUSTOM_HID_OutEvent_FS	8	static
-usbd_custom_hid_if.c:808:15:CUSTOM_HID_DeInit_FS	0	static
+usbd_custom_hid_if.c:852:15:CUSTOM_HID_Init_FS	4	static
+usbd_custom_hid_if.c:863:15:CUSTOM_HID_DeInit_FS	4	static
+usbd_custom_hid_if.c:876:15:CUSTOM_HID_OutEvent_FS	16	static
+usbd_custom_hid_if.c:885:15:CUSTOM_HID_GetEvent_FS	16	static

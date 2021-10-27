@@ -31,11 +31,12 @@ Core/Src/cppmain.o: ../Core/Src/cppmain.cpp ../Core/Inc/cppmain.h \
  ../MyLibs/Inc/ws2812.h ../MyLibs/Inc/FFBWheel.h \
  ../MyLibs/Inc/CmdParser.h ../Core/Inc/main.h \
  ../MyLibs/Inc/MotorBTS7960.h ../MyLibs/Inc/LocalButtons.h \
- ../MyLibs/Inc/ledEffects.h ../MyLibs/Inc/EncoderLocal.h \
- ../MyLibs/Inc/constants.h ../MyLibs/Inc/ExtiHandler.h \
- ../MyLibs/Inc/TimerHandler.h ../MyLibs/Inc/global_callbacks.h \
- ../MyLibs/Inc/HidFFB.h ../MyLibs/Inc/UsbHidHandler.h \
+ ../MyLibs/Inc/ledEffects.h ../MyLibs/Inc/i2ckeypad.h \
  ../MyLibs/Inc/ffb_defs.h ../MyLibs/Inc/Filters.h \
+ ../MyLibs/Inc/EncoderLocal.h ../MyLibs/Inc/constants.h \
+ ../MyLibs/Inc/ExtiHandler.h ../MyLibs/Inc/TimerHandler.h \
+ ../MyLibs/Inc/global_callbacks.h ../MyLibs/Inc/HidFFB.h \
+ ../MyLibs/Inc/Filters.h ../MyLibs/Inc/UsbHidHandler.h \
  ../MyLibs/Inc/AdcHandler.h ../MyLibs/Inc/CommandHandler.h \
  ../USB/Inc/usbd_cdc_if.h ../USB/Inc/usbd_cdc.h ../USB/Inc/usbd_ioreq.h \
  ../USB/Inc/usbd_def.h ../USB/Inc/usbd_conf.h ../USB/Inc/usbd_core.h \
@@ -118,6 +119,12 @@ Core/Src/cppmain.o: ../Core/Src/cppmain.cpp ../Core/Inc/cppmain.h \
 
 ../MyLibs/Inc/ledEffects.h:
 
+../MyLibs/Inc/i2ckeypad.h:
+
+../MyLibs/Inc/ffb_defs.h:
+
+../MyLibs/Inc/Filters.h:
+
 ../MyLibs/Inc/EncoderLocal.h:
 
 ../MyLibs/Inc/constants.h:
@@ -130,11 +137,9 @@ Core/Src/cppmain.o: ../Core/Src/cppmain.cpp ../Core/Inc/cppmain.h \
 
 ../MyLibs/Inc/HidFFB.h:
 
-../MyLibs/Inc/UsbHidHandler.h:
-
-../MyLibs/Inc/ffb_defs.h:
-
 ../MyLibs/Inc/Filters.h:
+
+../MyLibs/Inc/UsbHidHandler.h:
 
 ../MyLibs/Inc/AdcHandler.h:
 

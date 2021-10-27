@@ -41,7 +41,7 @@ extern "C" {
 #define USB_CUSTOM_HID_DESC_SIZE              9
 #define USBD_CUSTOMHID_OUTREPORT_BUF_SIZE     512 //512
 
-#define USBD_CUSTOM_HID_REPORT_DESC_SIZE     1267 //1267
+#define USBD_CUSTOM_HID_REPORT_DESC_SIZE     1218 //1267
 
 typedef enum
 {

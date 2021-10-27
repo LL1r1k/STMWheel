@@ -1,9 +1,9 @@
 CommandHandler.cpp:21:6:virtual bool CommandHandler::hasCommands()	0	static
 CommandHandler.cpp:24:6:virtual void CommandHandler::setCommandsEnabled(bool)	0	static
-CommandHandler.cpp:33:6:virtual bool CommandHandler::command(ParsedCommand*, std::__cxx11::string*)	0	static
+CommandHandler.cpp:33:6:virtual bool CommandHandler::command(ParsedCommand*, std::string*)	0	static
 CommandHandler.cpp:51:6:virtual void CommandHandler::removeCommandHandler()	24	static
-CommandHandler.cpp:16:1:CommandHandler::~CommandHandler()	8	static
-CommandHandler.cpp:16:1:virtual CommandHandler::~CommandHandler()	8	static
-vector.tcc:394:7:) [with _Args = {CommandHandler*}; _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	32	static
+CommandHandler.cpp:16:1:CommandHandler::~CommandHandler()	24	static
+CommandHandler.cpp:16:1:virtual CommandHandler::~CommandHandler()	24	static
+vector.tcc:426:7:) [with _Args = {CommandHandler*}; _Tp = CommandHandler*; _Alloc = std::allocator<CommandHandler*>]	40	static
 CommandHandler.cpp:41:6:virtual void CommandHandler::addCommandHandler()	24	static
-CommandHandler.cpp:12:1:CommandHandler::CommandHandler()	8	static
+CommandHandler.cpp:12:1:CommandHandler::CommandHandler()	24	static

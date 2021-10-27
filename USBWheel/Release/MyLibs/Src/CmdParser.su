@@ -1,11 +1,8 @@
 CmdParser.cpp:16:1:CmdParser::~CmdParser()	8	static
 CmdParser.cpp:16:1:virtual CmdParser::~CmdParser()	8	static
-stl_uninitialized.h:305:5:_ForwardIterator std::__uninitialized_move_if_noexcept_a(_InputIterator, _InputIterator, _ForwardIterator, _Allocator&) [with _InputIterator = ParsedCommand*; _ForwardIterator = ParsedCommand*; _Allocator = std::allocator<ParsedCommand>]	24	static
-basic_string.h:6367:3:long int std::__cxx11::stol(const string&, std::size_t*, int)	32	static
 CmdParser.cpp:11:1:CmdParser::CmdParser()	24	static
 CmdParser.cpp:20:6:void CmdParser::clear()	0	static
-CmdParser.cpp:25:6:bool CmdParser::add(char*, uint32_t*)	24	static
-vector.tcc:394:7:) [with _Args = {const ParsedCommand&}; _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	32	static
-stl_vector.h:939:7:void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	16	static
-vector.tcc:394:7:) [with _Args = {const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&}; _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	48	static
-CmdParser.cpp:42:28:std::vector<ParsedCommand> CmdParser::parse()	136	static
+CmdParser.cpp:25:6:bool CmdParser::add(char*, uint32_t*)	32	static
+vector.tcc:426:7:) [with _Args = {const ParsedCommand&}; _Tp = ParsedCommand; _Alloc = std::allocator<ParsedCommand>]	56	static
+vector.tcc:426:7:) [with _Args = {const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&}; _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >]	56	static
+CmdParser.cpp:55:28:std::vector<ParsedCommand> CmdParser::parse()	376	static

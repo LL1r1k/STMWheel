@@ -1,12 +1,6 @@
-/*
- * Filters.h
- *
- *  Created on: Feb 13, 2020
- *      Author: Yannick
- */
 
-#ifndef FILTERS_H_
-#define FILTERS_H_
+#ifndef FILTERS_H
+#define FILTERS_H
 #include "cppmain.h"
 
 #ifdef __cplusplus
@@ -29,9 +23,10 @@ public:
     float process(float in);
     void setBiquad(BiquadType type, float Fc, float Q, float peakGain);
     void setFc(float Fc); //frequency
+    void setQ(float Q);
+    void calcBiquad(void);
 
 protected:
-    void calcBiquad(void);
 
     BiquadType type;
     float a0, a1, a2, b1, b2;
@@ -42,4 +37,4 @@ protected:
 
 #endif
 
-#endif /* FILTERS_H_ */
+#endif /* EXTIHANDLER_H_ */

@@ -77,7 +77,6 @@ void RebootDFU();
 #define DIN1_GPIO_Port GPIOB
 #define ENCODER_Z_Pin GPIO_PIN_5
 #define ENCODER_Z_GPIO_Port GPIOB
-#define ENCODER_Z_EXTI_IRQn EXTI9_5_IRQn
 #define ENCODER_A_Pin GPIO_PIN_6
 #define ENCODER_A_GPIO_Port GPIOB
 #define ENCODER_B_Pin GPIO_PIN_7

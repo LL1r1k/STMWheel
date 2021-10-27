@@ -19,63 +19,6 @@
 #include "eeprom.h"
 #include "ws2812.h"
 
-struct FFBWheelConfig{
-	uint8_t check = 0x57;
-	uint8_t axes = 0b00000111;
-	uint8_t I2CButtons = 0x01;
-	uint8_t nLocalButtons = 0;
-	uint16_t degreesOfRotation = 900;
-	uint16_t power = 2000;
-	uint16_t encoderPPR = 2000;
-	uint8_t maxAdcCount = 8;
-
-	uint8_t inverted = false;
-	uint16_t endstop_gain = 20;
-	uint8_t constantGain = 100;
-	uint8_t rampGain = 100;
-	uint8_t squareGain = 100;
-	uint8_t sinGain = 100;
-	uint8_t triangleGain = 100;
-	uint8_t sawToothDownGain = 100;
-	uint8_t sawToothUpGain = 100;
-	uint8_t springGain = 100;
-	uint8_t damperGain = 100;
-	uint8_t inertiaGain = 100;
-	uint8_t frictionGain = 100;
-	uint8_t totalGain = 100;
-
-	bool isequal(FFBWheelConfig& conf)
-	{
-		if(	check == conf.check &&
-			axes == conf.axes &&
-			I2CButtons == conf.I2CButtons &&
-			nLocalButtons == conf.nLocalButtons &&
-			degreesOfRotation == conf.degreesOfRotation &&
-			power == conf.power &&
-			endstop_gain == conf.endstop_gain &&
-			encoderPPR == conf.encoderPPR &&
-			maxAdcCount == conf.maxAdcCount &&
-			inverted == conf.inverted &&
-			constantGain == conf.constantGain &&
-			rampGain == conf.rampGain &&
-			squareGain == conf.squareGain &&
-			sinGain == conf.sinGain &&
-			triangleGain == conf.triangleGain &&
-			sawToothDownGain == conf.sawToothDownGain &&
-			sawToothUpGain == conf.sawToothUpGain &&
-			springGain == conf.springGain &&
-			damperGain == conf.damperGain &&
-			inertiaGain == conf.inertiaGain &&
-			frictionGain == conf.frictionGain &&
-			totalGain == conf.totalGain)
-			return true;
-		else
-			return false;
-	}
-};
-
-
-
 
 class FFBWheel: public AdcHandler, TimerHandler, CommandHandler{
 public:
@@ -86,19 +29,18 @@ public:
 	void executeCommands(std::vector<ParsedCommand> commands);
 	bool command(ParsedCommand* cmd,std::string* reply);
 	bool executeSysCommand(ParsedCommand* cmd,std::string* reply);
-
 	void SOF();
 	void usbInit(); // initialize a composite usb device
 
 	void saveFlash();
 	void restoreFlash();
 
+	void setCfFilter(uint32_t f,uint8_t q);
+
 	void update();
 	void cdcRcv(char* Buf, uint32_t *Len);
 
 	static FFBWheelConfig decodeConf();
-	static void encodeConf(FFBWheelConfig conf);
-
 
 	void adcUpd(volatile uint32_t* ADC_BUF);
 	void timerElapsed(TIM_HandleTypeDef* htim);
@@ -108,16 +50,23 @@ public:
 	uint8_t adcCount =0;
 
 	int32_t getEncValue(EncoderLocal* enc,uint16_t degrees);
-
+	void initEncoder();
 	CmdParser parser = CmdParser();
 
+	uint8_t* pi2cBuf;
+	uint8_t i2cButtonsBuffer[9] = {0,};
+	uint8_t needSave = false;
 private:
 	void send_report();
 	int16_t updateEndstop();
 
+	int16_t i2cBuffer[255] = {0,};
+	uint16_t i2cSize = 0;
+
 	HidFFB* ffb;
 	TIM_HandleTypeDef* timer_update;
 	int32_t torque = 0; // last torque
+	float torqueScaler = 0;
 	int32_t endstopTorque = 0; // last torque
 	FFBWheelConfig conf;
 
@@ -130,6 +79,8 @@ private:
 	volatile uint32_t adc_buf2[ADC_PINS];
 	reportHID_t reportHID;
 
+	int32_t map(int32_t x, int32_t in_min, int32_t in_max, int32_t out_min, int32_t out_max);
+
 
 	int32_t lastScaledEnc = 0;
 	int32_t scaledEnc = 0;
@@ -141,6 +92,7 @@ private:
 	int32_t velocityFFgain = 30000;
 	int32_t velocityFFconst = 0;
 
+	uint16_t I2C_SLAVE_ADDR = 0x48;
 };
 
 #endif /* SRC_FFBWHEEL_H_ */

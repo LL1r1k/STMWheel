@@ -33,7 +33,7 @@ USB/Src/usbd_custom_hid_if.o: ../USB/Src/usbd_custom_hid_if.c \
  ../USB/Inc/usbd_ioreq.h ../USB/Inc/usbd_def.h ../USB/Inc/usbd_conf.h \
  ../USB/Inc/usbd_core.h ../USB/Inc/usbd_ctlreq.h \
  ../MyLibs/Inc/constants.h ../Core/Inc/cppmain.h ../Core/Inc/main.h \
- ../MyLibs/Inc/ffb_defs.h ../MyLibs/Inc/Filters.h
+ ../MyLibs/Inc/ffb_defs.h
 
 ../MyLibs/Inc/global_callbacks.h:
 
@@ -118,5 +118,3 @@ USB/Src/usbd_custom_hid_if.o: ../USB/Src/usbd_custom_hid_if.c \
 ../Core/Inc/main.h:
 
 ../MyLibs/Inc/ffb_defs.h:
-
-../MyLibs/Inc/Filters.h:

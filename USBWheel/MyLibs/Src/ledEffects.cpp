@@ -1,16 +1,11 @@
 #include "ledEffects.h"
 #include "main.h"
 
-uint32_t sysledtick=0;
-
-void pulseSysLed(){
-	sysledtick = HAL_GetTick();
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-}
+uint32_t lastTick = 0;
 
 void updateLeds(){
-	if(sysledtick!=0 && HAL_GetTick() > sysledtick+35){
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-		sysledtick = 0;
+	if(HAL_GetTick() - lastTick > 500){
+		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+		lastTick = HAL_GetTick();
 	}
 }

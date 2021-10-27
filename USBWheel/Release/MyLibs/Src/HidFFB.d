@@ -28,8 +28,11 @@ MyLibs/Src/HidFFB.o: ../MyLibs/Src/HidFFB.cpp ../MyLibs/Inc/HidFFB.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h \
- ../MyLibs/Inc/UsbHidHandler.h ../Core/Inc/cppmain.h ../Core/Inc/main.h \
- ../MyLibs/Inc/ffb_defs.h ../MyLibs/Inc/Filters.h
+ ../MyLibs/Inc/Filters.h ../Core/Inc/cppmain.h ../Core/Inc/main.h \
+ ../MyLibs/Inc/UsbHidHandler.h ../MyLibs/Inc/ffb_defs.h \
+ ../MyLibs/Inc/EncoderLocal.h ../MyLibs/Inc/constants.h \
+ ../MyLibs/Inc/ExtiHandler.h ../MyLibs/Inc/TimerHandler.h \
+ ../MyLibs/Inc/global_callbacks.h
 
 ../MyLibs/Inc/HidFFB.h:
 
@@ -93,12 +96,22 @@ MyLibs/Src/HidFFB.o: ../MyLibs/Src/HidFFB.cpp ../MyLibs/Inc/HidFFB.h \
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h:
 
-../MyLibs/Inc/UsbHidHandler.h:
+../MyLibs/Inc/Filters.h:
 
 ../Core/Inc/cppmain.h:
 
 ../Core/Inc/main.h:
 
+../MyLibs/Inc/UsbHidHandler.h:
+
 ../MyLibs/Inc/ffb_defs.h:
 
-../MyLibs/Inc/Filters.h:
+../MyLibs/Inc/EncoderLocal.h:
+
+../MyLibs/Inc/constants.h:
+
+../MyLibs/Inc/ExtiHandler.h:
+
+../MyLibs/Inc/TimerHandler.h:
+
+../MyLibs/Inc/global_callbacks.h:
